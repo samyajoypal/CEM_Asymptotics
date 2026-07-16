@@ -1,0 +1,126 @@
+We applied the method to the Dry Bean data of \citet{koklu2020drybean},
+which contain 12 measured dimensions and four shape descriptors extracted from
+images of 13,611 individual grains belonging to seven registered varieties.
+The class labels were not used in estimation.  They were retained only to give
+an external assessment of the fitted partition.  We standardized all 16
+features and used the first two principal-component scores, thereby avoiding a
+choice of variables based on the reported class labels.
+
+Before running the bootstrap, we screened six data configurations (breast
+cancer, wine, handwritten digits, and three pairs of bean varieties), two
+dimensions, and Normal--Student-$t$ and Normal--skew-normal specifications.
+The screen used numerical admissibility, component weights, effective kernel
+support near the estimated boundary, and whether the boundary correction was
+material.  It was used to select one regular illustration and one deliberately
+difficult diagnostic case, rather than to select the largest apparent
+improvement in clustering accuracy.  The complete screening results and failed
+fits are retained in the reproduction archive.
+
+For each selected data set we fitted a two-component Normal--Student-$t$
+classification mixture.  We compared the analytic standard errors with 500
+nonparametric bootstrap samples optimized locally within a coordinate-wise
+trust region around the original solution.  This is the bootstrap analogue of
+the local target in our theory.  We also performed 200 unrestricted refits from
+the full fitting procedure.  The latter diagnostic allows the selected basin
+to change and hence measures instability that is outside the local Gaussian
+approximation.  Table~\ref{tab:applications} summarizes the results.
+
+Figure~\ref{fig:application-boundaries} displays the standardized scores,
+coloured by external variety labels, together with the fitted classification
+boundary. Labels played no role in preprocessing or fitting.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/application_boundaries.pdf}
+\caption{Dry Bean principal-component scores and fitted Normal--Student-$t$
+classification boundaries. Colours show external labels used only for
+evaluation; black curves are equality sets of the fitted weighted log densities.}
+\label{fig:application-boundaries}
+\end{figure*}
+
+\begin{table}[t]
+\centering
+\caption{Dry Bean applications.  ``SE/local SD'' is the coordinate-median
+ratio of an analytic standard error to the standard deviation from successful
+local bootstrap fits.  Local success is the percentage of 500 locally
+optimized bootstrap refits that passed all convergence diagnostics.}
+\label{tab:applications}
+\begin{tabular}{lrrrrrr}
+\toprule
+Varieties & $n$ & ARI & Support & Local success & Naive & Stabilized \\
+\midrule
+Dermason--Seker & 5573 & 0.867 & 33 & 95.0\% & 0.798 & 0.991 \\
+Cali--Barbunya  & 2952 & 0.282 & 44 & 52.4\% & 0.538 & 0.850 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\begin{minipage}{0.94\linewidth}\small
+The median stabilized-to-naive standard-error inflation was 1.284 and 1.650,
+respectively.  The percentages of unrestricted refits remaining within a
+maximum coordinate distance of 0.75 from the original solution were 59.0\%
+and 46.5\%, respectively.
+\end{minipage}
+\end{table}
+
+\paragraph{A regular validation case.}
+For Dermason--Seker the fitted partition agrees closely with the independently
+recorded varieties (adjusted Rand index 0.867), both estimated component
+weights are substantial, and 475 of 500 local bootstrap fits succeeded.  The
+naive standard errors are systematically too small: their median ratio to the
+local bootstrap standard deviation is 0.798.  Boundary-aware standard errors
+raise this ratio to 0.991.  At the coordinate level the stabilized ratios range
+from 0.886 to 1.082, whereas the naive ratios range from 0.576 to 0.939.  Thus
+the aggregate improvement is not driven by one parameter.  The estimated
+boundary curvature required no finite-sample shrinkage in this fit.
+
+Figure~\ref{fig:application-calibration} confirms that the aggregate result is
+not an artefact of taking medians. Dermason--Seker corrected ratios cluster
+around one across the coordinate vector; Cali--Barbunya shows a substantial
+but incomplete improvement for most coordinates.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/application_se_calibration.pdf}
+\caption{Coordinate-level analytic standard errors divided by local-bootstrap
+standard deviations. The dotted reference at one represents exact local
+calibration.}
+\label{fig:application-calibration}
+\end{figure*}
+
+Only 59.0\% of unrestricted bootstrap refits remained in the original local
+basin.  Location-coordinate standard deviations from unrestricted refitting
+were consequently orders of magnitude larger for some coordinates.  This does
+not contradict the local calibration result: it identifies a separate layer
+of optimization and selection uncertainty.  In practice, the local standard
+errors should therefore be reported together with the basin-stability
+diagnostic.
+
+The unrestricted distances in Figure~\ref{fig:application-basins} make this
+distinction visible. Both examples have a local group of refits, but
+Dermason--Seker also has a separate group near distance five and
+Cali--Barbunya has a broad nonlocal tail. A global standard deviation would
+conflate these discrete changes with regular local sampling variation.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/application_basin_diagnostics.pdf}
+\caption{Maximum coordinate distance between each unrestricted bootstrap
+refit and the original solution. The dashed line is the prespecified local
+trust-region radius 0.75.}
+\label{fig:application-basins}
+\end{figure*}
+
+\paragraph{A nonregular diagnostic case.}
+The Cali--Barbunya pair has stronger overlap, as reflected in the lower
+external adjusted Rand index (0.282) and the larger median analytic correction
+(a factor of 1.650).  The stabilized standard errors again move substantially
+toward the local-bootstrap scale, improving the median ratio from 0.538 to
+0.850.  However, only 262 of 500 local optimizations succeeded, and only 46.5\%
+of unrestricted refits stayed near the original solution.  These diagnostics
+fail the operational stability requirement needed to treat the local normal
+approximation as a complete account of uncertainty.  We therefore present
+this example as a stress test, not as evidence for routine Wald inference.
+Together, the two applications show both the practical gain from estimating
+boundary curvature and the need to distinguish local sampling uncertainty
+from basin-selection instability.

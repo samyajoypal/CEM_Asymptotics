@@ -1,0 +1,36 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{natbib}
+\usepackage{booktabs,longtable,array}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\doublespacing
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newcommand{\ind}{\mathbf 1}
+
+\title{Supplementary Material for\\
+Inference for Hard Classification Likelihoods:\\
+Moving-Boundary Curvature and Feasible Uncertainty Quantification}
+\author{Authors to be finalized}
+\date{}
+
+\begin{document}
+\maketitle
+\renewcommand{\theequation}{S.\arabic{equation}}
+\setcounter{equation}{0}
+
+\input{appendix/technical_proofs}
+\input{appendix/empirical_details}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

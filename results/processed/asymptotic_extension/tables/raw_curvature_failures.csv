@@ -1,0 +1,5 @@
+scenario,n,replications_with_any_raw_failure
+nsn_p2_strong_balanced,8000,7
+nt_p2_strong_balanced,8000,19
+ntsn_p2_moderate_balanced,4000,17
+ntsn_p5_moderate_balanced,4000,125

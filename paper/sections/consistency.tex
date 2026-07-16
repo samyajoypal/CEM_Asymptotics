@@ -1,0 +1,86 @@
+We first establish consistency without imposing the smooth active-boundary
+conditions needed for inference.
+
+\begin{proposition}[Continuity and existence of the CML target]
+\label{prop:population-existence}
+Under Assumption~\ref{ass:basic-criterion}(1)--(3), $M$ is continuous on
+$\Theta$ and attains its maximum.  Under part (4), the maximizer is the unique
+target $\boldsymbol{\theta}^*$.
+\end{proposition}
+
+\begin{proof}
+For $P_0$-almost every $\mathbf{x}$, the maximum of the finite collection of continuous
+maps $\{q_j(\mathbf{x};\cdot):1\leq j\leq k\}$ is continuous.  The envelope in
+Assumption~\ref{ass:basic-criterion}(3) and dominated convergence imply
+continuity of $M$.  Existence follows from compactness of $\Theta$; uniqueness
+is part (4).
+\end{proof}
+
+\begin{theorem}[Uniform convergence of the classification criterion]
+\label{thm:uniform-convergence}
+Under Assumption~\ref{ass:basic-criterion}(1)--(3),
+\begin{equation}
+ \sup_{\boldsymbol{\theta}\in\Theta}|M_n(\boldsymbol{\theta})-M(\boldsymbol{\theta})|\xrightarrow{p}0.
+ \label{eq:uniform-convergence}
+\end{equation}
+If the observations form an infinite iid sequence, the convergence can be
+taken almost surely.
+\end{theorem}
+
+\begin{proof}
+The class $\{m_{\boldsymbol{\theta}}:\boldsymbol{\theta}\in\Theta\}$ has an integrable envelope.  It is
+indexed by a compact finite-dimensional parameter set and is pointwise
+continuous in $\boldsymbol{\theta}$ almost surely.  A finite covering argument, using
+dominated continuity to control the oscillation within each cover element,
+reduces the supremum to finitely many ordinary laws of large numbers.  This
+gives \eqref{eq:uniform-convergence}; applying the strong law in the same
+argument gives the almost-sure version.
+\end{proof}
+
+\begin{theorem}[Consistency of approximate CML maximizers]
+\label{thm:cml-consistency}
+Suppose Assumption~\ref{ass:basic-criterion} holds and
+$\widehat{\boldsymbol{\theta}}_n$ satisfies \eqref{eq:approximate-maximizer}.  Then
+\begin{equation}
+ \widehat{\boldsymbol{\theta}}_n\xrightarrow{p}\boldsymbol{\theta}^*.
+ \label{eq:cml-consistency}
+\end{equation}
+If the uniform convergence in Theorem~\ref{thm:uniform-convergence} and
+$r_n\to0$ both hold almost surely, then the convergence in
+\eqref{eq:cml-consistency} is almost sure.
+\end{theorem}
+
+\begin{proof}
+Fix $\varepsilon>0$ and let
+\[
+ \Delta_\varepsilon=M(\boldsymbol{\theta}^*)-
+ \sup_{\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|\geq\varepsilon}M(\boldsymbol{\theta})>0.
+\]
+On the event
+\[
+ 2\sup_{\boldsymbol{\theta}\in\Theta}|M_n(\boldsymbol{\theta})-M(\boldsymbol{\theta})|+r_n
+ <\Delta_\varepsilon,
+\]
+no approximate maximizer satisfying \eqref{eq:approximate-maximizer} can lie
+outside the $\varepsilon$-ball around $\boldsymbol{\theta}^*$.  The probability of this
+event tends to one by Theorem~\ref{thm:uniform-convergence} and $r_n=o_p(1)$.
+The almost-sure statement follows identically.
+\end{proof}
+
+Theorem~\ref{thm:cml-consistency} deliberately separates statistical and
+algorithmic claims.  A CEM iteration that terminates at an arbitrary local
+maximum need not satisfy \eqref{eq:approximate-maximizer}.  Later we give a
+local transfer result under consistent initialization and a quantified
+optimization error.
+
+For the first-order theory, Theorem~\ref{thm:population-curvature} supplies the
+deterministic quadratic expansion
+\begin{equation}
+ M(\boldsymbol{\theta}^*+\mathbf{u})-M(\boldsymbol{\theta}^*)
+ =\tfrac12\mathbf{u}^\mathsf THu+o(\|\mathbf{u}\|^2),
+ \label{eq:population-quadratic-expansion}
+\end{equation}
+because $\nabla_{\boldsymbol{\theta}}M(\boldsymbol{\theta}^*)=0$ at an interior maximizer.  The next theoretical
+layer will establish the matching local empirical-process expansion and show
+that a sufficiently accurate local maximizer is asymptotically linear with
+curvature $\mathbf{A}=\mathbf{I}_c-\mathbf{B}$.

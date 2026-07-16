@@ -1,0 +1,21 @@
+scenario,n,replication,status,method,bandwidth_multiplier,coordinate,coordinate_name,estimate,target,target_mcse,error,squared_error,estimated_se,coverage_95,interval_width_95,curvature_min_eigenvalue,fit_seconds,minimum_kernel_support,bandwidth_diagnostics,error_message
+nt_p2_moderate_balanced,500,28,corrected_failed,corrected,1.0,,,,,,,,,,,,0.1655563189997337,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00757131.
+nt_p2_moderate_balanced,500,28,corrected_failed,corrected,1.5,,,,,,,,,,,,0.1655563189997337,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.000450957.
+nt_p2_moderate_balanced,500,44,corrected_failed,corrected,0.75,,,,,,,,,,,,0.2674358930016751,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.0220511.
+nt_p2_moderate_balanced,500,51,corrected_failed,corrected,0.75,,,,,,,,,,,,0.23938035899846,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.0282922.
+nt_p2_moderate_balanced,500,51,corrected_failed,corrected,1.0,,,,,,,,,,,,0.23938035899846,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00838526.
+nt_p2_moderate_balanced,500,51,corrected_failed,corrected,1.5,,,,,,,,,,,,0.23938035899846,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00748716.
+nt_p2_moderate_balanced,500,57,corrected_failed,corrected,0.75,,,,,,,,,,,,0.2067396330021438,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00227726.
+nt_p2_moderate_balanced,500,57,corrected_failed,corrected,1.0,,,,,,,,,,,,0.2067396330021438,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00318248.
+nt_p2_moderate_balanced,500,58,corrected_failed,corrected,1.5,,,,,,,,,,,,0.2064224240020848,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.000766913.
+nt_p2_moderate_balanced,500,63,corrected_failed,corrected,1.5,,,,,,,,,,,,0.449644274001912,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.000524937.
+nt_p2_moderate_balanced,500,66,corrected_failed,corrected,0.75,,,,,,,,,,,,0.230686394002987,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.000289474.
+nt_p2_moderate_balanced,500,73,corrected_failed,corrected,0.75,,,,,,,,,,,,0.5584444369997072,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00797557.
+nt_p2_moderate_balanced,500,73,corrected_failed,corrected,1.0,,,,,,,,,,,,0.5584444369997072,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00930646.
+nt_p2_moderate_balanced,500,73,corrected_failed,corrected,1.5,,,,,,,,,,,,0.5584444369997072,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.000988036.
+nt_p2_moderate_balanced,500,75,corrected_failed,corrected,0.75,,,,,,,,,,,,0.1849192500012577,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.0570205.
+nt_p2_moderate_balanced,500,75,corrected_failed,corrected,1.0,,,,,,,,,,,,0.1849192500012577,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.0328627.
+nt_p2_moderate_balanced,500,75,corrected_failed,corrected,1.5,,,,,,,,,,,,0.1849192500012577,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00991646.
+nt_p2_moderate_balanced,500,79,corrected_failed,corrected,1.5,,,,,,,,,,,,0.4872221059995354,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00190262.
+nt_p2_moderate_balanced,500,86,corrected_failed,corrected,0.75,,,,,,,,,,,,0.209435308999673,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00168292.
+nt_p2_moderate_balanced,500,99,corrected_failed,corrected,0.75,,,,,,,,,,,,0.2588164700027846,,,LinAlgError: Estimated positive curvature is not positive definite: minimum eigenvalue=-0.00976551.

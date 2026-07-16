@@ -1,0 +1,35 @@
+{
+  "seed": 20260710,
+  "bandwidth_multipliers": [0.75, 1.0, 1.5],
+  "target": {
+    "reference_size": 100000,
+    "replications": 10,
+    "p10_replications": 5
+  },
+  "experiments": [
+    {
+      "name": "core",
+      "scenario_patterns": ["nt_p[25]_*_balanced", "nsn_p[25]_*_balanced"],
+      "sample_sizes": [500, 2000],
+      "replications": 1000
+    },
+    {
+      "name": "imbalance",
+      "scenario_patterns": ["nt_p2_moderate_imbalanced", "nsn_p2_moderate_imbalanced"],
+      "sample_sizes": [500, 2000],
+      "replications": 1000
+    },
+    {
+      "name": "three_component",
+      "scenario_patterns": ["ntsn_p2_moderate_balanced", "ntsn_p5_moderate_balanced"],
+      "sample_sizes": [1000],
+      "replications": 1000
+    },
+    {
+      "name": "dimension_stress",
+      "scenario_patterns": ["nt_p10_moderate_balanced", "nsn_p10_moderate_balanced"],
+      "sample_sizes": [1000],
+      "replications": 500
+    }
+  ]
+}

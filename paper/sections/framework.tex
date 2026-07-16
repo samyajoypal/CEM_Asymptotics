@@ -1,0 +1,112 @@
+Let $\mathbf{X}_1,\ldots,\mathbf{X}_n$ be independent copies of a random vector
+$\mathbf{X}\in\mathcal X\subseteq\mathbb R^p$ with distribution $P_0$.  We do not
+initially require $P_0$ to belong to a finite-mixture model.  This distinction
+allows the classification likelihood to be treated as a possibly
+misspecified criterion and makes its population target explicit.
+
+Consider $k\geq2$ positive component scores
+\begin{equation}
+ q_j(\mathbf{x};\boldsymbol{\theta})=\log\pi_j(\boldsymbol{\theta})+\log f_j(\mathbf{x};\boldsymbol{\alpha}_j(\boldsymbol{\theta})),
+ \qquad j=1,\ldots,k,
+ \label{eq:component-score}
+\end{equation}
+where $f_j(\cdot;\boldsymbol{\alpha}_j)$ may belong to different parametric families.  The
+component parameter $\boldsymbol{\alpha}_j$ has dimension $d_j$.  The full parameter
+$\boldsymbol{\theta}$ is expressed in a local unconstrained coordinate system and takes
+values in $\Theta\subset\mathbb R^d$, where
+\begin{equation}
+ d=(k-1)+\sum_{j=1}^k d_j.
+ \label{eq:parameter-dimension}
+\end{equation}
+For example, the first $k-1$
+coordinates may be multinomial-logit coordinates for the mixing weights,
+while covariance matrices may be represented by unconstrained Cholesky
+coordinates.  All derivatives below are with respect to this fixed coordinate
+system.
+
+Define
+\begin{equation}
+ m_{\boldsymbol{\theta}}(\mathbf{x})=\max_{1\leq j\leq k}q_j(\mathbf{x};\boldsymbol{\theta}),\qquad
+ M_n(\boldsymbol{\theta})=\mathbb P_n m_{\boldsymbol{\theta}},qquad
+ M(\boldsymbol{\theta})=P_0m_{\boldsymbol{\theta}},
+ \label{eq:cml-criteria}
+\end{equation}
+where $\mathbb P_n=n^{-1}\sum_{i=1}^n\delta_{\mathbf{X}_i}$.  The population
+classification maximum-likelihood target is
+\begin{equation}
+ \boldsymbol{\theta}^*=\arg\max_{\boldsymbol{\theta}\in\Theta}M(\boldsymbol{\theta}).
+ \label{eq:cml-target}
+\end{equation}
+The equality in \eqref{eq:cml-target} defines a statistical functional of
+$P_0$; it does not assert that $\boldsymbol{\theta}^*$ is the parameter generating $P_0$.
+Even under a correctly specified ordinary mixture model, the CML target and
+the ordinary mixture-likelihood parameter need not coincide.
+
+The theoretical estimator is any measurable approximate maximizer satisfying
+\begin{equation}
+ M_n(\widehat{\boldsymbol{\theta}}_n)
+ \geq \sup_{\boldsymbol{\theta}\in\Theta}M_n(\boldsymbol{\theta})-r_n,
+ \qquad r_n=o_p(1).
+ \label{eq:approximate-maximizer}
+\end{equation}
+Exact empirical maximizers correspond to $r_n=0$.  Stronger control of $r_n$
+will be imposed when deriving a first-order distribution.  Condition
+\eqref{eq:approximate-maximizer} is a property to be verified for an
+algorithmic output; calling an arbitrary stationary point a CML estimator does
+not make the condition true.
+
+For $j\ne l$, write
+\begin{equation}
+ g_{jl}(\mathbf{x};\boldsymbol{\theta})=q_j(\mathbf{x};\boldsymbol{\theta})-q_l(\mathbf{x};\boldsymbol{\theta}).
+ \label{eq:pairwise-contrast}
+\end{equation}
+Let $a_{\boldsymbol{\theta}}(\mathbf{x})$ be the smallest index in
+$\arg\max_jq_j(\mathbf{x};\boldsymbol{\theta})$.  This deterministic convention makes
+$a_{\boldsymbol{\theta}}$ measurable and defines the disjoint classification cells
+\begin{equation}
+ \mathcal R_j(\boldsymbol{\theta})=\{\mathbf{x}:a_{\boldsymbol{\theta}}(\mathbf{x})=j\},\qquad j=1,\ldots,k.
+ \label{eq:classification-cells}
+\end{equation}
+The convention has no effect on population quantities whenever ties have
+$P_0$-probability zero.
+
+\subsection{Parameter identifiability}
+
+When two components use the same family, simultaneous permutations of their
+weights and component parameters leave $m_{\boldsymbol{\theta}}$ unchanged.  We therefore
+work on an identifiable representative set $\Theta$.  This can be obtained by
+a scientifically meaningful component ordering, a fixed family assignment in
+a heterogeneous model, or a canonical ordering of a component functional.
+The chosen ordering must hold in a neighbourhood of $\boldsymbol{\theta}^*$; ordering
+components after estimation is not a substitute for local identifiability.
+
+The ordinary mixture density
+$\sum_j\pi_jf_j(\cdot;\boldsymbol{\alpha}_j)$ is used for data generation in some
+experiments, but it is not used to replace the unknown $P_0$ in the general
+theory.  In particular, the feasible boundary estimator developed later is
+based on observations from $P_0$ and does not assume that the mixture evaluated
+at $\boldsymbol{\theta}^*$ equals the data-generating density.
+
+\begin{assumption}[Basic criterion conditions]
+\label{ass:basic-criterion}
+The following conditions hold.
+\begin{enumerate}
+\item $\Theta$ is a compact, identifiable subset of $\mathbb R^d$.
+ \item For every $j$, $(\mathbf{x},\boldsymbol{\theta})\mapsto q_j(\mathbf{x};\boldsymbol{\theta})$ is jointly
+ measurable, and $\boldsymbol{\theta}\mapsto q_j(\mathbf{x};\boldsymbol{\theta})$ is continuous for
+ $P_0$-almost every $\mathbf{x}$.
+ \item There is a measurable function $F$ with $P_0F<\infty$ such that
+ $\sup_{\boldsymbol{\theta}\in\Theta}\max_j|q_j(\mathbf{X};\boldsymbol{\theta})|\leq F(\mathbf{X})$ almost surely.
+ \item $M$ has a unique, well-separated maximizer $\boldsymbol{\theta}^*$: for every
+ $\varepsilon>0$,
+ \[
+  M(\boldsymbol{\theta}^*)-
+  \sup_{\boldsymbol{\theta}\in\Theta:\,\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|\geq\varepsilon}M(\boldsymbol{\theta})>0.
+ \]
+\end{enumerate}
+\end{assumption}
+
+Compactness is used only for the global consistency argument.  Later local
+results require instead that $\boldsymbol{\theta}^*$ be an interior point of an open
+coordinate neighbourhood and that the empirical procedure enters that
+neighbourhood with probability tending to one.

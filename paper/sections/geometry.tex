@@ -1,0 +1,139 @@
+The equality set $\{\mathbf{x}:g_{jl}(\mathbf{x};\boldsymbol{\theta})=0\}$ is not necessarily a boundary of
+the classification partition.  A third component can dominate both $j$ and
+$l$ on part of that set.  For $j<l$, define the relatively open active face
+\begin{equation}
+ \mathcal F_{jl}(\boldsymbol{\theta})
+ =\left\{\mathbf{x}:q_j(\mathbf{x};\boldsymbol{\theta})=q_l(\mathbf{x};\boldsymbol{\theta})>
+ q_m(\mathbf{x};\boldsymbol{\theta})\ \text{for every }m\notin\{j,l\}\right\}.
+ \label{eq:active-face}
+\end{equation}
+Only $\mathcal F_{jl}(\boldsymbol{\theta})$ separates cells $j$ and $l$ locally.  Its
+closure can meet other faces at multiple-tie junctions.  We write
+$\mathcal F_{jl}^*=\mathcal F_{jl}(\boldsymbol{\theta}^*)$.
+
+For a smooth scalar map $g$, the notation $\nabla_{\mathbf{x}}g$ and $\nabla_{\boldsymbol{\theta}}g$ denotes
+gradients with respect to $\mathbf{x}$ and $\boldsymbol{\theta}$, respectively; $\nabla_{\boldsymbol{\theta}}^2q_j$ denotes
+the Hessian with respect to $\boldsymbol{\theta}$.  Let $\mathcal H^{p-1}$ denote
+$(p-1)$-dimensional Hausdorff measure.
+
+\begin{assumption}[Regular active-boundary geometry]
+\label{ass:boundary-geometry}
+There is an open neighbourhood $U$ of the interior point $\boldsymbol{\theta}^*$ such that:
+\begin{enumerate}
+ \item $P_0$ has a Lebesgue density $p_0$ that is continuous on a
+ neighbourhood of the closures of the active faces at $\boldsymbol{\theta}^*$.
+ \item Each $q_j(\mathbf{x};\boldsymbol{\theta})$ is twice continuously differentiable in $\boldsymbol{\theta}$
+ and continuously differentiable in $\mathbf{x}$ on the relevant neighbourhood.
+ \item For every nonempty $\mathcal F_{jl}^*$,
+ $\nabla_{\mathbf{x}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\ne0$ on its closure except possibly on a set of
+ $\mathcal H^{p-1}$-measure zero.
+ \item The set on which three or more component scores attain the common
+ maximum has $\mathcal H^{p-1}$-measure zero.
+ \item The derivatives can be passed through the volume and surface
+ integrals below.  In particular, the interior Hessian terms are
+ $P_0$-integrable and
+ \[
+  \int_{\mathcal F_{jl}^*}
+  \frac{p_0(\mathbf{x})\|\nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\|^2}
+       {\|\nabla_{\mathbf{x}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\|}
+  \,d\mathcal H^{p-1}(\mathbf{x})<\infty
+ \]
+ for every $j<l$.
+\end{enumerate}
+\end{assumption}
+
+Assumption~\ref{ass:boundary-geometry}(4) is a geometric condition, not merely
+a zero-$P_0$-probability condition.  Every regular hypersurface has
+$P_0$-probability zero under a Lebesgue density, while it can have positive
+$\mathcal H^{p-1}$ measure and contribute to curvature.
+
+At points with a unique winning component, define
+\begin{equation}
+ \boldsymbol{\psi}(\mathbf{x};\boldsymbol{\theta})
+ =\sum_{j=1}^k
+ \ind\{a_{\boldsymbol{\theta}}(\mathbf{x})=j\}\nabla_{\boldsymbol{\theta}}q_j(\mathbf{x};\boldsymbol{\theta}).
+ \label{eq:classification-score}
+\end{equation}
+On ties the right-hand side uses the deterministic convention from
+\eqref{eq:classification-cells}.  Its value on those points is immaterial under
+Assumption~\ref{ass:boundary-geometry}.
+
+\begin{theorem}[Population derivatives and active-boundary curvature]
+\label{thm:population-curvature}
+Suppose Assumption~\ref{ass:boundary-geometry} holds and the indicated
+first-order derivatives admit integrable envelopes.  Then $M$ is differentiable
+at $\boldsymbol{\theta}^*$ with
+\begin{equation}
+ \nabla_{\boldsymbol{\theta}}M(\boldsymbol{\theta}^*)=P_0\boldsymbol{\psi}(\mathbf{X};\boldsymbol{\theta}^*).
+ \label{eq:population-gradient}
+\end{equation}
+It is twice differentiable at $\boldsymbol{\theta}^*$, and
+\begin{align}
+ \mathbf{H}:=\nabla_{\boldsymbol{\theta}}^2M(\boldsymbol{\theta}^*)
+ &=P_0\left[
+   \sum_{j=1}^k\ind\{a_{\boldsymbol{\theta}^*}(\mathbf{X})=j\}
+   \nabla_{\boldsymbol{\theta}}^2q_j(\mathbf{X};\boldsymbol{\theta}^*)
+  \right]+\mathbf{B},                                      \label{eq:hessian-decomposition}\\
+ \mathbf{B}
+ &=\sum_{1\leq j<l\leq k}
+   \int_{\mathcal F_{jl}^*}
+   \frac{p_0(\mathbf{x})\nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)
+        \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)^\mathsf T}
+        {\|\nabla_{\mathbf{x}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\|}
+   \,d\mathcal H^{p-1}(\mathbf{x}).                                \label{eq:boundary-curvature}
+\end{align}
+Consequently, if
+\begin{equation}
+ \mathbf{I}_c=-P_0\left[
+   \sum_{j=1}^k\ind\{a_{\boldsymbol{\theta}^*}(\mathbf{X})=j\}
+   \nabla_{\boldsymbol{\theta}}^2q_j(\mathbf{X};\boldsymbol{\theta}^*)
+  \right],
+ \label{eq:fixed-class-information}
+\end{equation}
+then the positive population curvature is
+\begin{equation}
+ \mathbf{A}=-\mathbf{H}=\mathbf{I}_c-\mathbf{B}.
+ \label{eq:positive-curvature}
+\end{equation}
+In particular, $\mathbf{B}$ is positive semidefinite and parameter-dependent
+classification weakens the positive curvature relative to fixed-label
+analysis.
+\end{theorem}
+
+\begin{proof}
+Away from ties, the maximizing index is locally constant in $\boldsymbol{\theta}$, so the
+first derivative of $m_{\boldsymbol{\theta}}(\mathbf{x})$ equals the derivative of the winning score.
+The envelope condition and the fact that regular ties have $P_0$-probability
+zero give \eqref{eq:population-gradient} by dominated differentiation.
+
+For the second derivative, first consider a neighbourhood containing only an
+active face between $j$ and $l$.  Locally,
+\[
+ m_{\boldsymbol{\theta}}(\mathbf{x})=q_l(\mathbf{x};\boldsymbol{\theta})+\{g_{jl}(\mathbf{x};\boldsymbol{\theta})\}_+.
+\]
+In the distributional derivative with respect to $\boldsymbol{\theta}$, differentiating
+the positive-part term a second time produces the ordinary within-region
+Hessian and
+\[
+ \delta\{g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\}
+ \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)^\mathsf T.
+\]
+The coarea formula \citep{evans2015measure} converts its integral with respect to
+$p_0(\mathbf{x})\,dx$ into the corresponding term in
+\eqref{eq:boundary-curvature}.  A partition of unity over the unique-winner
+regions and the relatively open active faces combines these local identities.
+Inactive portions of pairwise equality sets do not enter because the maximum
+is locally attained by another component there.  Multiple-tie junctions make
+no contribution by Assumption~\ref{ass:boundary-geometry}(4).  Summing over
+$j<l$ proves \eqref{eq:hessian-decomposition}; the remaining statements follow
+from the definitions.
+\end{proof}
+
+\begin{corollary}[Negligible-boundary limit]
+\label{cor:negligible-boundary}
+If $p_0=0$ $\mathcal H^{p-1}$-almost everywhere on every active face, then
+$\mathbf{B}=0$ and fixed-classification curvature is correct to first order.
+More generally, the size of the correction is governed by probability density
+on the active faces, the sensitivity $\nabla_{\boldsymbol{\theta}}g_{jl}$, and the spatial
+transversality $\|\nabla_{\mathbf{x}}g_{jl}\|$.
+\end{corollary}

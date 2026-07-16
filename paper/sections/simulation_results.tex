@@ -1,0 +1,121 @@
+We used two-component Normal--Student-$t$ and Normal--skew-normal mixtures in
+dimensions $p=2$ and $p=5$, with Euclidean location separations representing
+separated, moderate-overlap, and strong-overlap regimes.  Balanced designs used
+$n=500$ and $n=2000$; additional experiments considered weights $(0.2,0.8)$,
+three heterogeneous components, and $p=10$.  There were 1000 replications per
+primary cell and 500 in the dimension stress cells, for 31,000 attempted fits.
+Bandwidth multipliers $0.75$, $1$, and $1.5$ were evaluated without refitting.
+All random seeds, including failed replications, were retained.
+
+Figure~\ref{fig:simulation-profiles} shows the principal two-dimensional
+designs before aggregation over regimes.  The correction has little effect in
+the separated cells, but the gap between the methods grows as the active
+boundary moves into a region of greater probability mass.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/simulation_profiles.pdf}
+\caption{Standard-error calibration and 95\% coverage in the principal
+two-dimensional simulations. Shapes distinguish separation regimes; solid
+blue and dashed grey curves denote stabilized boundary-aware and naive
+inference. Each point is a coordinate median over usable replications.}
+\label{fig:simulation-profiles}
+\end{figure*}
+
+The estimand was the population classification maximum-likelihood functional,
+not the generating ordinary-mixture parameter.  For each of 18 scenarios we
+used 10 independent reference samples of size 100,000, reduced to five for the
+initial $p=10$ stress calculation.  All reference fits succeeded.  Across the
+18 targets the largest coordinate Monte Carlo standard error was 0.033 and the
+largest range across independent reference fits was 0.322.  No selected target
+fit violated the prespecified admissibility diagnostics.
+
+Table~\ref{tab:simulation-main} reports coordinate-median coverage and the
+coordinate-median ratio of estimated standard error to empirical standard
+deviation.  The stabilized method uses the central bandwidth multiplier.  The
+correction is most consequential under overlap and imbalance.  For example, in
+the Normal--$t$, $p=2$, moderate-overlap design with $n=500$, median coverage
+increased from 0.886 to 0.925 and the median standard-error ratio from 0.758 to
+0.920.  Under imbalance the corresponding coverage increased from 0.834 to
+0.895.  Under separation and $n=2000$, both methods are closer, as expected.
+
+\begin{table}[t]
+\centering
+\caption{Selected simulation results. Entries are coordinate-median estimated
+standard error divided by empirical standard deviation, followed in
+parentheses by coordinate-median 95\% coverage.}
+\label{tab:simulation-main}
+\begin{tabular}{llrrcc}
+\toprule
+Families & Regime & $p$ & $n$ & Naive & Stabilized \\
+\midrule
+Normal--$t$ & moderate & 2 & 500  & 0.758 (0.886) & 0.920 (0.925) \\
+Normal--$t$ & moderate & 2 & 2000 & 0.827 (0.896) & 0.994 (0.940) \\
+Normal--$t$ & imbalanced & 2 & 500 & 0.615 (0.834) & 0.844 (0.895) \\
+Normal--$t$ & strong & 2 & 500 & 0.491 (0.750) & 0.675 (0.844) \\
+Normal--$t$ & separated & 5 & 2000 & 0.956 (0.939) & 1.018 (0.950) \\
+Normal--skew-normal & strong & 2 & 2000 & 0.573 (0.868) & 0.762 (0.922) \\
+Normal--skew-normal & moderate & 5 & 2000 & 0.892 (0.933) & 0.994 (0.943) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:simulation-calibration} summarizes every primary scenario.
+Nearly all points lie above the equality line: the correction increases both
+the estimated-standard-error ratio and coverage, generally toward the ideal
+horizontal reference rather than indiscriminately beyond it.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/simulation_calibration.pdf}
+\caption{Scenario-level comparison of naive and stabilized boundary-aware
+inference across the complete primary study. Point colour denotes the family
+design and point size distinguishes larger sample sizes. The dashed diagonal
+denotes equality; dotted lines mark ideal SE calibration and nominal coverage.}
+\label{fig:simulation-calibration}
+\end{figure*}
+
+Raw correction frequently produced a nonpositive estimated curvature, with the
+frequency increasing under strong overlap and in higher dimension.  In
+contrast, the stabilized correction was computable whenever the underlying
+fit and naive information calculation succeeded.  Stabilization was active in
+10.5\% of Normal--$t$, $p=2$, moderate-overlap replications at $n=500$, falling
+to 3.4\% at $n=2000$; in the separated $p=2$ cells it fell from 5.1\% to 1.0\%.
+
+Normal--$t$ fitting succeeded in every primary replication.  Operational fit
+failure for models involving a skew-normal component ranged from zero to 7.6\%,
+with the maximum occurring in the $p=10$ stress design.  We did not replace or
+discard these seeds.  Conditional summaries use all replications for which the
+base fit and naive information were available, and failure rates are reported
+separately.
+
+A post-confirmatory convergence extension used 500 replications at $n=8000$
+for the two $p=2$ strong-overlap models and at $n=4000$ for the two
+three-component models.  Stabilized median coverage reached 0.940 for the
+Normal--skew-normal strong-overlap case and 0.942 for the $p=5$ three-component
+case.  The Normal--$t$ strong-overlap case improved to 0.923, compared with
+0.721 for naive inference.  The $p=2$ three-component case remained difficult,
+with stabilized median coverage 0.863.  This last result illustrates slow
+finite-sample convergence when several decision faces and family-assignment
+uncertainty interact; it is reported as a limitation rather than removed from
+the design.
+
+Figure~\ref{fig:extension-boundary} places this extension beside a separate
+boundary-estimator convergence experiment. The latter shows decreasing RMSE
+from sample size 250 to 16,000, directly checking the feasible surface-moment
+estimator independently of the Wald calculations.
+The supplement additionally uses all replication-level estimator vectors to
+check standardized root-$n$ quantiles, Kolmogorov distance from Gaussianity,
+scaled RMSE, and scaled bias. Thus consistency, rate, asymptotic normality,
+variance calibration, coverage, feasible-curvature convergence, stabilization,
+and bootstrap behaviour each receive a distinct empirical diagnostic.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/extension_boundary_convergence.pdf}
+\caption{Large-sample and estimator-convergence diagnostics. Left:
+coordinate-median coverage in four post-confirmatory cells; segments join
+naive and corrected results. Right: RMSE of a scalar boundary-curvature
+functional, with an $n^{-1/2}$ reference slope.}
+\label{fig:extension-boundary}
+\end{figure*}

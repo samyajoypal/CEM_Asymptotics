@@ -1,0 +1,198 @@
+\section{Simulation design and complete results}
+
+\subsection{Data-generating distributions}
+
+All simulations were generated independently from ordinary finite mixtures,
+but performance was evaluated about the corresponding population
+classification maximum-likelihood target.  This distinction matters under
+overlap.  For the two-component designs, the first component was multivariate
+Normal with AR(1) covariance parameter 0.25.  Its location was
+$-\delta\mathbf{e}/2$, where
+$\mathbf{e}=p^{-1/2}(1,\ldots,1)^\mathsf T$.  The second location was
+$\delta\mathbf{e}/2$.  We used $\delta=6.0,4.25,$ and $3.0$ for separated,
+moderate, and strong overlap, respectively.  In dimensions $p\geq5$, the
+strong-overlap distance was 3.75 because the prespecified $3.0$ design caused
+population component collapse and therefore did not satisfy the regular-target
+conditions of the inferential study.
+
+In Normal--Student-$t$ experiments, the second component had 6 degrees of
+freedom and an AR(1) scatter matrix with correlation 0.20 and marginal scale
+1.1.  In Normal--skew-normal experiments, its covariance had AR(1) correlation
+$-0.15$ and its shape vector was
+$(3,-2,0,\ldots,0)^\mathsf T$.  Balanced weights were $(0.5,0.5)$ and the
+imbalanced experiments used $(0.2,0.8)$.  The three-component design combined
+Normal, Student-$t_7$, and skew-normal components with weights
+$(0.3,0.4,0.3)$.  Their first two location coordinates formed an equilateral
+triangle of radius 2.3; remaining location coordinates were zero.  Its shape
+vector was $(2.5,-1.5,0,\ldots,0)^\mathsf T$.
+
+The primary design comprised dimensions $p=2$ and $p=5$, sample sizes 500 and
+2000, the three overlap regimes, imbalance at moderate overlap, two
+three-component experiments at $n=1000$, and dimension-$10$ stress experiments
+at $n=1000$.  There were 1000 replications in each principal cell and 500 in
+each dimension-$10$ cell, giving 31,000 attempted primary fits.  An additional
+large-sample extension used 500 replications at $n=8000$ for the two
+two-dimensional strong-overlap models and at $n=4000$ for the two
+three-component models.
+
+\subsection{Targets, estimators, and performance measures}
+
+For each of the 18 population scenarios, we generated ten independent
+reference samples of size 100,000; five were used in the initial dimension-10
+stress computation.  All reference fits succeeded.  The selected population
+target was the coordinate mean of the canonicalized reference solutions.
+Across scenarios, the largest coordinate Monte Carlo standard error was 0.033
+and the largest range across reference estimates was 0.322.  Target uncertainty
+was retained in the archive and audited before the confirmatory run.
+
+Each sample was fitted using the multistart and family-assignment procedure in
+the main paper.  For every successful fit, inference was evaluated with
+bandwidth multipliers $0.75$, 1, and 1.5 around the pilot bandwidth.  The
+primary corrected method is the stabilized estimator at multiplier 1.  A
+coordinate contributed to coverage only if the base estimator and the
+corresponding covariance calculation were available.  We report the number of
+usable replications and do not replace failed seeds.  Scenario summaries are
+medians across unconstrained parameter coordinates; mean coordinate coverage
+and all coordinate-level results remain in the machine-readable archive.
+
+Table~\ref{tab:s-full-performance} gives every scenario-level primary and
+large-sample result for naive and stabilized inference.  It shows that the
+correction is most important for Normal--$t$ overlap and imbalance, and that
+several difficult skew-normal cells converge slowly at $n=500$.  The
+large-sample extension resolves much of this discrepancy, except for the
+two-dimensional three-component experiment, where family and face
+interactions remain difficult.  This cell was retained as a limitation.
+
+Figure~\ref{fig:s-bandwidth} gives the full bandwidth sensitivity display.
+Thin lines are individual scenario--sample-size cells and the black line is
+their median. Aggregate conclusions are stable across the prespecified
+multipliers, although individual difficult cells remain sensitive.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/bandwidth_sensitivity.pdf}
+\caption{Sensitivity of stabilized inference to bandwidth multipliers 0.75,
+1, and 1.5. Thin coloured lines are individual cells; black is the across-cell
+median.}
+\label{fig:s-bandwidth}
+\end{figure}
+
+\subsection{Failure and stabilization accounting}
+
+Table~\ref{tab:s-failures} reports all primary fit failures and all
+replications in which at least one raw bandwidth-specific covariance was
+nonpositive.  Normal--Student-$t$ fitting succeeded in every primary
+replication.  Skew-normal fit failure ranged from 0 to 7.6\%, with the largest
+rate in the dimension-10 cell.  Raw curvature failure is appreciably more
+common and increases under overlap and dimension.  These are failures of the
+finite-sample plug-in curvature, not evidence that the population curvature is
+nonpositive.  The stabilization makes the covariance computable while its
+activation frequency generally decreases with sample size, as predicted by
+the asymptotic-inactivity proposition.
+
+\subsection{Direct convergence experiment for the boundary estimator}
+
+We separately estimated a scalar functional of the boundary curvature at
+sample sizes 250, 1000, 4000, and 16,000.  The results were
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+$n$ & Bias & Empirical SD & RMSE & Bandwidth\\
+\midrule
+250   & $-0.00223$ & 0.04519 & 0.04520 & 0.33145\\
+1000  & $-0.00432$ & 0.02903 & 0.02932 & 0.25119\\
+4000  & $-0.00236$ & 0.01678 & 0.01693 & 0.19037\\
+16000 & $-0.00077$ & 0.00958 & 0.00960 & 0.14427\\
+\bottomrule
+\end{tabular}
+\end{center}
+The shrinking bias and variance provide a direct numerical check of the
+kernel-estimator consistency result, separate from Wald-interval performance.
+
+\subsection{Direct evidence for the limiting theory}
+
+Figure~\ref{fig:s-asymptotic-evidence} evaluates the consistency, root-$n$
+rate, and Gaussian-limit claims using the replication-level estimates, rather
+than treating interval coverage as a proxy. For every successful replication
+we formed $\sqrt n(\widehat{\boldsymbol\theta}-\boldsymbol\theta^\star)$ in
+the identifiable unconstrained coordinates. The upper-left panel compares
+coordinate-standardized empirical quantiles with standard-normal quantiles;
+the upper-right reports the coordinate-level Kolmogorov distance after
+centering and scaling. The lower panels show $\sqrt n$ times coordinate-median
+RMSE and absolute bias for every scenario observed at both $n=500$ and
+$n=2000$. These are diagnostics, not formal proofs: their purpose is to show
+whether the finite-sample experiments display the behaviour asserted by the
+theorems and to retain deviations in difficult cells.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/asymptotic_evidence.pdf}
+\caption{Empirical evidence for the limiting theory. Top left: median
+coordinate-level quantiles of standardized root-$n$ errors. Top right:
+coordinate-level Kolmogorov distance from a fitted standard normal law.
+Bottom: scenario trajectories of scaled RMSE and scaled absolute bias.}
+\label{fig:s-asymptotic-evidence}
+\end{figure}
+
+\subsection{Complete coordinate-level diagnostic atlas}
+
+Figures~\ref{fig:s-bias-atlas}--\ref{fig:s-se-atlas} retain every
+unconstrained coordinate from every confirmatory scenario. They are the direct
+counterparts of the parameter-by-parameter bias, RMSE, coverage, and
+SD-versus-SE plots in the previous study, but use the redesigned targets,
+families, dimensions, sample sizes, and stabilization. A separate panel is
+shown for each scenario. Colour denotes sample size; in the inference atlases,
+dotted and solid curves denote naive and stabilized boundary-aware inference.
+The machine-readable source values accompany the figures.
+
+\begin{figure}[p]\centering
+\includegraphics[width=.94\textwidth]{figures/coordinate_bias_atlas.pdf}
+\caption{Coordinate-level bias atlas for all confirmatory scenarios.}
+\label{fig:s-bias-atlas}\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=.94\textwidth]{figures/coordinate_rmse_atlas.pdf}
+\caption{Coordinate-level RMSE atlas for all confirmatory scenarios.}
+\label{fig:s-rmse-atlas}\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=.94\textwidth]{figures/coordinate_coverage_atlas.pdf}
+\caption{Coordinate-level coverage atlas for naive and stabilized inference.}
+\label{fig:s-coverage-atlas}\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=.94\textwidth]{figures/coordinate_se_atlas.pdf}
+\caption{Coordinate-level estimated-SE to empirical-SD ratio atlas.}
+\label{fig:s-se-atlas}\end{figure}
+
+\section{Application screening and additional results}
+
+The prespecified screen considered breast cancer, wine, digits 0 versus 1,
+and three Dry Bean pairs; Normal--Student-$t$ and Normal--skew-normal fits were
+examined after two- and five-dimensional principal-component reduction.
+Table~\ref{tab:s-screen} reports the complete screen.  Fits with negligible
+kernel support were not treated as useful evidence for a boundary correction,
+and failed covariance calculations were retained.
+
+For the selected Dry Bean analyses, Tables~\ref{tab:s-dermason-parameters} and
+\ref{tab:s-cali-parameters} report every unconstrained coordinate.  The local
+bootstrap uses 500 resamples and the unrestricted diagnostic uses 200.  In
+Dermason--Seker, stabilized standard errors track local-bootstrap variability
+across the full parameter vector.  Cali--Barbunya shows a consistent movement
+in the correct direction but incomplete calibration and a high local
+optimization failure rate.  The unrestricted refits have very large
+location-coordinate variability because they can select another basin; these
+global standard deviations are retained in the CSV archive but are not pooled
+with the local Gaussian target.
+
+\input{appendix/empirical_tables}
+
+\section{Computational verification and reproducibility}
+
+The implementation has unit tests for parameter packing and unpacking,
+component log densities, family-assignment permutations, active-pair logic,
+finite-difference gradients, curvature stabilization, and bootstrap failure
+retention.  Vectorized contrast derivatives were compared with an independent
+observation-wise implementation.  The skew-normal density used by fitting and
+inference is identical, including its symmetric inverse square root.  Every
+simulation seed is a deterministic function of the base seed, scenario,
+sample size, and replication number.  Raw cluster-array chunks, standard
+output and error logs, processed tables, and the scripts that generate this
+supplement are retained in the reproduction project.

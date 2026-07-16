@@ -1,0 +1,55 @@
+dataset,p,mode,replication,status,error_message,seconds,coordinate,coordinate_name,estimate,objective,hit_trust_boundary
+dry_bean_cali_barbunya,2,local,0,failed,RuntimeError: local optimization: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; hit_boundary=True,0.27459061999979895,,,,,
+dry_bean_cali_barbunya,2,local,1,failed,RuntimeError: local optimization: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; hit_boundary=True,0.3560747259998607,,,,,
+dry_bean_cali_barbunya,2,local,2,failed,RuntimeError: local optimization: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; hit_boundary=True,0.16937317399970198,,,,,
+dry_bean_cali_barbunya,2,local,3,success,,0.14641504700011865,0.0,weight_logit_1_vs_2,1.1722446768561448,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.1464235240000562,1.0,component_1_normal_coordinate_0,0.7959519226246885,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14642844199988758,2.0,component_1_normal_coordinate_1,0.68535629471226,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.1464321089997611,3.0,component_1_normal_coordinate_2,0.7532990454638913,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14643581600012112,4.0,component_1_normal_coordinate_3,-0.7182678429602397,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14643923200037534,5.0,component_1_normal_coordinate_4,0.3980156953715502,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14644273599969893,6.0,component_2_student_t_coordinate_0,-2.702268928274967,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14644611200037616,7.0,component_2_student_t_coordinate_1,-1.99790999218911,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14644924900039769,8.0,component_2_student_t_coordinate_2,0.8330239566536979,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14645291800025007,9.0,component_2_student_t_coordinate_3,-1.337893818381162,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.14645626499986975,10.0,component_2_student_t_coordinate_4,0.5230742158230679,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,3,success,,0.1464656489997651,11.0,component_2_student_t_coordinate_5,2.4505692356631466,-4.619380425053241,False
+dry_bean_cali_barbunya,2,local,4,success,,0.2371263300001374,0.0,weight_logit_1_vs_2,1.5778876925759506,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.23713213199971506,1.0,component_1_normal_coordinate_0,0.7620485063635468,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.2371364270002232,2.0,component_1_normal_coordinate_1,0.5084344009789402,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.23714021199975832,3.0,component_1_normal_coordinate_2,0.7513955651077803,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.23714374199971644,4.0,component_1_normal_coordinate_3,-0.5829520178965591,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.2371470349999072,5.0,component_1_normal_coordinate_4,0.5014778626800379,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.23715049400016142,6.0,component_2_student_t_coordinate_0,-3.337092339965036,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.23715409800024645,7.0,component_2_student_t_coordinate_1,-1.9521057062601204,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.2371576229998027,8.0,component_2_student_t_coordinate_2,0.7233411145287394,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.2371662980003748,9.0,component_2_student_t_coordinate_3,-1.6746806085465855,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.23717000400029065,10.0,component_2_student_t_coordinate_4,0.5098685696548447,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,4,success,,0.2371734340003968,11.0,component_2_student_t_coordinate_5,1.8625910377857384,-4.5855347301891465,False
+dry_bean_cali_barbunya,2,local,5,failed,RuntimeError: local optimization: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; hit_boundary=True,0.21690801400018245,,,,,
+dry_bean_cali_barbunya,2,local,6,failed,RuntimeError: local optimization: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; hit_boundary=True,0.17247752899947955,,,,,
+dry_bean_cali_barbunya,2,local,7,success,,0.14665430700006254,0.0,weight_logit_1_vs_2,1.151704627264393,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.1466593790000843,1.0,component_1_normal_coordinate_0,0.9599097685644532,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.1466631379998944,2.0,component_1_normal_coordinate_1,0.6479631605108375,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14666653599942947,3.0,component_1_normal_coordinate_2,0.7357542353947508,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.1466701359995568,4.0,component_1_normal_coordinate_3,-0.7669473064302466,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14667339099923993,5.0,component_1_normal_coordinate_4,0.3888093321340228,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.146676765999473,6.0,component_2_student_t_coordinate_0,-2.6463223595289636,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14668039899970609,7.0,component_2_student_t_coordinate_1,-2.064092600409904,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14668369099945266,8.0,component_2_student_t_coordinate_2,0.7444507994491832,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14668706199972803,9.0,component_2_student_t_coordinate_3,-1.1140014508247262,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14669041799970728,10.0,component_2_student_t_coordinate_4,0.5247181180526314,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,7,success,,0.14669383199998265,11.0,component_2_student_t_coordinate_5,2.251436403750557,-4.590219935695742,False
+dry_bean_cali_barbunya,2,local,8,failed,RuntimeError: local optimization: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; hit_boundary=True,0.13216043000011268,,,,,
+dry_bean_cali_barbunya,2,local,9,success,,0.14882797299924277,0.0,weight_logit_1_vs_2,1.1278019186082588,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.14883370799998374,1.0,component_1_normal_coordinate_0,0.9056875663455846,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.1488376219995189,2.0,component_1_normal_coordinate_1,0.6784374188697629,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.1488410419997308,3.0,component_1_normal_coordinate_2,0.7502603068808803,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.14884434399937163,4.0,component_1_normal_coordinate_3,-0.7032125172863747,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.14884769599939318,5.0,component_1_normal_coordinate_4,0.39945359650449497,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.14885087099992234,6.0,component_2_student_t_coordinate_0,-2.6499667036034467,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.1488540689997535,7.0,component_2_student_t_coordinate_1,-2.098648773410695,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.14885723699990194,8.0,component_2_student_t_coordinate_2,0.8088133887076793,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.14886063499943702,9.0,component_2_student_t_coordinate_3,-1.2984333714340395,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.1488638329992682,10.0,component_2_student_t_coordinate_4,0.544619600243179,-4.636286831095651,False
+dry_bean_cali_barbunya,2,local,9,success,,0.1488674929996705,11.0,component_2_student_t_coordinate_5,2.2495502208171843,-4.636286831095651,False

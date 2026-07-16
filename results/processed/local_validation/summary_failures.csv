@@ -1,0 +1,1 @@
+scenario,n,replication,status,method,bandwidth_multiplier,coordinate,coordinate_name,estimate,target,target_mcse,error,squared_error,estimated_se,coverage_95,interval_width_95,curvature_min_eigenvalue,fit_seconds,minimum_kernel_support,bandwidth_diagnostics

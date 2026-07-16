@@ -1,0 +1,214 @@
+\section{Technical lemmas for active-boundary inference}
+
+This supplement records the technical structure underlying the principal
+results in the main paper.  Throughout, $p$ denotes observation dimension and
+$d$ denotes total parameter dimension.  Vectors and matrices are typeset in
+bold; scalar component scores and pairwise contrasts are not.
+
+\subsection{Differentiating the population maximum}
+
+For a fixed active pair $(j,l)$, let
+\[
+ g(\mathbf{x};\boldsymbol{\theta})
+ =q_j(\mathbf{x};\boldsymbol{\theta})
+  -q_l(\mathbf{x};\boldsymbol{\theta}),
+ \qquad
+ \mathbf{s}(\mathbf{x})
+ =\nabla_{\boldsymbol{\theta}}
+   g(\mathbf{x};\boldsymbol{\theta}^*).
+\]
+
+\begin{lemma}[Local positive-part differentiation]
+\label{lem:s-positive-part}
+Let $\mathcal O$ be an open set on which only components $j$ and $l$ can
+attain the maximum.  Under the regular-face and envelope assumptions of the
+main paper, for arbitrary $\mathbf{a},\mathbf{b}\in\mathbb R^d$,
+\begin{multline}
+ \left.
+ \frac{\partial^2}{\partial s\,\partial t}
+ P_0\!\left[
+ \{g(\mathbf{X};\boldsymbol{\theta}^*
+       +s\mathbf{a}+t\mathbf{b})\}_+
+ \ind\{\mathbf{X}\in\mathcal O\}
+ \right]
+ \right|_{s=t=0}\\
+ =P_0\!\left[
+ \ind\{g(\mathbf{X};\boldsymbol{\theta}^*)>0,
+          \mathbf{X}\in\mathcal O\}
+ \mathbf{a}^\mathsf T
+ \nabla_{\boldsymbol{\theta}}^2g
+ (\mathbf{X};\boldsymbol{\theta}^*)\mathbf{b}
+ \right]\\
+ +\int_{\mathcal O\cap\{g=0\}}
+ \frac{p_0(\mathbf{x})
+ (\mathbf{a}^\mathsf T\mathbf{s}(\mathbf{x}))
+ (\mathbf{b}^\mathsf T\mathbf{s}(\mathbf{x}))}
+ {\|\nabla_{\mathbf{x}}g
+       (\mathbf{x};\boldsymbol{\theta}^*)\|}
+ \,d\mathcal H^{p-1}(\mathbf{x}).
+ \label{eq:s-positive-part}
+\end{multline}
+\end{lemma}
+
+\begin{proof}
+Choose a nonnegative, symmetric $C^\infty$ density $K_0$ supported on
+$[-1,1]$ and define
+\[
+ \rho_\varepsilon(v)
+ =\int (v-\varepsilon z)_+K_0(z)\,dz.
+\]
+Then $\rho_\varepsilon'\to\ind\{v>0\}$ away from zero and
+$\rho_\varepsilon''(v)=\varepsilon^{-1}K_0(v/\varepsilon)$.
+Ordinary differentiation of
+$P_0\rho_\varepsilon(g)$ in directions $\mathbf{a}$ and $\mathbf{b}$ gives
+an interior-Hessian term and
+\[
+ P_0\!\left[
+ \varepsilon^{-1}K_0\{g(\mathbf{X})/\varepsilon\}
+ (\mathbf{a}^\mathsf T\mathbf{s}(\mathbf{X}))
+ (\mathbf{b}^\mathsf T\mathbf{s}(\mathbf{X}))
+ \ind\{\mathbf{X}\in\mathcal O\}
+ \right].
+\]
+Apply the coarea formula to the second expression.  Continuity of its surface
+moment at level zero and $\int K_0=1$ yield the surface integral in
+\eqref{eq:s-positive-part}.  Dominated convergence yields the interior term.
+Finally let $\varepsilon\downarrow0$; the assumed surface and volume envelopes
+justify interchange of the smoothing and parameter limits
+\citep{evans2015measure}.
+\end{proof}
+
+\begin{lemma}[Assembly over active strata]
+\label{lem:s-strata}
+Suppose the active faces are locally finite and multiple-tie junctions have
+$\mathcal H^{p-1}$-measure zero.  Then a smooth partition of unity can be
+chosen so that every partition element intersects either a unique-winner
+region or the relative interior of exactly one active face.  Summing
+Lemma~\ref{lem:s-positive-part} over this partition produces
+\[
+ \nabla_{\boldsymbol{\theta}}^2M(\boldsymbol{\theta}^*)
+ =-\mathbf{I}_c+\mathbf{B}.
+\]
+Inactive equality sets contribute zero.
+\end{lemma}
+
+\begin{proof}
+Remove a decreasing open neighbourhood of the multiple-tie junctions.  On the
+remaining closed set, regularity and local finiteness give an open cover by
+unique-winner and single-face charts.  A subordinate smooth partition of
+unity exists.  Lemma~\ref{lem:s-positive-part} applies on each face chart;
+ordinary dominated differentiation applies on unique-winner charts.  Let the
+junction neighbourhood shrink.  Its surface contribution vanishes by the
+Hausdorff-measure assumption and the surface envelope.  If an equality set is
+inactive, a third score dominates throughout a neighbourhood, so the local
+maximum does not contain the corresponding positive-part term.
+\end{proof}
+
+\subsection{Localized empirical-process control}
+
+Let
+\[
+ r_{\mathbf{u}}(\mathbf{x})
+ =m_{\boldsymbol{\theta}^*+\mathbf{u}}(\mathbf{x})
+  -m_{\boldsymbol{\theta}^*}(\mathbf{x})
+  -\mathbf{u}^\mathsf T\boldsymbol{\psi}^*(\mathbf{x}),
+ \qquad \|\mathbf{u}\|\leq\delta.
+\]
+
+\begin{lemma}[Envelope and entropy of the local remainder class]
+\label{lem:s-entropy}
+Under the local Lipschitz-envelope and boundary-margin conditions, there are
+constants $C_1,C_2$ such that
+\begin{align}
+ \sup_{\|\mathbf{u}\|\leq\delta}
+ \|r_{\mathbf{u}}\|_{P_0,2}
+ &\leq C_1(\delta^{3/2}+\delta^2),                         \label{eq:s-l2}\\
+ \log N_{[]}
+ \left(\varepsilon\|F_\delta\|_{P_0,2},
+       \{r_{\mathbf{u}}:\|\mathbf{u}\|\leq\delta\},
+       L_2(P_0)\right)
+ &\leq C_2d\log(C_2/\varepsilon),                         \label{eq:s-entropy}
+\end{align}
+for $0<\varepsilon<1$, where
+$\|F_\delta\|_{P_0,2}=O(\delta^{3/2}+\delta^2)$.
+\end{lemma}
+
+\begin{proof}
+Decompose the sample space into the event on which the winner is unchanged and
+the union of active tubes of width $O(\delta L)$.  Taylor's theorem bounds the
+first contribution by $O(\delta^2L)$; the second is bounded by
+$O(\delta L)$ and has probability $O(\delta)$.  This proves
+\eqref{eq:s-l2}, after truncation and use of $P_0L^{2+\eta}<\infty$.
+
+Cover the Euclidean $d$-ball of radius $\delta$ by
+$O(\varepsilon^{-d})$ balls.  The Lipschitz score envelope and the same tube
+decomposition create upper and lower brackets around the function indexed by
+each center.  Their $L_2(P_0)$ widths are bounded by a constant multiple of
+$\varepsilon\|F_\delta\|_{P_0,2}$, which gives
+\eqref{eq:s-entropy}.
+\end{proof}
+
+The bracketing integral implied by \eqref{eq:s-entropy} is finite.  The
+bracketing maximal inequality therefore gives, for fixed $R$,
+\[
+ \sup_{\|\mathbf{u}\|\leq R}
+ \left|\sqrt n\,\mathbb G_n
+ r_{\mathbf{u}/\sqrt n}\right|=o_p(1),
+\]
+which is the nonlinear remainder required by the local empirical-process
+expansion in the main paper \citep{van1996weak}.
+
+\subsection{Boundary-estimator expansion}
+
+For each active pair, define the matrix-valued surface moment
+$\boldsymbol{\Gamma}_{jl}(v)$ as in the main paper.  By the coarea formula,
+the oracle expectation is exactly
+\begin{equation}
+ E\widetilde{\mathbf{B}}_n
+ =\sum_{j<l}\int K(t)\boldsymbol{\Gamma}_{jl}(ht)\,dt.
+ \label{eq:s-oracle-expectation}
+\end{equation}
+A componentwise Taylor expansion, symmetry of $K$, and
+$\int K=1$ give the stated $O(h^2)$ bias.  Applying the same identity to the
+outer product of vectorized summands gives
+\begin{equation}
+ nh\,\operatorname{Var}
+ \{\operatorname{vec}(\widetilde{\mathbf{B}}_n)\}
+ \longrightarrow\boldsymbol{\Omega}_{\mathbf{B}}.
+ \label{eq:s-oracle-variance}
+\end{equation}
+Compact support and the fourth-order surface envelope imply the Lindeberg
+condition for the triangular array.
+
+\begin{lemma}[Uniform parameter substitution]
+\label{lem:s-plugin}
+Let $\overline{\boldsymbol{\theta}}_n$ satisfy
+$\|\overline{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*\|=o_p(h)$.
+Under the kernel, derivative-envelope, and junction-neighbourhood assumptions,
+uniformly over such sequences,
+\begin{equation}
+ \|\widehat{\mathbf{B}}_n(\overline{\boldsymbol{\theta}}_n)
+   -\widehat{\mathbf{B}}_n(\boldsymbol{\theta}^*)\|_F
+ =O_p\!\left(
+ \frac{\|\overline{\boldsymbol{\theta}}_n
+             -\boldsymbol{\theta}^*\|}{h}+\zeta_h
+ \right).
+ \label{eq:s-plugin}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Split the difference into changes in the kernel argument, derivative outer
+product, and active-pair indicator.  Lipschitz continuity of $K$ introduces
+the factor $h^{-1}$ in the first term.  Uniform derivative envelopes control
+the second.  The active indicator can change only if a third component is
+within $O(h+\|\overline{\boldsymbol{\theta}}_n-
+\boldsymbol{\theta}^*\|)$ of the tied pair; the normalized contribution of
+these junction neighbourhoods is bounded by $\zeta_h$ plus the first term.
+The empirical deviations obey the same bounds by the localized maximal
+inequality.
+\end{proof}
+
+Combining \eqref{eq:s-oracle-expectation},
+\eqref{eq:s-oracle-variance}, and Lemma~\ref{lem:s-plugin} proves both
+consistency and the plug-in rate stated in the main paper.

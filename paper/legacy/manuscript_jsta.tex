@@ -1,0 +1,3749 @@
+%Version 3.1 December 2024
+% See section 11 of the User Manual for version history
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+
+%%=======================================================%%
+%% to print line numbers in the margin use lineno option %%
+%%=======================================================%%
+
+%%\documentclass[lineno,pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%=========================================================================================%%
+%% the documentclass is set to pdflatex as default. You can delete it if not appropriate.  %%
+%%=========================================================================================%%
+
+%%\documentclass[sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%Note: the following reference styles support Namedate and Numbered referencing. By default the style follows the most common style. To switch between the options you can add or remove Numbered in the optional parenthesis. 
+%%The option is available for: sn-basic.bst, sn-chicago.bst%  
+ 
+%%\documentclass[pdflatex,sn-nature]{sn-jnl}% Style for submissions to Nature Portfolio journals
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+%%\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style
+\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author Year Reference Style
+%%\documentclass[pdflatex,sn-aps]{sn-jnl}% American Physical Society (APS) Reference Style
+%%\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}% Vancouver Numbered Reference Style
+%%\documentclass[pdflatex,sn-vancouver-ay]{sn-jnl}% Vancouver Author Year Reference Style
+%%\documentclass[pdflatex,sn-apa]{sn-jnl}% APA Reference Style
+%%\documentclass[pdflatex,sn-chicago]{sn-jnl}% Chicago-based Humanities Reference Style
+
+%%%% Standard Packages
+%%<additional latex packages if required can be included here>
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\newcommand{\vech}{\operatorname{vech}}
+\let\oldtheta\theta
+\renewcommand{\theta}{\boldsymbol{\oldtheta}}
+\let\oldalpha\alpha
+\renewcommand{\alpha}{\boldsymbol{\oldalpha}}
+\let\oldmu\mu
+\renewcommand{\mu}{\boldsymbol{\oldmu}}
+\let\oldSigma\Sigma
+\renewcommand{\Sigma}{\boldsymbol{\oldSigma}}
+\let\oldxi\xi
+\renewcommand{\xi}{\boldsymbol{\oldxi}}
+\let\oldOmega\Omega
+\renewcommand{\Omega}{\boldsymbol{\oldOmega}}
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+\usepackage{bbm}
+%%%%
+
+%%%%%=============================================================================%%%%
+%%%%  Remarks: This template is provided to aid authors with the preparation
+%%%%  of original research articles intended for submission to journals published 
+%%%%  by Springer Nature. The guidance has been prepared in partnership with 
+%%%%  production teams to conform to Springer Nature technical requirements. 
+%%%%  Editorial and presentation requirements differ among journal portfolios and 
+%%%%  research disciplines. You may find sections in this template are irrelevant 
+%%%%  to your work and are empowered to omit any such section if allowed by the 
+%%%%  journal you intend to submit to. The submission guidelines and policies 
+%%%%  of the journal take precedence. A detailed User Manual is available in the 
+%%%%  template package for technical guidance.
+%%%%%=============================================================================%%%%
+
+%% as per the requirement new theorem styles can be included as shown below
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}{Proposition}% 
+%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}%
+\newtheorem{assumption}{Assumption}
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title[Asymptotic Inference for CEM]{Asymptotic Inference for Heterogeneous Multivariate Mixture Models Estimated by the Classification EM Algorithm}
+
+%%=============================================================%%
+%% GivenName	-> \fnm{Joergen W.}
+%% Particle	-> \spfx{van der} -> surname prefix
+%% FamilyName	-> \sur{Ploeg}
+%% Suffix	-> \sfx{IV}
+%% \author*[1,2]{\fnm{Joergen W.} \spfx{van der} \sur{Ploeg} 
+%%  \sfx{IV}}\email{iauthor@gmail.com}
+%%=============================================================%%
+
+\author*[1]{\fnm{Samyajoy} \sur{Pal}}\email{samyajoy.pal@rptu.de}
+
+\author[1]{\fnm{Rouven} \sur{E. Haschka}}
+% \equalcont{These authors contributed equally to this work.}
+
+
+\affil[1]{\orgdiv{Chair of Data Analytics}, \orgname{Technical University of Kaiserslautern-Landau}, \orgaddress{\street{Gottlieb-Daimler-Straße 42}, \city{Kaiserslautern}, \postcode{67663}, \country{Germany}}}
+
+%%==================================%%
+%% Sample for unstructured abstract %%
+%%==================================%%
+
+\abstract{
+Finite mixture models are flexible tools for modeling heterogeneous populations, but likelihood-based estimation by the standard Expectation--Maximization (EM) algorithm can be computationally demanding for complex multivariate and heterogeneous component families. The Classification EM (CEM) algorithm offers a scalable alternative by replacing posterior probabilistic assignments with deterministic hard classifications. This simplification, however, changes the statistical target and creates nonstandard inferential challenges, since uncertainty near classification boundaries is ignored when hard labels are treated as fixed. In this paper, we develop an M-estimation framework for heterogeneous multivariate CEM estimators. We establish consistency and asymptotic normality relative to the population Classification Maximum Likelihood (CML) target and derive a computable boundary-corrected sandwich covariance estimator based on decision hypersurface contributions. Monte Carlo simulations for heterogeneous Normal--Student-$t$ and Normal--Skew-Normal mixtures show that the proposed correction improves standard error estimation and confidence interval coverage, especially in overlapping settings. A real-data application to the Breast Cancer Wisconsin dataset further illustrates that boundary-corrected standard errors are generally closer to bootstrap-based variability estimates than naive standard errors.
+}
+
+\keywords{Heterogeneous finite mixtures, Classification EM algorithm, Boundary-corrected inference, Asymptotic normality, Sandwich covariance estimation}
+
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+
+\section{Introduction}
+
+Finite mixture models \citep{mclachlan2000finite} are widely used for modeling heterogeneous populations and have applications in areas such as genomics \citep{pal2025revisiting}, medical imaging \citep{wells1996adaptive}, economics \citep{deb2013finite}, and natural language processing \citep{blei2003latent}. By representing the observed data distribution as a convex combination of latent subpopulation distributions, mixture models provide a flexible model-based framework for density estimation, clustering, and latent variable analysis. Parameters of finite mixture models are commonly estimated by maximum likelihood using the Expectation--Maximization (EM) algorithm \citep{dempster1977maximum}. In the standard EM algorithm, the E-step computes posterior probabilities of component membership, leading to soft probabilistic assignments of observations to mixture components.
+
+Although the standard EM algorithm has attractive likelihood-based properties, its computational cost can become substantial for complex multivariate mixture models. This issue is particularly relevant for heterogeneous mixtures, where different components may belong to distinct parametric families \citep{pal2026flexible}, such as mixtures combining multivariate normal and multivariate skew-normal distributions. In such settings, repeated evaluation of complex component densities and the absence of closed-form updates for some component-specific parameters can make the soft EM algorithm computationally demanding, especially in high-dimensional or large-sample applications.
+
+The Classification EM (CEM) algorithm was introduced as a computationally efficient alternative \citep{celeux1992classification}. CEM augments the EM scheme with a classification step that replaces posterior probabilistic assignments by deterministic hard allocations. Each observation is assigned to the component with the largest posterior probability, and the subsequent maximization step is performed conditionally on these hard classifications. This can simplify the optimization problem substantially, because the component-specific parameter updates become partially decoupled once the classifications are fixed. As a result, CEM is often attractive in applications involving complex component families or large datasets.
+
+The computational simplification achieved by CEM comes with important statistical consequences. Since the hard-classification criterion differs from the ordinary observed-data likelihood, the resulting estimator generally targets the maximizer of a population classification likelihood rather than the ordinary mixture-likelihood parameter \citep{pal2024gaussian}. This distinction has been noted in earlier work on CEM \citep{celeux1992classification}, but a general inferential framework for heterogeneous multivariate mixtures remains limited. In particular, if the hard classifications are treated as fixed labels, the resulting variance estimates ignore the uncertainty induced by perturbations of the classification regions. This can lead to underestimated standard errors and confidence intervals with below-nominal coverage, especially when component overlap is substantial and the decision boundary lies in a region with non-negligible probability mass.
+
+In this paper, we develop an M-estimation framework \citep{vandervaart1998} for heterogeneous multivariate CEM estimators. The estimator is studied relative to the population Classification Maximum Likelihood (CML) target, which is the natural population target associated with the hard-classification objective. Under regularity conditions \citep{Huber1967}, we establish consistency and asymptotic normality of the CEM estimator. We then derive a boundary-corrected sandwich covariance estimator \citep{white1982maximum} that accounts for the additional curvature contribution generated by parameter-dependent classification regions. The correction is expressed through surface integrals over the decision hypersurfaces separating the hard-classification regions and is computable from the fitted model.
+
+We study the finite-sample behavior of the proposed inference procedure through Monte Carlo simulations for heterogeneous Normal--Student-$t$ and Normal--Skew-Normal mixtures under different degrees of component overlap. The results show that the boundary correction improves standard error estimation and confidence interval coverage in settings where naive classified-likelihood inference tends to underestimate variability. We also illustrate the method on the Breast Cancer Wisconsin dataset, using bootstrap variability as an empirical benchmark for comparing naive and boundary-corrected standard errors.
+
+\section{Methods}
+\label{sec:methodology}
+
+Let $\mathbf{X}\in\mathbb{R}^p$ be a continuous multivariate random vector generated from a $k$-component finite mixture distribution. In contrast to conventional mixture models in which all components are assumed to belong to the same parametric family, we consider a heterogeneous multivariate mixture framework where different components may arise from distinct continuous distribution families. Let
+   $ \mathcal{H}
+    =
+    \{
+    \mathcal{F}_1,\ldots,\mathcal{F}_M
+    \}$ denote a collection of candidate multivariate parametric density families, such as the multivariate normal, multivariate skew-normal, or multivariate generalized hyperbolic families.
+
+The marginal density of $\mathbf{X}$ is written as
+\begin{equation}
+    g(\mathbf{x};\boldsymbol{\theta})
+    =
+    \sum_{j=1}^k
+    \pi_j
+    f_j(\mathbf{x};\boldsymbol{\alpha}_j),
+    \label{eq:mixture_density}
+\end{equation}
+where $\boldsymbol{\pi} = (\pi_1,\ldots,\pi_k)^T$ denotes the vector of mixing proportions satisfying $\pi_j>0$ for all $j=1,\ldots,k$ and $\sum_{j=1}^k \pi_j = 1$~.
+
+The density $f_j(\cdot;\boldsymbol{\alpha}_j)$ denotes the $j$-th component density, which belongs to one of the families in $\mathcal{H}$ and is parameterized by a component-specific parameter vector $\boldsymbol{\alpha}_j \in \mathcal{A}_j \subset \mathbb{R}^{d_j}$. The full parameter vector is
+    $\boldsymbol{\theta}
+    =
+    (
+    \boldsymbol{\pi}^T,
+    \boldsymbol{\alpha}_1^T,
+    \ldots,
+    \boldsymbol{\alpha}_k^T
+    )^T
+    \in
+   \boldsymbol{\Theta}$~, where
+   $\boldsymbol{\Theta}
+    \subset
+    \mathbb{R}^d$
+is the parameter space with total dimension
+\[
+    d
+    =
+    (k-1)
+    +
+    \sum_{j=1}^k d_j.
+\]
+
+To study the asymptotic behavior of the Classification EM (CEM) estimator, we formulate estimation through an empirical classification maximum likelihood criterion. Let $\mathbf{X}_1,\ldots,\mathbf{X}_n$ be independent and identically distributed observations from the true data-generating distribution $P_0$. For a given parameter vector $\boldsymbol{\theta}$, each observation is assigned to the component that maximizes its weighted component density. The sample classification maximum likelihood (CML) criterion is defined as
+\begin{equation}
+    C_n(\boldsymbol{\theta})
+    =
+    \frac{1}{n}
+    \sum_{i=1}^n
+    \max_{1\leq j\leq k}
+    \left\{
+        \log \pi_j
+        +
+        \log f_j(\mathbf{X}_i;\boldsymbol{\alpha}_j)
+    \right\}.
+    \label{eq:sample_cml}
+\end{equation}
+The CEM estimator is defined as any global maximizer of this criterion:
+\begin{equation}
+    \widehat{\boldsymbol{\theta}}_n
+    \in
+    \arg\max_{\boldsymbol{\theta}\in\Theta}
+    C_n(\boldsymbol{\theta}).
+    \label{eq:cem_estimator}
+\end{equation}
+
+The corresponding population CML criterion is
+\begin{equation}
+    \overline{C}(\boldsymbol{\theta})
+    =
+    \mathbb{E}_{P_0}
+    \left[
+        \max_{1\leq j\leq k}
+        \left\{
+            \log \pi_j
+            +
+            \log f_j(\mathbf{X};\boldsymbol{\alpha}_j)
+        \right\}
+    \right].
+    \label{eq:pop_cml}
+\end{equation}
+We define the population CML target as
+\begin{equation}
+    \boldsymbol{\theta}^*
+    \in
+    \arg\max_{\boldsymbol{\theta}\in\Theta}
+    \overline{C}(\boldsymbol{\theta}).
+    \label{eq:population_target}
+\end{equation}
+
+It is important to distinguish this target from the ordinary mixture likelihood parameter. Since CEM relies on deterministic hard classification rather than posterior probabilistic assignment, $\boldsymbol{\theta}^*$ is the maximizer of the population classification criterion. It coincides with the true mixture parameter only under additional conditions ensuring that the classification criterion and the ordinary mixture likelihood share the same population maximizer.
+
+The maximum operator in \eqref{eq:sample_cml} and \eqref{eq:pop_cml} induces a deterministic partition of the sample space $\mathcal{X} \subseteq \mathbb{R}^p$ . For a fixed parameter vector $\boldsymbol{\theta}$, define the component score functions
+\begin{equation}
+    q_j(\mathbf{x};\boldsymbol{\theta})
+    =
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x};\boldsymbol{\alpha}_j),
+    \qquad
+    j=1,\ldots,k.
+    \label{eq:component_score}
+\end{equation}
+
+A hard classification rule assigns $\mathbf{x}$ to one of the maximizers of $q_j(\mathbf{x};\boldsymbol{\theta})$. To obtain mutually disjoint partition cells, ties are resolved according to a fixed deterministic rule, for example by assigning the observation to the component with the smallest index among the maximizers. Thus,
+\begin{equation}
+    P_j(\boldsymbol{\theta})
+    =
+    \left\{
+    \mathbf{x}\in\mathcal{X}:
+    q_j(\mathbf{x};\boldsymbol{\theta})
+    =
+    \max_{1\leq l\leq k}
+    q_l(\mathbf{x};\boldsymbol{\theta})
+    \ \text{and the tie-breaking rule selects } j
+    \right\}.
+    \label{eq:partition_cells}
+\end{equation}
+The cells
+    $\{
+    P_j(\boldsymbol{\theta})
+    \}_{j=1}^k$
+are mutually disjoint and satisfy
+   $ \bigcup_{j=1}^k
+    P_j(\boldsymbol{\theta})
+    =
+    \mathcal{X}$ .
+
+
+Equivalently, the population CML criterion may be written as
+\begin{equation}
+    \overline{C}(\boldsymbol{\theta})
+    =
+    \sum_{j=1}^k
+    \int_{P_j(\boldsymbol{\theta})}
+    \left[
+        \log \pi_j
+        +
+        \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+    \right]
+    dP_0(\mathbf{x}).
+    \label{eq:pop_cml_partition}
+\end{equation}
+
+Because the component families may be non-identical and asymmetric, the boundaries separating the classification regions can be highly nonlinear. For $j\neq l$, define the pairwise decision function
+\begin{equation}
+    g_{jl}(\mathbf{x};\boldsymbol{\theta})
+    =
+    q_j(\mathbf{x};\boldsymbol{\theta})
+    -
+    q_l(\mathbf{x};\boldsymbol{\theta})
+    =
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+    -
+    \log \pi_l
+    -
+    \log f_l(\mathbf{x};\boldsymbol{\alpha}_l).
+    \label{eq:decision_function}
+\end{equation}
+
+The corresponding pairwise decision hypersurface is the level set
+\begin{equation}
+    \mathcal{S}_{jl}(\boldsymbol{\theta})
+    =
+    \left\{
+    \mathbf{x}\in\mathcal{X}:
+    g_{jl}(\mathbf{x};\boldsymbol{\theta})=0
+    \right\}.
+    \label{eq:decision_surface}
+\end{equation}
+
+The union of all pairwise decision hypersurfaces is denoted by
+\begin{equation}
+    \mathcal{S}(\boldsymbol{\theta})
+    =
+    \bigcup_{1\leq j<l\leq k}
+    \mathcal{S}_{jl}(\boldsymbol{\theta}).
+    \label{eq:decision_boundary_union}
+\end{equation}
+
+Across these hypersurfaces, the hard classification mapping may change discontinuously. In heterogeneous multivariate mixtures, the decision hypersurfaces $ \mathcal{S}_{jl}(\boldsymbol{\theta})$ may exhibit highly nonlinear geometry depending on the component families and covariance structures. This geometric complexity is the principal source of the additional asymptotic boundary correction terms derived later in the paper.
+
+Throughout the remainder of the paper, whenever the population CML maximizer is unique, we write
+\[
+    \boldsymbol{\theta}^*
+    =
+    \arg\max_{\boldsymbol{\theta}\in\Theta}
+    \overline{C}(\boldsymbol{\theta}),
+\]
+and denote the induced population partition cells and decision boundaries by
+\[
+    P_j^*
+    =
+    P_j(\boldsymbol{\theta}^*),
+\]
+\[
+    \mathcal{S}_{jl}^*
+    =
+    \mathcal{S}_{jl}(\boldsymbol{\theta}^*),
+\]
+and
+\[
+    \mathcal{S}^*
+    =
+    \mathcal{S}(\boldsymbol{\theta}^*).
+\]
+
+
+\subsection{Consistency of the Heterogeneous Multivariate CEM Estimator}
+\label{subsec:consistency}
+
+We now establish the large-sample consistency properties of the heterogeneous multivariate Classification EM (CEM) estimator within an M-estimation framework. The analysis proceeds in three steps. First, we introduce assumptions ensuring the existence and uniqueness of the population maximizer of the classification maximum likelihood criterion. Second, we establish a uniform law of large numbers for the empirical classification criterion over the parameter space. Finally, combining these results with a standard argmax argument yields weak consistency of the heterogeneous multivariate CEM estimator.
+
+\begin{assumption}[Identification and Well-Separated Population Maximizer]
+\label{ass:cml_identification}
+
+Let
+\[
+    \overline{C}(\boldsymbol{\theta})
+    =
+    \mathbb{E}_{P_0}
+    \left[
+        \max_{1 \leq j \leq k}
+        \left\{
+            \log \pi_j
+            +
+            \log f_j(\mathbf{X};\boldsymbol{\alpha}_j)
+        \right\}
+    \right]
+\]
+denote the population classification maximum likelihood criterion defined on a compact parameter space $\boldsymbol{\Theta} \subset \mathbb{R}^d$. Assume the following conditions hold:
+
+\begin{enumerate}
+
+\item
+For almost every $\mathbf{x}\in\mathcal{X}$, the map
+\[
+    \boldsymbol{\theta}
+    \mapsto
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+\]
+is continuous on $\boldsymbol{\Theta}$ for each $j=1,\ldots,k$.
+
+\item
+There exists an integrable envelope function $M(\mathbf{x})$ such that
+\[
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    \left|
+        \max_{1 \leq j \leq k}
+        \left\{
+            \log \pi_j
+            +
+            \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+        \right\}
+    \right|
+    \leq
+    M(\mathbf{x})
+\]
+for almost every $\mathbf{x}$, with
+   $ \mathbb{E}_{P_0}
+    \left[
+        M(\mathbf{X})
+    \right]
+    <
+    \infty$~.
+
+
+\item
+The population criterion $\overline{C}(\boldsymbol{\theta})$ possesses a unique maximizer
+$\boldsymbol{\theta}^* \in\boldsymbol{\Theta}$~.
+
+
+\item
+The maximizer is well-separated in the sense that for every $\epsilon>0$~,
+
+\[
+    \sup_{
+        \|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|
+        \geq
+        \epsilon
+    }
+    \overline{C}(\boldsymbol{\theta})
+    <
+    \overline{C}(\boldsymbol{\theta}^*).
+\]
+
+\end{enumerate}
+
+\end{assumption}
+
+\begin{proposition}[Continuity and Existence of the Population CML Maximizer]
+\label{prop:cml_continuity}
+
+Under Assumption \ref{ass:cml_identification}(1)--(2), the population criterion 
+$ \overline{C}(\boldsymbol{\theta})$ is continuous on $\boldsymbol{\Theta}$. Since $\boldsymbol{\Theta}$ is compact, $\overline{C}(\boldsymbol{\theta})$ attains at least one global maximizer on $\boldsymbol{\Theta}$.
+
+\end{proposition}
+
+\begin{proof}
+
+Define
+\[
+    h(\mathbf{x};\boldsymbol{\theta})
+    =
+    \max_{1 \leq j \leq k}
+    \left\{
+        \log \pi_j
+        +
+        \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+    \right\}.
+\]
+
+For fixed $\mathbf{x}$, each component map
+\[
+    \boldsymbol{\theta}
+    \mapsto
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+\]
+is continuous by assumption. Since the maximum of finitely many continuous functions is continuous,
+\[
+    \boldsymbol{\theta}
+    \mapsto
+    h(\mathbf{x};\boldsymbol{\theta})
+\]
+is continuous on $\boldsymbol{\Theta}$ for almost every $\mathbf{x}$.
+
+Moreover, Assumption
+\ref{ass:cml_identification}(2) provides an integrable envelope function $M(\mathbf{x})$ satisfying
+\[
+    |h(\mathbf{x};\boldsymbol{\theta})|
+    \leq
+    M(\mathbf{x})
+\]
+uniformly over $\boldsymbol{\theta}\in\Theta$.
+
+
+Therefore, by dominated convergence,
+\[
+    \overline{C}(\boldsymbol{\theta})
+    =
+    \mathbb{E}_{P_0}
+    \left[
+        h(\mathbf{X};\boldsymbol{\theta})
+    \right]
+\]
+is continuous on $\boldsymbol{\Theta}$.
+
+Since $\boldsymbol{\Theta}$ is compact and $ \overline{C}(\boldsymbol{\theta})$ is continuous, the Extreme Value Theorem \citep{rudin1976principles} implies that $ \overline{C}(\boldsymbol{\theta})$ attains at least one global maximum on $\boldsymbol{\Theta}$.
+
+\end{proof}
+
+\begin{theorem}[Uniform Convergence of the Heterogeneous Multivariate CML Criterion]
+\label{thm:uniform_convergence}
+
+Let $\boldsymbol{\Theta} \subset \mathbb{R}^d$ be compact and define
+\[
+    h_{\boldsymbol{\theta}}(\mathbf{x})
+    =
+    \max_{1\leq j\leq k}
+    \left\{
+        \log \pi_j
+        +
+        \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+    \right\}.
+\]
+
+Assume that for almost every $\mathbf{x}\in\mathcal{X}$, the map
+$ \boldsymbol{\theta}
+    \mapsto
+    h_{\boldsymbol{\theta}}(\mathbf{x})$ is continuous on $\boldsymbol{\Theta}$. Suppose further that there exists a
+$P_0$-integrable envelope function $ M(\mathbf{x})$ such that
+\[
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    |h_{\boldsymbol{\theta}}(\mathbf{x})|
+    \leq
+    M(\mathbf{x}),
+    \qquad
+    \mathbb{E}_{P_0}
+    \left[
+        M(\mathbf{X})
+    \right]
+    <
+    \infty.
+\]
+
+Then
+\[
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    \left|
+        C_n(\boldsymbol{\theta})
+        -
+        \overline{C}(\boldsymbol{\theta})
+    \right|
+    \xrightarrow{p}
+    0,
+\]
+where
+\[
+    C_n(\boldsymbol{\theta})
+    =
+    \frac{1}{n}
+    \sum_{i=1}^n
+    h_{\boldsymbol{\theta}}(\mathbf{X}_i),
+\]
+and
+\[
+    \overline{C}(\boldsymbol{\theta})
+    =
+    \mathbb{E}_{P_0}
+    \left[
+        h_{\boldsymbol{\theta}}(\mathbf{X})
+    \right].
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+Let
+   $ \mathcal{F}
+    =
+    \{
+    h_{\boldsymbol{\theta}}
+    :
+    \boldsymbol{\theta}\in\Theta
+    \}$ denote the class of classification log-likelihood functions.
+
+For almost every fixed $\mathbf{x}$, the map
+    $\boldsymbol{\theta}
+    \mapsto
+    h_{\boldsymbol{\theta}}(\mathbf{x})$ is continuous on the compact set $\boldsymbol{\Theta}$. Moreover, the class
+    $\mathcal{F}$ is dominated by the integrable envelope
+    $M(\mathbf{x})$,
+that is,
+\[
+    |h_{\boldsymbol{\theta}}(\mathbf{x})|
+    \leq
+    M(\mathbf{x})
+    \qquad
+    \text{for all }
+    \boldsymbol{\theta}\in \boldsymbol{\Theta}
+\]
+for almost every $\mathbf{x}$.
+
+We first show that $ \mathcal{F}$ is totally bounded in $    L_1(P_0)$ .
+
+
+Let $\epsilon>0$ be arbitrary. Since $\boldsymbol{\Theta}$ is compact, it is sufficient to show that the map
+    $\boldsymbol{\theta}
+    \mapsto
+    h_{\boldsymbol{\theta}}$
+is continuous from $\boldsymbol{\Theta}$ into
+   $ L_1(P_0)$.
+
+
+Let
+   $ \boldsymbol{\theta}_m
+    \to
+    \boldsymbol{\theta}$.
+
+By pointwise continuity,
+\[
+    h_{\boldsymbol{\theta}_m}(\mathbf{x})
+    \to
+    h_{\boldsymbol{\theta}}(\mathbf{x})
+\]
+for almost every $\mathbf{x}$. Also,
+\[
+    |h_{\boldsymbol{\theta}_m}(\mathbf{x})
+    -
+    h_{\boldsymbol{\theta}}(\mathbf{x})|
+    \leq
+    |h_{\boldsymbol{\theta}_m}(\mathbf{x})|
+    +
+    |h_{\boldsymbol{\theta}}(\mathbf{x})|
+    \leq
+    2M(\mathbf{x}),
+\]
+where $2M(\mathbf{x})$ is $P_0$-integrable. Hence, by dominated convergence,
+\[
+    \mathbb{E}_{P_0}
+    \left[
+        |h_{\boldsymbol{\theta}_m}(\mathbf{X})
+        -
+        h_{\boldsymbol{\theta}}(\mathbf{X})|
+    \right]
+    \to
+    0.
+\]
+
+Therefore, $\boldsymbol{\theta}
+    \mapsto
+    h_{\boldsymbol{\theta}}$ is continuous as a map from $\boldsymbol{\Theta}$ into
+    $L_1(P_0)$. Since $\boldsymbol{\Theta}$ is compact, the image $\mathcal{F}$ is totally bounded in $ L_1(P_0)$.
+
+Now fix $\epsilon>0$. By total boundedness, there exist finitely many functions
+   $ h_{\boldsymbol{\theta}_1},
+    \ldots,
+    h_{\boldsymbol{\theta}_N}$ such that for every $ \boldsymbol{\theta}\in\Theta$, there exists some $r\in\{1,\ldots,N\}$
+with
+\[
+    \mathbb{E}_{P_0}
+    \left[
+        |h_{\boldsymbol{\theta}}(\mathbf{X})
+        -
+        h_{\boldsymbol{\theta}_r}(\mathbf{X})|
+    \right]
+    <
+    \epsilon.
+\]
+
+For this finite collection, the ordinary law of large numbers gives
+\[
+    \max_{1\leq r\leq N}
+    \left|
+        P_n h_{\boldsymbol{\theta}_r}
+        -
+        P_0 h_{\boldsymbol{\theta}_r}
+    \right|
+    \xrightarrow{p}
+    0.
+\]
+
+Using the finite approximation and the integrable envelope, the standard uniform law of large numbers for compact, dominated parametric classes \citep{Newey1994} implies
+\[
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    |P_n h_{\boldsymbol{\theta}}
+    -
+    P_0 h_{\boldsymbol{\theta}}|
+    \xrightarrow{p}
+    0.
+\]
+
+Since
+\[
+    P_n h_{\boldsymbol{\theta}}
+    =
+    C_n(\boldsymbol{\theta}),
+    \qquad
+    P_0 h_{\boldsymbol{\theta}}
+    =
+    \overline{C}(\boldsymbol{\theta}),
+\]
+we obtain
+\[
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    \left|
+        C_n(\boldsymbol{\theta})
+        -
+        \overline{C}(\boldsymbol{\theta})
+    \right|
+    \xrightarrow{p}
+    0.
+\]
+
+\end{proof}
+
+\begin{theorem}[Consistency of the Heterogeneous Multivariate CEM Estimator]
+\label{thm:cem_consistency}
+
+Let
+\[
+    \widehat{\boldsymbol{\theta}}_n
+    \in
+    \arg\max_{\boldsymbol{\theta}\in\Theta}
+    C_n(\boldsymbol{\theta})
+\]
+denote the empirical CEM estimator, and let
+\[
+    \boldsymbol{\theta}^*
+    =
+    \arg\max_{\boldsymbol{\theta}\in\Theta}
+    \overline{C}(\boldsymbol{\theta})
+\]
+be the unique maximizer of the population CML criterion.
+
+Suppose that:
+
+\begin{enumerate}
+
+\item $\boldsymbol{\Theta}$ is compact;
+
+\item
+the population criterion $\overline{C}(\boldsymbol{\theta})$ is uniquely maximized at $ \boldsymbol{\theta}^*$ and satisfies the well-separatedness condition
+\[
+    \sup_{
+        \|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|
+        \geq
+        \epsilon
+    }
+    \overline{C}(\boldsymbol{\theta})
+    <
+    \overline{C}(\boldsymbol{\theta}^*)
+\]
+for every $\epsilon>0$;
+
+
+\item
+    ~$\sup_{\boldsymbol{\theta}\in\Theta}
+    \left|
+        C_n(\boldsymbol{\theta})
+        -
+        \overline{C}(\boldsymbol{\theta})
+    \right|
+    \xrightarrow{p}
+    0$.
+
+\end{enumerate}
+
+Then
+\[
+    \widehat{\boldsymbol{\theta}}_n
+    \xrightarrow{p}
+    \boldsymbol{\theta}^*.
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+Fix $\epsilon>0$. By the well-separatedness assumption, there exists $ \delta_\epsilon>0$ such that
+\[
+    \|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|
+    \geq
+    \epsilon
+    \quad
+    \Longrightarrow
+    \quad
+    \overline{C}(\boldsymbol{\theta})
+    \leq
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \delta_\epsilon.
+\]
+
+Since $ \widehat{\boldsymbol{\theta}}_n$ maximizes $ C_n(\boldsymbol{\theta})$,
+
+\[
+    C_n(\widehat{\boldsymbol{\theta}}_n)
+    \geq
+    C_n(\boldsymbol{\theta}^*).
+\]
+
+Therefore,
+\begin{align}
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    &=
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    C_n(\boldsymbol{\theta}^*)
+    \nonumber\\
+    &\qquad
+    +
+    C_n(\boldsymbol{\theta}^*)
+    -
+    C_n(\widehat{\boldsymbol{\theta}}_n)
+    \nonumber\\
+    &\qquad
+    +
+    C_n(\widehat{\boldsymbol{\theta}}_n)
+    -
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    \nonumber\\
+    &\leq
+    \left|
+        \overline{C}(\boldsymbol{\theta}^*)
+        -
+        C_n(\boldsymbol{\theta}^*)
+    \right|
+    \nonumber\\
+    &\qquad
+    +
+    \left|
+        C_n(\widehat{\boldsymbol{\theta}}_n)
+        -
+        \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    \right|
+    \nonumber\\
+    &\leq
+    2
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    \left|
+        C_n(\boldsymbol{\theta})
+        -
+        \overline{C}(\boldsymbol{\theta})
+    \right|.
+\end{align}
+
+By uniform convergence,
+\[
+    \sup_{\boldsymbol{\theta}\in\Theta}
+    \left|
+        C_n(\boldsymbol{\theta})
+        -
+        \overline{C}(\boldsymbol{\theta})
+    \right|
+    \xrightarrow{p}
+    0,
+\]
+and hence
+\[
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    \xrightarrow{p}
+    0.
+\]
+
+Now observe that
+\[
+    \|\widehat{\boldsymbol{\theta}}_n
+    -
+    \boldsymbol{\theta}^*\|
+    \geq
+    \epsilon
+\]
+implies
+\[
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    \leq
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \delta_\epsilon,
+\]
+or equivalently,
+\[
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    \geq
+    \delta_\epsilon.
+\]
+
+Thus,
+\[
+    P
+    \left(
+        \|\widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*\|
+        \geq
+        \epsilon
+    \right)
+    \leq
+    P
+    \left(
+        \overline{C}(\boldsymbol{\theta}^*)
+        -
+        \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+        \geq
+        \delta_\epsilon
+    \right)
+    \to
+    0.
+\]
+
+Therefore,
+\[
+    \widehat{\boldsymbol{\theta}}_n
+    \xrightarrow{p}
+    \boldsymbol{\theta}^*.
+\]
+
+\end{proof}
+
+
+\subsection{Asymptotic Normality of Heterogeneous Multivariate CEM Estimators}
+\label{subsec:asymptotic_normality}
+
+We now establish the asymptotic normality of the heterogeneous multivariate CEM estimator. The analysis proceeds through a sequence of intermediate results. First, we establish the parametric convergence rate of the estimator. Next, we derive stochastic equicontinuity of the localized empirical process. These results provide the probabilistic foundation required for the subsequent asymptotic expansion and boundary-corrected limiting distribution.
+
+\begin{theorem}[Rate of Convergence of the Heterogeneous Multivariate CEM Estimator]
+\label{thm:rate_of_convergence}
+
+Assume that:
+
+\begin{enumerate}
+
+\item
+The estimator $\widehat{\boldsymbol{\theta}}_n$ is consistent for the unique population maximizer $\boldsymbol{\theta}^*$.
+\item There exist constants
+   $ c_0>0
+    \qquad
+    \text{and}
+    \qquad
+    \delta_0>0$
+such that
+\[
+    \overline{C}(\boldsymbol{\theta})
+    -
+    \overline{C}(\boldsymbol{\theta}^*)
+    \leq
+    -c_0
+    \|
+        \boldsymbol{\theta}
+        -
+        \boldsymbol{\theta}^*
+    \|_2^2 \text{ for all }  \boldsymbol{\theta}
+\]
+satisfying
+\[
+    \|
+        \boldsymbol{\theta}
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    <
+    \delta_0.
+\]
+
+\item
+The localized empirical process satisfies
+\[
+    \mathbb{E}
+    \left[
+        \sup_{
+            \|
+            \boldsymbol{\theta}
+            -
+            \boldsymbol{\theta}^*
+            \|_2
+            <
+            \delta
+        }
+        \left|
+            \sqrt{n}
+            (P_n-P_0)
+            \left(
+                h_{\boldsymbol{\theta}}
+                -
+                h_{\boldsymbol{\theta}^*}
+            \right)
+        \right|
+    \right]
+    \lesssim
+    \delta
+\]
+for sufficiently small $ \delta>0$.
+
+
+\end{enumerate}
+
+Then
+\[
+    \|
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    =
+    O_p(n^{-1/2}).
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+The proof follows from the standard rate theorem for M-estimators; see, for example, Theorem 5.52 of \citep{vandervaart1998}.
+
+By consistency,
+\[
+    \widehat{\boldsymbol{\theta}}_n
+    \xrightarrow{p}
+    \boldsymbol{\theta}^*.
+\]
+Hence, with probability tending to one, $\widehat{\boldsymbol{\theta}}_n$
+belongs to a sufficiently small neighbourhood of $\boldsymbol{\theta}^*$ in which the quadratic curvature condition holds.
+
+Since $ \widehat{\boldsymbol{\theta}}_n$ maximizes $ C_n(\boldsymbol{\theta})$,
+
+\[
+    C_n(\widehat{\boldsymbol{\theta}}_n)
+    \geq
+    C_n(\boldsymbol{\theta}^*).
+\]
+Equivalently,
+\[
+    (P_n-P_0)
+    \left(
+        h_{\widehat{\boldsymbol{\theta}}_n}
+        -
+        h_{\boldsymbol{\theta}^*}
+    \right)
+    \geq
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n).
+\]
+
+Using the quadratic separation condition,
+\[
+    \overline{C}(\boldsymbol{\theta}^*)
+    -
+    \overline{C}(\widehat{\boldsymbol{\theta}}_n)
+    \geq
+    c_0
+    \|
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2^2.
+\]
+
+The localized empirical process assumption implies that stochastic fluctuations of the criterion are asymptotically dominated by the deterministic quadratic drift whenever
+\[
+    \|
+        \boldsymbol{\theta}
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    \gg
+    n^{-1/2}.
+\]
+
+Therefore, the maximizer cannot lie outside an $ O_p(n^{-1/2})$ neighbourhood of $\boldsymbol{\theta}^*$.
+
+
+Consequently,
+\[
+    \|
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    =
+    O_p(n^{-1/2}).
+\]
+
+\end{proof}
+
+\begin{theorem}[Stochastic Equicontinuity of the Heterogeneous Multivariate CEM Process]
+\label{thm:stochastic_equicontinuity}
+
+Let
+\[
+    h_{\boldsymbol{\theta}}(\mathbf{x})
+    =
+    \max_{1\leq j\leq k}
+    \left\{
+        \log \pi_j
+        +
+        \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+    \right\},
+    \qquad
+    \boldsymbol{\theta}\in\boldsymbol{\Theta}.
+\]
+
+Assume that the class
+   $ \mathcal{F}
+    =
+    \{
+        h_{\boldsymbol{\theta}}
+        :
+        \boldsymbol{\theta}\in\Theta
+    \}$
+is $ P_0$-Donsker \citep{van1996weak}.
+
+Suppose further that, in a neighbourhood of $ \boldsymbol{\theta}^*$, there exists a function $ L\in L_2(P_0)$ such that
+\[
+    |h_{\boldsymbol{\theta}}(\mathbf{x})
+    -
+    h_{\boldsymbol{\theta}^*}(\mathbf{x})|
+    \leq
+    L(\mathbf{x})
+    \|
+        \boldsymbol{\theta}
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+\]
+for all $ \boldsymbol{\theta}$ sufficiently close to $ \boldsymbol{\theta}^*$
+and for almost every $ \mathbf{x}$.
+
+Then, for any random sequence
+    $\boldsymbol{\theta}_n
+    \xrightarrow{p}
+    \boldsymbol{\theta}^*$,
+we have
+\[
+    \mathbb{G}_n
+    \left(
+        h_{\boldsymbol{\theta}_n}
+        -
+        h_{\boldsymbol{\theta}^*}
+    \right)
+    =
+    o_p(1).
+\]
+
+In particular, the conclusion holds whenever
+\[
+    \|
+        \boldsymbol{\theta}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    =
+    O_p(n^{-1/2}).
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+By the local Lipschitz condition,
+\[
+    |h_{\boldsymbol{\theta}}(\mathbf{x})
+    -
+    h_{\boldsymbol{\theta}^*}(\mathbf{x})|
+    \leq
+    L(\mathbf{x})
+    \|
+        \boldsymbol{\theta}
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+\]
+for $ \boldsymbol{\theta}$ in a neighbourhood of $\boldsymbol{\theta}^*$.
+
+Hence,
+\[
+    P_0
+    \left(
+        h_{\boldsymbol{\theta}}
+        -
+        h_{\boldsymbol{\theta}^*}
+    \right)^2
+    \leq
+    P_0L^2
+    \,
+    \|
+        \boldsymbol{\theta}
+        -
+        \boldsymbol{\theta}^*
+    \|_2^2.
+\]
+
+Therefore,
+\[
+    \|
+        h_{\boldsymbol{\theta}}
+        -
+        h_{\boldsymbol{\theta}^*}
+    \|_{L_2(P_0)}
+    \to
+    0
+    \qquad
+    \text{whenever }
+    \boldsymbol{\theta}
+    \to
+    \boldsymbol{\theta}^*.
+\]
+
+Since $\mathcal{F}$ is$ P_0$-Donsker, the empirical process $\mathbb{G}_n$ is asymptotically uniformly equicontinuous with respect to the $ L_2(P_0)$ semimetric. Consequently, for every $  \epsilon>0
+    \text{ and } \eta>0$ , there exists $ \delta>0$ such that
+\[
+    \limsup_{n\to\infty}
+    P^*
+    \left(
+        \sup_{
+            \|
+                h_{\boldsymbol{\theta}}
+                -
+                h_{\boldsymbol{\theta}^*}
+            \|_{L_2(P_0)}
+            <
+            \delta
+        }
+        \left|
+            \mathbb{G}_n
+            \left(
+                h_{\boldsymbol{\theta}}
+                -
+                h_{\boldsymbol{\theta}^*}
+            \right)
+        \right|
+        >
+        \epsilon
+    \right)
+    <
+    \eta.
+\]
+
+Let $\boldsymbol{\theta}_n
+    \xrightarrow{p}
+    \boldsymbol{\theta}^*$.
+
+From the $L_2(P_0)$ continuity shown above,
+\[
+    \|
+        h_{\boldsymbol{\theta}_n}
+        -
+        h_{\boldsymbol{\theta}^*}
+    \|_{L_2(P_0)}
+    \xrightarrow{p}
+    0.
+\]
+
+Therefore,
+\[
+    \mathbb{G}_n
+    \left(
+        h_{\boldsymbol{\theta}_n}
+        -
+        h_{\boldsymbol{\theta}^*}
+    \right)
+    =
+    o_p(1).
+\]
+
+Since
+\[
+    O_p(n^{-1/2})
+\]
+implies convergence in probability to zero, the result also holds for any sequence satisfying
+\[
+    \|
+        \boldsymbol{\theta}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    =
+    O_p(n^{-1/2}).
+\]
+
+\end{proof}
+
+The approximate first-order condition is understood on regions where no observation lies exactly on an empirical decision boundary; under the continuous model assumptions, such boundary events occur with probability zero for fixed $\boldsymbol{\theta}$.
+
+\begin{theorem}[Asymptotic Linear Representation of the Heterogeneous Multivariate CEM Estimator]
+\label{thm:linear_representation}
+
+Let
+\[
+    h_{\boldsymbol{\theta}}(\mathbf{x})
+    =
+    \max_{1\leq j\leq k}
+    \left\{
+        \log \pi_j
+        +
+        \log f_j(\mathbf{x};\boldsymbol{\alpha}_j)
+    \right\}.
+\]
+
+Assume that $\boldsymbol{\theta}^*$ is an interior point of $\boldsymbol{\Theta}$, and that $\widehat{\boldsymbol{\theta}}_n$ satisfies
+\[
+    \|
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    =
+    O_p(n^{-1/2}).
+\]
+
+Suppose that $ h_{\boldsymbol{\theta}}(\mathbf{x})$ is differentiable with respect to $ \boldsymbol{\theta}$
+for $ P_0$-almost every $  \mathbf{x}$ in a neighbourhood of $ \boldsymbol{\theta}^*$,
+and define
+\[
+    \boldsymbol{\psi}(\mathbf{x},\boldsymbol{\theta})
+    =
+    \nabla_{\boldsymbol{\theta}}
+    h_{\boldsymbol{\theta}}(\mathbf{x}).
+\]
+
+Assume further that:
+
+\begin{enumerate}
+
+\item$ P_0
+    \{
+        \mathcal{S}(\boldsymbol{\theta}^*)
+    \}
+    =
+    0$, so that $ \boldsymbol{\psi}(\mathbf{x},\boldsymbol{\theta}^*)$ exists $ P_0$-almost surely;
+
+\item
+the population score is differentiable at $\boldsymbol{\theta}^*$ and $ P_0
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta}^*)
+    =
+    \mathbf{0}$;
+
+
+\item
+the population Hessian
+\[
+    \mathbf{H}
+    =
+    \nabla_{\boldsymbol{\theta}}^2
+    \overline{C}(\boldsymbol{\theta}^*)
+    =
+    \left.
+    \frac{
+        \partial
+    }{
+        \partial
+        \boldsymbol{\theta}^T
+    }
+    P_0
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta})
+    \right|_{
+        \boldsymbol{\theta}
+        =
+        \boldsymbol{\theta}^*
+    }
+\]
+exists and is nonsingular;
+
+\item
+the empirical score satisfies the local stochastic expansion
+\[
+    \sqrt{n}
+    \left[
+        (P_n-P_0)
+        \boldsymbol{\psi}
+        (\cdot,\widehat{\boldsymbol{\theta}}_n)
+        -
+        (P_n-P_0)
+        \boldsymbol{\psi}
+        (\cdot,\boldsymbol{\theta}^*)
+    \right]
+    =
+    o_p(1);
+\]
+
+\item
+the estimator satisfies the approximate first-order condition
+\[
+    P_n
+    \boldsymbol{\psi}
+    (\cdot,\widehat{\boldsymbol{\theta}}_n)
+    =
+    o_p(n^{-1/2}).
+\]
+
+\end{enumerate}
+
+Then
+\[
+    \sqrt{n}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    =
+    -\mathbf{H}^{-1}
+    \frac{1}{\sqrt{n}}
+    \sum_{i=1}^n
+    \boldsymbol{\psi}
+    (\mathbf{X}_i,\boldsymbol{\theta}^*)
+    +
+    o_p(1).
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+By the approximate first-order condition,
+\[
+    P_n
+    \boldsymbol{\psi}
+    (\cdot,\widehat{\boldsymbol{\theta}}_n)
+    =
+    o_p(n^{-1/2}).
+\]
+
+Decompose this expression as
+\begin{align}
+    \mathbf{0}
+    &=
+    P_n
+    \boldsymbol{\psi}
+    (\cdot,\widehat{\boldsymbol{\theta}}_n)
+    +
+    o_p(n^{-1/2})
+    \nonumber\\
+    &=
+    P_n
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta}^*)
+    +
+    P_0
+    \left\{
+        \boldsymbol{\psi}
+        (\cdot,\widehat{\boldsymbol{\theta}}_n)
+        -
+        \boldsymbol{\psi}
+        (\cdot,\boldsymbol{\theta}^*)
+    \right\}
+    \nonumber\\
+    &\qquad
+    +
+    (P_n-P_0)
+    \left\{
+        \boldsymbol{\psi}
+        (\cdot,\widehat{\boldsymbol{\theta}}_n)
+        -
+        \boldsymbol{\psi}
+        (\cdot,\boldsymbol{\theta}^*)
+    \right\}
+    +
+    o_p(n^{-1/2}).
+\end{align}
+
+Since
+\[
+    P_0
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta}^*)
+    =
+    \mathbf{0},
+\]
+\[
+    P_n
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta}^*)
+    =
+    (P_n-P_0)
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta}^*).
+\]
+
+By the local stochastic equicontinuity assumption for the score process,
+\[
+    (P_n-P_0)
+    \left\{
+        \boldsymbol{\psi}
+        (\cdot,\widehat{\boldsymbol{\theta}}_n)
+        -
+        \boldsymbol{\psi}
+        (\cdot,\boldsymbol{\theta}^*)
+    \right\}
+    =
+    o_p(n^{-1/2}).
+\]
+
+Next, differentiability of the population score at $ \boldsymbol{\theta}^*$ gives
+\[
+    P_0
+    \left\{
+        \boldsymbol{\psi}
+        (\cdot,\widehat{\boldsymbol{\theta}}_n)
+        -
+        \boldsymbol{\psi}
+        (\cdot,\boldsymbol{\theta}^*)
+    \right\}
+    =
+    \mathbf{H}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    +
+    o_p
+    \left(
+        \|
+            \widehat{\boldsymbol{\theta}}_n
+            -
+            \boldsymbol{\theta}^*
+        \|_2
+    \right).
+\]
+
+Using
+\[
+    \|
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \|_2
+    =
+    O_p(n^{-1/2}),
+\]
+this becomes
+\[
+    P_0
+    \left\{
+        \boldsymbol{\psi}
+        (\cdot,\widehat{\boldsymbol{\theta}}_n)
+        -
+        \boldsymbol{\psi}
+        (\cdot,\boldsymbol{\theta}^*)
+    \right\}
+    =
+    \mathbf{H}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    +
+    o_p(n^{-1/2}).
+\]
+
+Therefore,
+\[
+    \mathbf{0}
+    =
+    (P_n-P_0)
+    \boldsymbol{\psi}
+    (\cdot,\boldsymbol{\theta}^*)
+    +
+    \mathbf{H}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    +
+    o_p(n^{-1/2}).
+\]
+
+Multiplying by $\sqrt{n}$ gives
+\[
+    \mathbf{0}
+    =
+    \frac{1}{\sqrt{n}}
+    \sum_{i=1}^n
+    \boldsymbol{\psi}
+    (\mathbf{X}_i,\boldsymbol{\theta}^*)
+    +
+    \sqrt{n}
+    \mathbf{H}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    +
+    o_p(1).
+\]
+
+Since $\mathbf{H}$ is nonsingular,
+\[
+    \sqrt{n}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    =
+    -\mathbf{H}^{-1}
+    \frac{1}{\sqrt{n}}
+    \sum_{i=1}^n
+    \boldsymbol{\psi}
+    (\mathbf{X}_i,\boldsymbol{\theta}^*)
+    +
+    o_p(1).
+\]
+
+\end{proof}
+
+% \begin{theorem}[Louis-Type Boundary Decomposition for Heterogeneous Multivariate CEM]
+% \label{thm:boundary_decomposition}
+
+% Let
+% \[
+%     q_j(\mathbf{x};\boldsymbol{\theta})
+%     =
+%     \log \pi_j
+%     +
+%     \log f_j(\mathbf{x};\boldsymbol{\alpha}_j),
+%     \qquad
+%     j=1,\ldots,k,
+% \]
+% and define
+% \[
+%     h_{\boldsymbol{\theta}}(\mathbf{x})
+%     =
+%     \max_{1\leq j\leq k}
+%     q_j(\mathbf{x};\boldsymbol{\theta}).
+% \]
+
+% Assume that all derivatives are taken with respect to a local unconstrained parametrization  $ \boldsymbol{\theta}$. Suppose that, in a neighbourhood of $ \boldsymbol{\theta}^*$, the following conditions hold:
+
+% \begin{enumerate}
+
+% \item $ q_j(\mathbf{x};\boldsymbol{\theta})$ is twice continuously differentiable in $\boldsymbol{\theta}$ and continuously differentiable in $\mathbf{x}$ for each $ j=1,\ldots,k;$
+
+% \item
+% the true distribution $ P_0$ admits a density $ p_0$ with respect to Lebesgue measure \citep{billingsley1995probability};
+
+% \item
+% for each pair $j\neq l$, the decision function
+% \[
+%     g_{jl}(\mathbf{x};\boldsymbol{\theta})
+%     =
+%     q_j(\mathbf{x};\boldsymbol{\theta})
+%     -
+%     q_l(\mathbf{x};\boldsymbol{\theta})
+% \]
+% satisfies
+% \[
+%     \nabla_{\mathbf{x}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)
+%     \neq
+%     \mathbf{0}
+%     \qquad
+%     \text{for all }
+%     \mathbf{x}
+%     \in
+%     \mathcal{S}_{jl}^*,
+% \]
+% where
+% \[
+%     \mathcal{S}_{jl}^*
+%     =
+%     \{
+%         \mathbf{x}\in\mathcal{X}
+%         :
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%         =
+%         0
+%     \};
+% \]
+
+% \item
+% intersections involving three or more competing components have $P_0$-measure zero and do not contribute to the surface integral.
+
+% \end{enumerate}
+
+% Let
+% \[
+%     z_j^*(\mathbf{x})
+%     =
+%     \mathbbm{1}
+%     \{
+%         \mathbf{x}\in P_j^*
+%     \}
+% \]
+% denote the hard classification induced by $  \boldsymbol{\theta}^*$, and define the classified complete-data log-likelihood contribution
+% \[
+%     \ell_c
+%     (\mathbf{x},\mathbf{z}^*(\mathbf{x});\boldsymbol{\theta})
+%     =
+%     \sum_{j=1}^k
+%     z_j^*(\mathbf{x})
+%     q_j(\mathbf{x};\boldsymbol{\theta}).
+% \]
+
+% Let
+% \[
+%     \mathbf{I}_c
+%     =
+%     -
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \nabla_{\boldsymbol{\theta}}^2
+%         \ell_c
+%         (\mathbf{X},\mathbf{z}^*(\mathbf{X});\boldsymbol{\theta}^*)
+%     \right]
+% \]
+% be the classified complete-data information matrix evaluated at the optimal hard classification.
+
+% Then the population Hessian
+% \[
+%     \mathbf{H}
+%     =
+%     \nabla_{\boldsymbol{\theta}}^2
+%     \overline{C}
+%     (\boldsymbol{\theta}^*)
+% \]
+% admits the decomposition
+% \[
+%     \mathbf{H}
+%     =
+%     -\mathbf{I}_c
+%     +
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*),
+% \]
+% where the boundary curvature matrix is
+% \[
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*)
+%     =
+%     \sum_{1\leq j<l\leq k}
+%     \int_{\mathcal{S}_{jl}^*}
+%     \frac{
+%         \nabla_{\boldsymbol{\theta}}
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%         \nabla_{\boldsymbol{\theta}}
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)^T
+%     }{
+%         \|
+%             \nabla_{\mathbf{x}}
+%             g_{jl}
+%             (\mathbf{x};\boldsymbol{\theta}^*)
+%         \|_2
+%     }
+%     p_0(\mathbf{x})
+%     \,
+%     d\mathcal{H}^{p-1}(\mathbf{x}).
+% \]
+
+% Equivalently,
+% \[
+%     -\mathbf{H}
+%     =
+%     \mathbf{I}_c
+%     -
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*).
+% \]
+
+% \end{theorem}
+
+% \begin{proof}
+
+% Write
+% \[
+%     h_{\boldsymbol{\theta}}(\mathbf{x})
+%     =
+%     \max_{1\leq j\leq k}
+%     q_j(\mathbf{x};\boldsymbol{\theta}).
+% \]
+
+% Away from the decision hypersurfaces, the maximizer is locally constant. Hence, for $\mathbf{x}
+%     \notin
+%     \mathcal{S}(\boldsymbol{\theta}^*)$,
+
+% \[
+%     \nabla_{\boldsymbol{\theta}}
+%     h_{\boldsymbol{\theta}^*}
+%     (\mathbf{x})
+%     =
+%     \sum_{j=1}^k
+%     z_j^*(\mathbf{x})
+%     \nabla_{\boldsymbol{\theta}}
+%     q_j(\mathbf{x};\boldsymbol{\theta}^*).
+% \]
+
+% Similarly, the ordinary interior second derivative contribution is
+% \[
+%     \sum_{j=1}^k
+%     z_j^*(\mathbf{x})
+%     \nabla_{\boldsymbol{\theta}}^2
+%     q_j(\mathbf{x};\boldsymbol{\theta}^*).
+% \]
+
+% If the classification regions were fixed, the Hessian of the population criterion would therefore be
+% \[
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \sum_{j=1}^k
+%         z_j^*(\mathbf{X})
+%         \nabla_{\boldsymbol{\theta}}^2
+%         q_j(\mathbf{X};\boldsymbol{\theta}^*)
+%     \right]
+%     =
+%     -\mathbf{I}_c.
+% \]
+
+% However, in CEM the classification regions themselves depend on $\boldsymbol{\theta}$. Differentiating the hard classification rule therefore produces additional boundary contributions.
+
+% For two components $j \text{ and } l,$ the boundary between their classification regions is determined by
+% \[
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta})
+%     =
+%     q_j
+%     (\mathbf{x};\boldsymbol{\theta})
+%     -
+%     q_l
+%     (\mathbf{x};\boldsymbol{\theta})
+%     =
+%     0.
+% \]
+
+% In the distributional sense, differentiating the hard indicator
+% \[
+%     \mathbbm{1}
+%     \{
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta})
+%         \geq
+%         0
+%     \}
+% \]
+% with respect to $\boldsymbol{\theta}$ produces the term
+% \[
+%     \delta
+%     \left(
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta})
+%     \right)
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}),
+% \]
+% where $\delta(\cdot)$ denotes the Dirac delta distribution.
+
+% Consequently, the second derivative of the max operation contains the additional distributional contribution
+% \[
+%     \delta
+%     \left(
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%     \right)
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)^T.
+% \]
+
+% Integrating this term with respect to $P_0$ gives
+% \[
+%     \int_{\mathcal{X}}
+%     \delta
+%     \left(
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%     \right)
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)^T
+%     p_0(\mathbf{x})
+%     \,
+%     d\mathbf{x}.
+% \]
+
+% By the co-area formula,
+% \[
+%     \int_{\mathcal{X}}
+%     \delta
+%     \left(
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%     \right)
+%     a(\mathbf{x})
+%     p_0(\mathbf{x})
+%     \,
+%     d\mathbf{x}
+%     =
+%     \int_{\mathcal{S}_{jl}^*}
+%     \frac{
+%         a(\mathbf{x})
+%         p_0(\mathbf{x})
+%     }{
+%         \|
+%             \nabla_{\mathbf{x}}
+%             g_{jl}
+%             (\mathbf{x};\boldsymbol{\theta}^*)
+%         \|_2
+%     }
+%     d\mathcal{H}^{p-1}(\mathbf{x}),
+% \]
+% with
+% \[
+%     a(\mathbf{x})
+%     =
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)
+%     \nabla_{\boldsymbol{\theta}}
+%     g_{jl}
+%     (\mathbf{x};\boldsymbol{\theta}^*)^T.
+% \]
+
+% Therefore, the boundary contribution from the pair $ (j,l)$ is
+% \[
+%     \int_{\mathcal{S}_{jl}^*}
+%     \frac{
+%         \nabla_{\boldsymbol{\theta}}
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%         \nabla_{\boldsymbol{\theta}}
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)^T
+%     }{
+%         \|
+%             \nabla_{\mathbf{x}}
+%             g_{jl}
+%             (\mathbf{x};\boldsymbol{\theta}^*)
+%         \|_2
+%     }
+%     p_0(\mathbf{x})
+%     d\mathcal{H}^{p-1}(\mathbf{x}).
+% \]
+
+% Summing over all pairwise decision hypersurfaces gives
+% \[
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*)
+%     =
+%     \sum_{1\leq j<l\leq k}
+%     \int_{\mathcal{S}_{jl}^*}
+%     \frac{
+%         \nabla_{\boldsymbol{\theta}}
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)
+%         \nabla_{\boldsymbol{\theta}}
+%         g_{jl}
+%         (\mathbf{x};\boldsymbol{\theta}^*)^T
+%     }{
+%         \|
+%             \nabla_{\mathbf{x}}
+%             g_{jl}
+%             (\mathbf{x};\boldsymbol{\theta}^*)
+%         \|_2
+%     }
+%     p_0(\mathbf{x})
+%     d\mathcal{H}^{p-1}(\mathbf{x}).
+% \]
+
+% Combining the fixed-region complete-data curvature and the additional boundary curvature yields
+% \[
+%     \mathbf{H}
+%     =
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \sum_{j=1}^k
+%         z_j^*(\mathbf{X})
+%         \nabla_{\boldsymbol{\theta}}^2
+%         q_j(\mathbf{X};\boldsymbol{\theta}^*)
+%     \right]
+%     +
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*).
+% \]
+
+% Since
+% \[
+%     \mathbf{I}_c
+%     =
+%     -
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \sum_{j=1}^k
+%         z_j^*(\mathbf{X})
+%         \nabla_{\boldsymbol{\theta}}^2
+%         q_j(\mathbf{X};\boldsymbol{\theta}^*)
+%     \right],
+% \]
+% we obtain
+% \[
+%     \mathbf{H}
+%     =
+%     -\mathbf{I}_c
+%     +
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*).
+% \]
+
+% Equivalently,
+% \[
+%     -\mathbf{H}
+%     =
+%     \mathbf{I}_c
+%     -
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*).
+% \]
+
+% This completes the proof.
+
+% \end{proof}
+
+
+\begin{theorem}[Boundary Curvature Decomposition for Heterogeneous Multivariate CEM]
+\label{thm:boundary_decomposition}
+
+Let
+\[
+    q_j(\mathbf{x};\boldsymbol{\theta})
+    =
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x};\boldsymbol{\alpha}_j),
+    \qquad
+    j=1,\ldots,k,
+\]
+and define
+\[
+    h_{\boldsymbol{\theta}}(\mathbf{x})
+    =
+    \max_{1\leq j\leq k}
+    q_j(\mathbf{x};\boldsymbol{\theta}).
+\]
+
+Assume that all derivatives are taken with respect to a local unconstrained parametrization $\boldsymbol{\theta}$. Suppose that, in a neighbourhood of $\boldsymbol{\theta}^*$, the following conditions hold:
+
+\begin{enumerate}
+
+\item $q_j(\mathbf{x};\boldsymbol{\theta})$ is twice continuously differentiable in $\boldsymbol{\theta}$ and continuously differentiable in $\mathbf{x}$ for each $j=1,\ldots,k$;
+
+\item the true distribution $P_0$ admits a density $p_0$ with respect to Lebesgue measure \citep{billingsley1995probability};
+
+\item for each pair $j\neq l$, the decision function
+\[
+    g_{jl}(\mathbf{x};\boldsymbol{\theta})
+    =
+    q_j(\mathbf{x};\boldsymbol{\theta})
+    -
+    q_l(\mathbf{x};\boldsymbol{\theta})
+\]
+satisfies
+\[
+    \nabla_{\mathbf{x}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)
+    \neq
+    \mathbf{0}
+    \qquad
+    \text{for all }
+    \mathbf{x}
+    \in
+    \mathcal{S}_{jl}^*,
+\]
+where
+\[
+    \mathcal{S}_{jl}^*
+    =
+    \{
+        \mathbf{x}\in\mathcal{X}
+        :
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+        =
+        0
+    \};
+\]
+
+\item intersections involving three or more competing components have $P_0$-measure zero and do not contribute to the surface integral.
+
+\end{enumerate}
+
+Let
+\[
+    z_j^*(\mathbf{x})
+    =
+    \mathbbm{1}
+    \{
+        \mathbf{x}\in P_j^*
+    \}
+\]
+denote the hard classification induced by $\boldsymbol{\theta}^*$, and define the classified complete-data log-likelihood contribution
+\[
+    \ell_c
+    (\mathbf{x},\mathbf{z}^*(\mathbf{x});\boldsymbol{\theta})
+    =
+    \sum_{j=1}^k
+    z_j^*(\mathbf{x})
+    q_j(\mathbf{x};\boldsymbol{\theta}).
+\]
+
+Let
+\[
+    \mathbf{I}_c
+    =
+    -
+    \mathbb{E}_{P_0}
+    \left[
+        \nabla_{\boldsymbol{\theta}}^2
+        \ell_c
+        (\mathbf{X},\mathbf{z}^*(\mathbf{X});\boldsymbol{\theta}^*)
+    \right]
+\]
+be the classified complete-data information matrix evaluated at the optimal hard classification.
+
+Then the population Hessian of the CML criterion,
+\[
+    \mathbf{H}
+    =
+    \nabla_{\boldsymbol{\theta}}^2
+    \overline{C}
+    (\boldsymbol{\theta}^*),
+\]
+admits the decomposition
+\[
+    \mathbf{H}
+    =
+    -\mathbf{I}_c
+    +
+    \mathcal{B}
+    (\boldsymbol{\theta}^*),
+\]
+where the boundary curvature matrix is
+\[
+    \mathcal{B}
+    (\boldsymbol{\theta}^*)
+    =
+    \sum_{1\leq j<l\leq k}
+    \int_{\mathcal{S}_{jl}^*}
+    \frac{
+        \nabla_{\boldsymbol{\theta}}
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+        \nabla_{\boldsymbol{\theta}}
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)^T
+    }{
+        \|
+            \nabla_{\mathbf{x}}
+            g_{jl}
+            (\mathbf{x};\boldsymbol{\theta}^*)
+        \|_2
+    }
+    p_0(\mathbf{x})
+    \,
+    d\mathcal{H}^{p-1}(\mathbf{x}).
+\]
+
+Equivalently, the positive curvature matrix
+\[
+    \mathbf{A}
+    =
+    -\mathbf{H}
+\]
+is given by
+\[
+    \mathbf{A}
+    =
+    \mathbf{I}_c
+    -
+    \mathcal{B}
+    (\boldsymbol{\theta}^*).
+\]
+
+\end{theorem}
+
+
+\begin{proof}
+
+Write
+\[
+    h_{\boldsymbol{\theta}}(\mathbf{x})
+    =
+    \max_{1\leq j\leq k}
+    q_j(\mathbf{x};\boldsymbol{\theta}).
+\]
+
+Away from the decision hypersurfaces, the maximizer is locally constant. Hence, for $\mathbf{x}
+    \notin
+    \mathcal{S}(\boldsymbol{\theta}^*)$,
+
+\[
+    \nabla_{\boldsymbol{\theta}}
+    h_{\boldsymbol{\theta}^*}
+    (\mathbf{x})
+    =
+    \sum_{j=1}^k
+    z_j^*(\mathbf{x})
+    \nabla_{\boldsymbol{\theta}}
+    q_j(\mathbf{x};\boldsymbol{\theta}^*).
+\]
+
+Similarly, the ordinary interior second derivative contribution is
+\[
+    \sum_{j=1}^k
+    z_j^*(\mathbf{x})
+    \nabla_{\boldsymbol{\theta}}^2
+    q_j(\mathbf{x};\boldsymbol{\theta}^*).
+\]
+
+If the classification regions were fixed, the Hessian of the population criterion would therefore be
+\[
+    \mathbb{E}_{P_0}
+    \left[
+        \sum_{j=1}^k
+        z_j^*(\mathbf{X})
+        \nabla_{\boldsymbol{\theta}}^2
+        q_j(\mathbf{X};\boldsymbol{\theta}^*)
+    \right]
+    =
+    -\mathbf{I}_c.
+\]
+
+However, in CEM the classification regions themselves depend on $\boldsymbol{\theta}$. Differentiating the hard classification rule therefore produces additional boundary contributions.
+
+For two components $j$ and $l$, the boundary between their classification regions is determined by
+\[
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta})
+    =
+    q_j
+    (\mathbf{x};\boldsymbol{\theta})
+    -
+    q_l
+    (\mathbf{x};\boldsymbol{\theta})
+    =
+    0.
+\]
+
+In the distributional sense, differentiating the hard indicator
+\[
+    \mathbbm{1}
+    \{
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta})
+        \geq
+        0
+    \}
+\]
+with respect to $\boldsymbol{\theta}$ produces the term
+\[
+    \delta
+    \left(
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta})
+    \right)
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}),
+\]
+where $\delta(\cdot)$ denotes the Dirac delta distribution.
+
+Consequently, the second derivative of the max operation contains the additional distributional contribution
+\[
+    \delta
+    \left(
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+    \right)
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)^T.
+\]
+
+Integrating this term with respect to $P_0$ gives
+\[
+    \int_{\mathcal{X}}
+    \delta
+    \left(
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+    \right)
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)^T
+    p_0(\mathbf{x})
+    \,
+    d\mathbf{x}.
+\]
+
+By the co-area formula,
+\[
+    \int_{\mathcal{X}}
+    \delta
+    \left(
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+    \right)
+    a(\mathbf{x})
+    p_0(\mathbf{x})
+    \,
+    d\mathbf{x}
+    =
+    \int_{\mathcal{S}_{jl}^*}
+    \frac{
+        a(\mathbf{x})
+        p_0(\mathbf{x})
+    }{
+        \|
+            \nabla_{\mathbf{x}}
+            g_{jl}
+            (\mathbf{x};\boldsymbol{\theta}^*)
+        \|_2
+    }
+    d\mathcal{H}^{p-1}(\mathbf{x}),
+\]
+with
+\[
+    a(\mathbf{x})
+    =
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)
+    \nabla_{\boldsymbol{\theta}}
+    g_{jl}
+    (\mathbf{x};\boldsymbol{\theta}^*)^T.
+\]
+
+Therefore, the boundary contribution from the pair $(j,l)$ is
+\[
+    \int_{\mathcal{S}_{jl}^*}
+    \frac{
+        \nabla_{\boldsymbol{\theta}}
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+        \nabla_{\boldsymbol{\theta}}
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)^T
+    }{
+        \|
+            \nabla_{\mathbf{x}}
+            g_{jl}
+            (\mathbf{x};\boldsymbol{\theta}^*)
+        \|_2
+    }
+    p_0(\mathbf{x})
+    d\mathcal{H}^{p-1}(\mathbf{x}).
+\]
+
+Summing over all pairwise decision hypersurfaces gives
+\[
+    \mathcal{B}
+    (\boldsymbol{\theta}^*)
+    =
+    \sum_{1\leq j<l\leq k}
+    \int_{\mathcal{S}_{jl}^*}
+    \frac{
+        \nabla_{\boldsymbol{\theta}}
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)
+        \nabla_{\boldsymbol{\theta}}
+        g_{jl}
+        (\mathbf{x};\boldsymbol{\theta}^*)^T
+    }{
+        \|
+            \nabla_{\mathbf{x}}
+            g_{jl}
+            (\mathbf{x};\boldsymbol{\theta}^*)
+        \|_2
+    }
+    p_0(\mathbf{x})
+    d\mathcal{H}^{p-1}(\mathbf{x}).
+\]
+
+Combining the fixed-region complete-data curvature and the additional boundary curvature yields
+\[
+    \mathbf{H}
+    =
+    \mathbb{E}_{P_0}
+    \left[
+        \sum_{j=1}^k
+        z_j^*(\mathbf{X})
+        \nabla_{\boldsymbol{\theta}}^2
+        q_j(\mathbf{X};\boldsymbol{\theta}^*)
+    \right]
+    +
+    \mathcal{B}
+    (\boldsymbol{\theta}^*).
+\]
+
+Since
+\[
+    \mathbf{I}_c
+    =
+    -
+    \mathbb{E}_{P_0}
+    \left[
+        \sum_{j=1}^k
+        z_j^*(\mathbf{X})
+        \nabla_{\boldsymbol{\theta}}^2
+        q_j(\mathbf{X};\boldsymbol{\theta}^*)
+    \right],
+\]
+we obtain
+\[
+    \mathbf{H}
+    =
+    -\mathbf{I}_c
+    +
+    \mathcal{B}
+    (\boldsymbol{\theta}^*).
+\]
+
+At a regular local maximum, it is convenient for inference to work with the positive curvature matrix
+\[
+    \mathbf{A}
+    =
+    -\mathbf{H}.
+\]
+Therefore,
+\[
+    \mathbf{A}
+    =
+    \mathbf{I}_c
+    -
+    \mathcal{B}
+    (\boldsymbol{\theta}^*).
+\]
+
+This completes the proof.
+
+\end{proof}
+
+
+% \begin{theorem}[Asymptotic Normality of the Heterogeneous Multivariate CEM Estimator]
+% \label{thm:final_normality}
+
+% Assume that the conditions of Theorems
+% \ref{thm:rate_of_convergence},
+% \ref{thm:stochastic_equicontinuity},
+% \ref{thm:linear_representation}, and
+% \ref{thm:boundary_decomposition}
+% hold.
+
+% Suppose further that
+% \[
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \|
+%             \boldsymbol{\psi}
+%             (\mathbf{X},\boldsymbol{\theta}^*)
+%         \|_2^2
+%     \right]
+%     <
+%     \infty,
+% \]
+% where
+% \[
+%     \boldsymbol{\psi}
+%     (\mathbf{X},\boldsymbol{\theta}^*)
+%     =
+%     \sum_{j=1}^k
+%     \mathbbm{1}
+%     \{
+%         \mathbf{X}\in P_j^*
+%     \}
+%     \nabla_{\boldsymbol{\theta}}
+%     \left[
+%         \log \pi_j^*
+%         +
+%         \log f_j
+%         (\mathbf{X};\boldsymbol{\alpha}_j^*)
+%     \right].
+% \]
+
+% Let
+% \[
+%     \mathbf{J}
+%     =
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \boldsymbol{\psi}
+%         (\mathbf{X},\boldsymbol{\theta}^*)
+%         \boldsymbol{\psi}
+%         (\mathbf{X},\boldsymbol{\theta}^*)^T
+%     \right],
+% \]
+% and let
+% \[
+%     \mathbf{H}
+%     =
+%     \nabla_{\boldsymbol{\theta}}^2
+%     \overline{C}
+%     (\boldsymbol{\theta}^*)
+%     =
+%     -\mathbf{I}_c
+%     +
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*)
+% \]
+% be nonsingular.
+
+% Then
+% \[
+%     \sqrt{n}
+%     \left(
+%         \widehat{\boldsymbol{\theta}}_n
+%         -
+%         \boldsymbol{\theta}^*
+%     \right)
+%     \xrightarrow{d}
+%     \mathcal{N}
+%     \left(
+%         \mathbf{0},
+%         \mathbf{H}^{-1}
+%         \mathbf{J}
+%         \mathbf{H}^{-T}
+%     \right).
+% \]
+
+% \end{theorem}
+
+% \begin{proof}
+
+% By the asymptotic linear representation,
+% \[
+%     \sqrt{n}
+%     \left(
+%         \widehat{\boldsymbol{\theta}}_n
+%         -
+%         \boldsymbol{\theta}^*
+%     \right)
+%     =
+%     -\mathbf{H}^{-1}
+%     \frac{1}{\sqrt{n}}
+%     \sum_{i=1}^n
+%     \boldsymbol{\psi}
+%     (\mathbf{X}_i,\boldsymbol{\theta}^*)
+%     +
+%     o_p(1).
+% \]
+
+% Since $\boldsymbol{\theta}^*$ is an interior maximizer of the population criterion,
+% \[
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \boldsymbol{\psi}
+%         (\mathbf{X},\boldsymbol{\theta}^*)
+%     \right]
+%     =
+%     \nabla_{\boldsymbol{\theta}}
+%     \overline{C}
+%     (\boldsymbol{\theta}^*)
+%     =
+%     \mathbf{0}.
+% \]
+
+% Moreover, by assumption,
+% \[
+%     \mathbb{E}_{P_0}
+%     \left[
+%         \|
+%             \boldsymbol{\psi}
+%             (\mathbf{X},\boldsymbol{\theta}^*)
+%         \|_2^2
+%     \right]
+%     <
+%     \infty.
+% \]
+
+% Therefore, by the multivariate central limit theorem,
+% \[
+%     \frac{1}{\sqrt{n}}
+%     \sum_{i=1}^n
+%     \boldsymbol{\psi}
+%     (\mathbf{X}_i,\boldsymbol{\theta}^*)
+%     \xrightarrow{d}
+%     \mathcal{N}
+%     (
+%         \mathbf{0},
+%         \mathbf{J}
+%     ).
+% \]
+
+% Since $ \mathbf{H}$ is deterministic and nonsingular, Slutsky's theorem gives
+% \[
+%     -\mathbf{H}^{-1}
+%     \frac{1}{\sqrt{n}}
+%     \sum_{i=1}^n
+%     \boldsymbol{\psi}
+%     (\mathbf{X}_i,\boldsymbol{\theta}^*)
+%     +
+%     o_p(1)
+%     \xrightarrow{d}
+%     \mathcal{N}
+%     \left(
+%         \mathbf{0},
+%         (-\mathbf{H}^{-1})
+%         \mathbf{J}
+%         (-\mathbf{H}^{-1})^T
+%     \right).
+% \]
+
+% Because
+% \[
+%     (-\mathbf{H}^{-1})
+%     \mathbf{J}
+%     (-\mathbf{H}^{-1})^T
+%     =
+%     \mathbf{H}^{-1}
+%     \mathbf{J}
+%     \mathbf{H}^{-T},
+% \]
+% we obtain
+% \[
+%     \sqrt{n}
+%     \left(
+%         \widehat{\boldsymbol{\theta}}_n
+%         -
+%         \boldsymbol{\theta}^*
+%     \right)
+%     \xrightarrow{d}
+%     \mathcal{N}
+%     \left(
+%         \mathbf{0},
+%         \mathbf{H}^{-1}
+%         \mathbf{J}
+%         \mathbf{H}^{-T}
+%     \right).
+% \]
+
+% Finally, by Theorem
+% \ref{thm:boundary_decomposition},
+% \[
+%     \mathbf{H}
+%     =
+%     -\mathbf{I}_c
+%     +
+%     \mathcal{B}
+%     (\boldsymbol{\theta}^*),
+% \]
+% which yields the stated boundary-corrected sandwich covariance structure.
+
+% \end{proof}
+
+\begin{theorem}[Asymptotic Normality of the Heterogeneous Multivariate CEM Estimator]
+\label{thm:final_normality}
+
+Assume that the conditions of Theorems
+\ref{thm:rate_of_convergence},
+\ref{thm:stochastic_equicontinuity},
+\ref{thm:linear_representation}, and
+\ref{thm:boundary_decomposition}
+hold.
+
+Suppose further that
+\[
+    \mathbb{E}_{P_0}
+    \left[
+        \|
+            \boldsymbol{\psi}
+            (\mathbf{X},\boldsymbol{\theta}^*)
+        \|_2^2
+    \right]
+    <
+    \infty,
+\]
+where
+\[
+    \boldsymbol{\psi}
+    (\mathbf{X},\boldsymbol{\theta}^*)
+    =
+    \sum_{j=1}^k
+    \mathbbm{1}
+    \{
+        \mathbf{X}\in P_j^*
+    \}
+    \nabla_{\boldsymbol{\theta}}
+    \left[
+        \log \pi_j^*
+        +
+        \log f_j
+        (\mathbf{X};\boldsymbol{\alpha}_j^*)
+    \right].
+\]
+
+Let
+\[
+    \mathbf{J}
+    =
+    \mathbb{E}_{P_0}
+    \left[
+        \boldsymbol{\psi}
+        (\mathbf{X},\boldsymbol{\theta}^*)
+        \boldsymbol{\psi}
+        (\mathbf{X},\boldsymbol{\theta}^*)^T
+    \right],
+\]
+and let
+\[
+    \mathbf{H}
+    =
+    \nabla_{\boldsymbol{\theta}}^2
+    \overline{C}
+    (\boldsymbol{\theta}^*)
+    =
+    -\mathbf{I}_c
+    +
+    \mathcal{B}
+    (\boldsymbol{\theta}^*)
+\]
+be nonsingular. Define the positive curvature matrix
+\[
+    \mathbf{A}
+    =
+    -\mathbf{H}
+    =
+    \mathbf{I}_c
+    -
+    \mathcal{B}
+    (\boldsymbol{\theta}^*).
+\]
+
+Then
+\[
+    \sqrt{n}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    \xrightarrow{d}
+    \mathcal{N}
+    \left(
+        \mathbf{0},
+        \mathbf{A}^{-1}
+        \mathbf{J}
+        \mathbf{A}^{-T}
+    \right).
+\]
+
+\end{theorem}
+
+\begin{proof}
+
+By the asymptotic linear representation,
+\[
+    \sqrt{n}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    =
+    -\mathbf{H}^{-1}
+    \frac{1}{\sqrt{n}}
+    \sum_{i=1}^n
+    \boldsymbol{\psi}
+    (\mathbf{X}_i,\boldsymbol{\theta}^*)
+    +
+    o_p(1).
+\]
+
+Since $\boldsymbol{\theta}^*$ is an interior maximizer of the population criterion,
+\[
+    \mathbb{E}_{P_0}
+    \left[
+        \boldsymbol{\psi}
+        (\mathbf{X},\boldsymbol{\theta}^*)
+    \right]
+    =
+    \nabla_{\boldsymbol{\theta}}
+    \overline{C}
+    (\boldsymbol{\theta}^*)
+    =
+    \mathbf{0}.
+\]
+
+Moreover, by assumption,
+\[
+    \mathbb{E}_{P_0}
+    \left[
+        \|
+            \boldsymbol{\psi}
+            (\mathbf{X},\boldsymbol{\theta}^*)
+        \|_2^2
+    \right]
+    <
+    \infty.
+\]
+
+Therefore, by the multivariate central limit theorem,
+\[
+    \frac{1}{\sqrt{n}}
+    \sum_{i=1}^n
+    \boldsymbol{\psi}
+    (\mathbf{X}_i,\boldsymbol{\theta}^*)
+    \xrightarrow{d}
+    \mathcal{N}
+    (
+        \mathbf{0},
+        \mathbf{J}
+    ).
+\]
+
+Since $\mathbf{H}$ is deterministic and nonsingular, Slutsky's theorem gives
+\[
+    -\mathbf{H}^{-1}
+    \frac{1}{\sqrt{n}}
+    \sum_{i=1}^n
+    \boldsymbol{\psi}
+    (\mathbf{X}_i,\boldsymbol{\theta}^*)
+    +
+    o_p(1)
+    \xrightarrow{d}
+    \mathcal{N}
+    \left(
+        \mathbf{0},
+        (-\mathbf{H}^{-1})
+        \mathbf{J}
+        (-\mathbf{H}^{-1})^T
+    \right).
+\]
+
+By definition,
+\[
+    \mathbf{A}
+    =
+    -\mathbf{H},
+\]
+and therefore
+\[
+    -\mathbf{H}^{-1}
+    =
+    \mathbf{A}^{-1}.
+\]
+Consequently,
+\[
+    (-\mathbf{H}^{-1})
+    \mathbf{J}
+    (-\mathbf{H}^{-1})^T
+    =
+    \mathbf{A}^{-1}
+    \mathbf{J}
+    \mathbf{A}^{-T}.
+\]
+
+Thus,
+\[
+    \sqrt{n}
+    \left(
+        \widehat{\boldsymbol{\theta}}_n
+        -
+        \boldsymbol{\theta}^*
+    \right)
+    \xrightarrow{d}
+    \mathcal{N}
+    \left(
+        \mathbf{0},
+        \mathbf{A}^{-1}
+        \mathbf{J}
+        \mathbf{A}^{-T}
+    \right).
+\]
+
+Finally, by Theorem
+\ref{thm:boundary_decomposition},
+\[
+    \mathbf{A}
+    =
+    \mathbf{I}_c
+    -
+    \mathcal{B}
+    (\boldsymbol{\theta}^*),
+\]
+which yields the stated boundary-corrected sandwich covariance structure.
+
+\end{proof}
+
+\subsection{Model-Specific Quantities for Boundary-Corrected Inference}
+\label{subsec:model_specific_quantities}
+
+The asymptotic covariance matrix derived in Theorem
+\ref{thm:final_normality} depends on the score covariance matrix $\mathbf{J}$, the
+classified complete-data information matrix $\mathbf{I}_c$, and the boundary
+curvature matrix $\mathcal{B}(\boldsymbol{\theta}^*)$. Equivalently, inference is based on the positive curvature matrix
+$\mathbf{A}=\mathbf{I}_c-\mathcal{B}(\boldsymbol{\theta}^*)$. In this subsection, we specialize
+these quantities to two heterogeneous two-component mixtures that are used
+in the simulation study. Throughout this subsection, we use an unconstrained
+parametrization for the mixing proportion and scale parameters. For a
+two-component mixture, write
+\[
+    \pi_1 = \frac{\exp(\rho)}{1+\exp(\rho)},
+    \qquad
+    \pi_2 = 1-\pi_1.
+\]
+Covariance matrices are parametrized through unconstrained Cholesky factors \citep{golub2013matrix}.
+Specifically, for each covariance matrix $\Sigma_j$, we write
+\[
+    \boldsymbol{\Sigma}_j = \boldsymbol{L}_j\bold{L}_j^T,
+\]
+where $\mathbf{L}_j$ is lower triangular with positive diagonal entries represented on the logarithmic scale. This guarantees positive definiteness while allowing unconstrained numerical optimization and differentiation.
+
+For any two-component heterogeneous mixture, define
+\[
+    q_j(\mathbf{x};\boldsymbol{\theta})
+    =
+    \log \pi_j + \log f_j(\mathbf{x};\boldsymbol{\alpha_j}),
+    \qquad j=1,2,
+\]
+and
+\[
+    g_{12}(\mathbf{x};\boldsymbol{\theta})
+    =
+    q_1(\mathbf{x};\boldsymbol{\theta})-q_2(\mathbf{x};\boldsymbol{\theta}).
+\]
+The hard classification regions are
+\[
+    P_1(\boldsymbol{\theta})
+    =
+    \{\mathbf{x}:g_{12}(\mathbf{x};\boldsymbol{\theta})\geq 0\},
+    \qquad
+    P_2(\boldsymbol{\theta})
+    =
+    \{\mathbf{x}:g_{12}(\mathbf{x};\boldsymbol{\theta})<0\}.
+\]
+The generalized CML score is then
+\[
+    \boldsymbol{\psi}(\mathbf{x},\boldsymbol{\theta})
+    =
+    \mathbf{1}\{\mathbf{x}\in P_1(\boldsymbol{\theta})\}\nabla_{\boldsymbol{\theta}} q_1(\mathbf{x};\boldsymbol{\theta})
+    +
+    \mathbf{1}\{\mathbf{x}\in P_2(\boldsymbol{\theta})\}\nabla_{\boldsymbol{\theta}} q_2(\mathbf{x};\boldsymbol{\theta}).
+\]
+The empirical score covariance matrix is estimated by
+\[
+    \widehat{\mathbf{J}}
+    =
+    \frac{1}{n}
+    \sum_{i=1}^n
+    \widehat{\boldsymbol{\psi}}_i
+    \widehat{\boldsymbol{\psi}}_i^T,
+    \qquad
+    \widehat{\boldsymbol{\psi}}_i
+    =
+    \boldsymbol{\psi}
+    (\mathbf{x}_i,\widehat{\boldsymbol{\theta}}_n).
+\]
+The classified complete-data information matrix is estimated by
+\[
+    \widehat{\mathbf{I}}_c
+    =
+    -
+    \frac{1}{n}
+    \sum_{i=1}^n
+    \nabla_{\theta}^2
+    \ell_c(\mathbf{x}_i,\widehat{\mathbf{z}}_i; \widehat {\boldsymbol{\theta}}_n),
+\]
+where
+\[
+    \ell_c(\mathbf{x}_i,\widehat{\mathbf{z}}_i;\boldsymbol{\theta})
+    =
+    \sum_{j=1}^2
+    \widehat z_{ij}
+    q_j(\mathbf{x}_i;\boldsymbol{\theta}).
+\]
+
+For multivariate heterogeneous mixtures, the classification boundary is the
+decision hypersurface
+\[
+    \mathcal{S}_{12}(\boldsymbol{\theta})
+    =
+    \{\mathbf{x}\in\mathbb{R}^p:
+    g_{12}(\mathbf{x};\boldsymbol{\theta})=0\}.
+\]
+The boundary curvature matrix is then given by the surface integral
+\[
+    \boldsymbol{\mathcal{B}}(\boldsymbol{\theta})
+    =
+    \int_{\mathcal{S}_{12}(\boldsymbol{\theta})}
+    \frac{
+        \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})
+        \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})^T
+    }{
+        \|\nabla_\mathbf{x} g_{12}(\mathbf{x};\boldsymbol{\theta})\|
+    }
+    p_0(\mathbf{x})
+    \, dS(\mathbf{x}),
+\]
+where:
+\begin{itemize}
+    \item $\nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})$ denotes the gradient of the decision function with respect to the model parameters,
+    \item $\nabla_\mathbf{x} g_{12}(\mathbf{x};\boldsymbol{\theta})$ denotes the gradient with respect to the observation vector $\mathbf{x}$,
+    \item $\|\cdot\|$ is the Euclidean norm,
+    \item $dS(\mathbf{x})$ denotes the surface measure on the decision boundary,
+    \item and $p_0$ is the true data-generating density.
+\end{itemize}
+
+This matrix captures the additional asymptotic variability induced by local perturbations of the classification hypersurface under hard assignments. In practice, the unknown density $p_0$ is replaced by the fitted heterogeneous mixture density
+\[
+    \widehat p(\mathbf{x})
+    =
+    \widehat\pi_1
+    f_1(\mathbf{x};\widehat{\boldsymbol{\alpha}}_1)
+    +
+    \widehat\pi_2
+    f_2(\mathbf{x};\widehat{\boldsymbol{\alpha}}_2).
+\]
+
+For numerical implementation, the surface integral defining
+$\boldsymbol{\mathcal{B}}(\boldsymbol{\theta})$ is approximated using the co-area formula over a thin band around the estimated decision hypersurface. Let
+\[
+    \widehat{\mathcal S}_{12}^\epsilon
+    =
+    \{\mathbf{x}:
+    |g_{12}(\mathbf{x};\widehat{\boldsymbol{\theta}_n})| < \epsilon\}
+\]
+denote a narrow margin of width $2\epsilon$. The boundary contribution is then computed by integrating the probability density and the outer product of the decision function gradients over a fine two-dimensional grid of size $\Delta x \times \Delta y$:
+\[
+    \widehat{\boldsymbol{\mathcal{B}}}(\widehat{\boldsymbol{\theta}}_n)
+    \approx
+    \frac{\Delta x \Delta y}{2\epsilon}
+    \sum_{\mathbf{x} \in \widehat{\mathcal S}_{12}^\epsilon}
+    \widehat p(\mathbf{x})
+    \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\widehat{\boldsymbol{\theta}_n})
+    \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\widehat{\boldsymbol{\theta}_n})^T.
+\]
+This volume-based numerical approximation is inherently more robust than estimating the surface area element directly, as it avoids numerical instabilities caused by dividing by the norm of the spatial gradient $\|\nabla_\mathbf{x} g_{12}(\mathbf{x};\widehat\theta_n)\|$.
+
+The resulting boundary-corrected positive curvature matrix is estimated by
+\[
+    \widehat{\mathbf{A}}
+    =
+    \widehat{\mathbf{I}}_c
+    -
+    \widehat{\mathcal{B}},
+\]
+where
+\[
+    \widehat{\mathbf{I}}_c
+    =
+    -
+    \frac{1}{n}
+    \sum_{i=1}^n
+    \nabla_{\boldsymbol{\theta}}^2
+    \ell_c
+    (\mathbf{x}_i,\widehat{\mathbf{z}}_i;\widehat{\boldsymbol{\theta}}_n)
+\]
+is the classified complete-data information matrix. Consequently, the boundary-corrected sandwich covariance estimator is
+\[
+    \widehat{\boldsymbol{\Sigma}}_{\mathrm{CEM}}
+    =
+    \widehat{\mathbf{A}}^{-1}
+    \widehat{\mathbf{J}}
+    \widehat{\mathbf{A}}^{-T}.
+\]
+
+\subsubsection{Multivariate Normal--Student-\texorpdfstring{$t$}{t} Mixture}
+
+Consider the heterogeneous two-component mixture model
+\[
+    g(\mathbf{x};\boldsymbol{\theta})
+    =
+    \pi_1
+    f_N(\mathbf{x};\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)
+    +
+    \pi_2
+    f_t(\mathbf{x};\boldsymbol{\mu}_2,\boldsymbol{\Sigma}_2,\nu),
+\]
+where:
+\begin{itemize}
+    \item $f_N(\cdot;\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)$ denotes the $p$-dimensional Gaussian density,
+    \item $f_t(\cdot;\boldsymbol{\mu}_2,\boldsymbol{\Sigma}_2,\nu)$ denotes the multivariate Student-$t$ density with $\nu$ degrees of freedom,
+    \item and $\pi_1+\pi_2=1$.
+\end{itemize}
+
+To obtain an unconstrained parametrization, the mixing proportion is written as
+\[
+    \pi_1
+    =
+    \frac{\exp(\rho)}
+    {1+\exp(\rho)},
+    \qquad
+    \pi_2
+    =
+    1-\pi_1,
+\]
+while the covariance matrices are parametrized through Cholesky factors
+\[
+    \boldsymbol{\Sigma}_j=\mathbf{L}_j\mathbf{L}_j^T,
+\]
+where $\mathbf{L}_j$ is lower triangular with positive diagonal entries represented on the logarithmic scale. Furthermore, the degrees-of-freedom parameter is written as
+\[
+    \nu
+    =
+    2+\exp(\lambda),
+\]
+which guarantees $\nu>2$.
+
+The unconstrained parameter vector is therefore
+\[
+   \boldsymbol{\theta}
+    =
+    (
+    \rho,
+    \boldsymbol{\mu}_1^T,
+    \vech(\mathbf{L}_1)^T,
+    \boldsymbol{\mu}_2^T,
+    \vech(\mathbf{L}_2)^T,
+    \lambda
+    )^T,
+\]
+where $\vech(\cdot)$ denotes the vectorization of the lower triangular part of a matrix.
+
+For each component, define
+\[
+    q_j(\mathbf{x};\theta)
+    =
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x};\boldsymbol{\alpha}_j),
+    \qquad j=1,2.
+\]
+The corresponding decision function is
+\[
+    g_{12}(\mathbf{x};\boldsymbol{\theta})
+    =
+    q_1(\mathbf{x};\boldsymbol{\theta})
+    -
+    q_2(\mathbf{x};\boldsymbol{\theta}).
+\]
+The classification boundary is then the hypersurface
+\[
+    \mathcal S_{12}(\boldsymbol{\theta})
+    =
+    \{\mathbf{x}\in\mathbb R^p:
+    g_{12}(\mathbf{x};\boldsymbol{\theta})=0\}.
+\]
+
+The generalized CML score contribution is
+\[
+    \boldsymbol{\psi}(\mathbf{x},\boldsymbol{\theta})
+    =
+    \mathbf 1
+    \{
+    g_{12}(\mathbf{x};\boldsymbol{\theta})\geq 0
+    \}
+    \nabla_{\boldsymbol{\theta}} q_1(\mathbf{x};\boldsymbol{\theta})
+    +
+    \mathbf 1
+    \{
+    g_{12}(\mathbf{x};\boldsymbol{\theta})<0
+    \}
+    \nabla_{\boldsymbol{\theta}} q_2(\mathbf{x};\boldsymbol{\theta}).
+\]
+For the multivariate Normal--Student-$t$ model, analytical derivatives of the log-densities with respect to the mean vectors, covariance parameters, and degrees-of-freedom parameter become algebraically cumbersome. Therefore, the gradients and Hessians entering the sandwich estimator are evaluated numerically using finite-difference approximations on the unconstrained parameter space.
+
+The boundary curvature matrix is
+\[
+    \mathcal B_{N,t}(\boldsymbol{\theta})
+    =
+    \int_{\mathcal S_{12}(\boldsymbol{\theta})}
+    \frac{
+        \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})
+        \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})^T
+    }{
+        \|
+        \nabla_\mathbf{x} g_{12}(\mathbf{x};\boldsymbol{\theta})
+        \|
+    }
+    p_0(\mathbf{x})
+    \, dS(\mathbf{x}).
+\]
+where $dS(\mathbf{x})$ denotes the surface measure on the decision hypersurface and $p_0$ is the true data-generating density.
+
+In practice, $p_0$ is replaced by the fitted mixture density
+\[
+    \widehat p(\mathbf{x})
+    =
+    \widehat\pi_1
+    f_N(\mathbf{x};\widehat{\boldsymbol{\mu}_1},\widehat{\boldsymbol{\Sigma}_1})
+    +
+    \widehat\pi_2
+    f_t(\mathbf{x};\widehat{\boldsymbol{\mu}_2},\widehat{\boldsymbol{\Sigma}_2},\widehat\nu).
+\]
+
+The classified complete-data information matrix is estimated by
+\[
+    \widehat{\mathbf I}_{c,N,t}
+    =
+    -
+    \frac{1}{n}
+    \sum_{i=1}^n
+    \nabla_{\boldsymbol{\theta}}^2
+    \ell_c
+    (
+        \mathbf{x}_i,
+        \widehat{\mathbf{z}}_i;
+        \widehat{\boldsymbol{\theta}}_n
+    ).
+\]
+The boundary-corrected positive curvature matrix is then
+\[
+    \widehat{\mathbf A}_{N,t}
+    =
+    \widehat{\mathbf I}_{c,N,t}
+    -
+    \widehat{\mathcal B}_{N,t}.
+\]
+Consequently, the boundary-corrected asymptotic covariance estimator is
+\[
+    \widehat{\boldsymbol{\Sigma}}_{N,t}
+    =
+    \widehat{\mathbf A}_{N,t}^{-1}
+    \widehat{\mathbf J}_{N,t}
+    \widehat{\mathbf A}_{N,t}^{-T}.
+\]
+
+
+\subsubsection{Multivariate Normal--Skew-Normal Mixture}
+
+Consider the heterogeneous two-component mixture model
+\[
+    g(\mathbf{x};\boldsymbol{\theta})
+    =
+    \pi_1
+    f_N(\mathbf{x};\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)
+    +
+    \pi_2
+    f_{SN}(\mathbf{x};\boldsymbol{\xi}_2,\boldsymbol{\Omega}_2,\boldsymbol{\alpha}_2),
+\]
+where:
+\begin{itemize}
+    \item $f_N(\cdot;\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)$ denotes the $p$-dimensional Gaussian density,
+    \item $f_{SN}(\cdot;\boldsymbol{\xi}_2,\boldsymbol{\Omega}_2,\boldsymbol{\alpha}_2)$ denotes the multivariate skew-normal density,
+    \item $\boldsymbol{\mu}_1,\boldsymbol{\xi}_2\in\mathbb R^p$ are location vectors,
+    \item $\boldsymbol{\Sigma}_1$ and $\boldsymbol{\Omega}_2$ are positive definite covariance matrices,
+    \item and $\boldsymbol{\alpha}_2\in\mathbb R^p$ is the skewness parameter vector.
+\end{itemize}
+
+The mixing proportions are parametrized through the logit transformation
+\[
+    \pi_1
+    =
+    \frac{\exp(\rho)}
+    {1+\exp(\rho)},
+    \qquad
+    \pi_2
+    =
+    1-\pi_1.
+\]
+The covariance matrices are represented through unconstrained Cholesky factors
+\[
+    \boldsymbol{\Sigma}_1=\mathbf{L}_1\mathbf{L}_1^T,
+    \qquad
+    \boldsymbol{\Omega}_2=\mathbf{L}_2\mathbf{L}_2^T,
+\]
+where the diagonal elements of the lower triangular matrices are represented on the logarithmic scale to guarantee positive definiteness.
+
+The resulting unconstrained parameter vector is
+\[
+    \boldsymbol{\theta}
+    =
+    (
+    \rho,
+    \boldsymbol{\mu}_1^T,
+    \vech(\mathbf{L}_1)^T,
+    \boldsymbol{\xi}_2^T,
+    \vech(\mathbf{L}_2)^T,
+    \boldsymbol{\alpha}_2^T
+    )^T.
+\]
+
+For each component, define
+\[
+    q_j(\mathbf{x}; \boldsymbol{\theta})
+    =
+    \log \pi_j
+    +
+    \log f_j(\mathbf{x}; \boldsymbol{\alpha_j}),
+    \qquad j=1,2.
+\]
+The corresponding classification decision function is
+\[
+    g_{12}(\mathbf{x}; \boldsymbol{\theta})
+    =
+    q_1(\mathbf{x}; \boldsymbol{\theta})
+    -
+    q_2(\mathbf{x}; \boldsymbol{\theta}),
+\]
+with decision hypersurface
+\[
+    \mathcal S_{12}( \boldsymbol{\theta})
+    =
+    \{\mathbf{x}\in\mathbb R^p:
+    g_{12}(\mathbf{x}; \boldsymbol{\theta})=0\}.
+\]
+
+The generalized CML score contribution is
+\[
+    \boldsymbol{\psi}(\mathbf{x},\boldsymbol{\theta})
+    =
+    \mathbf 1
+    \{
+    g_{12}(\mathbf{x};\boldsymbol{\theta})\geq 0
+    \}
+    \nabla_{\boldsymbol{\theta}} q_1(\mathbf{x};\boldsymbol{\theta})
+    +
+    \mathbf 1
+    \{
+    g_{12}(\mathbf{x};\boldsymbol{\theta})<0
+    \}
+    \nabla_{\boldsymbol{\theta}} q_2(\mathbf{x};\boldsymbol{\theta}).
+\]
+
+The multivariate skew-normal density admits the representation
+\[
+    f_{SN}(\mathbf{x};\boldsymbol{\xi},\boldsymbol{\Omega},\boldsymbol{\alpha})
+    =
+    2
+    \phi_p(\mathbf{x};\boldsymbol{\xi},\boldsymbol{\Omega})
+    \Phi\!\left(
+        \boldsymbol{\alpha}^T
+        \boldsymbol{\omega}^{-1}
+        (\mathbf{x}-\boldsymbol{\xi})
+    \right),
+\]
+where:
+\begin{itemize}
+    \item $\phi_p(\cdot;\boldsymbol{\xi},\boldsymbol{\Omega})$ denotes the $p$-dimensional Gaussian density,
+    \item $\Phi(\cdot)$ is the univariate standard normal distribution function,
+    \item and $\boldsymbol{\omega}=\mathrm{diag}(\boldsymbol{\Omega})^{1/2}$.
+\end{itemize}
+
+For the multivariate Normal--Skew-Normal model, analytical derivatives of the log-density with respect to the covariance and skewness parameters become algebraically involved. Therefore, the gradients and Hessians entering the boundary-corrected sandwich estimator are evaluated numerically using finite-difference approximations on the unconstrained parameter space.
+
+The boundary curvature matrix is
+\[
+    \mathcal B_{N,SN}(\boldsymbol{\theta})
+    =
+    \int_{\mathcal S_{12}(\boldsymbol{\theta})}
+    \frac{
+        \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})
+        \nabla_{\boldsymbol{\theta}} g_{12}(\mathbf{x};\boldsymbol{\theta})^T
+    }{
+        \|
+        \nabla_\mathbf{x} g_{12}(\mathbf{x};\boldsymbol{\theta})
+        \|
+    }
+    p_0(\mathbf{x})
+    \, dS(\mathbf{x}).
+\]
+where $dS(\mathbf{x})$ denotes the surface measure on the decision hypersurface and $p_0$ is the true data-generating density.
+
+In practice, $p_0$ is replaced by the fitted mixture density
+\[
+    \widehat p(\mathbf{x})
+    =
+    \widehat\pi_1
+    f_N(\mathbf{x};\widehat{\boldsymbol{\mu}_1},\widehat{\boldsymbol{\Sigma}_1})
+    +
+    \widehat\pi_2
+    f_{SN}(\mathbf{x};\widehat\xi_2,\widehat{\boldsymbol{\Omega}_2},\widehat{\boldsymbol{\alpha}}_2).
+\]
+
+The classified complete-data information matrix is estimated by
+\[
+    \widehat{\mathbf I}_{c,N,SN}
+    =
+    -
+    \frac{1}{n}
+    \sum_{i=1}^n
+    \nabla_{\boldsymbol{\theta}}^2
+    \ell_c
+    (
+        \mathbf{x}_i,
+        \widehat{\mathbf{z}}_i;
+        \widehat{\boldsymbol{\theta}}_n
+    ).
+\]
+The boundary-corrected positive curvature matrix is then
+\[
+    \widehat{\mathbf A}_{N,SN}
+    =
+    \widehat{\mathbf I}_{c,N,SN}
+    -
+    \widehat{\mathcal B}_{N,SN}.
+\]
+Consequently, the boundary-corrected asymptotic covariance estimator is
+\[
+    \widehat{\boldsymbol{\Sigma}}_{N,SN}
+    =
+    \widehat{\mathbf A}_{N,SN}^{-1}
+    \widehat{\mathbf J}_{N,SN}
+    \widehat{\mathbf A}_{N,SN}^{-T}.
+\]
+
+
+\section{Results}
+\label{sec:results}
+
+We evaluate the finite-sample behaviour of the proposed inference procedure through a Monte Carlo simulation study and a real-data application. The simulation study examines the performance of heterogeneous multivariate CEM estimators under varying degrees of component overlap and for different combinations of component families. Particular attention is given to the comparison between naive classified-likelihood standard errors and the proposed boundary-corrected sandwich standard errors. The real-data application illustrates the practical behaviour of the method in a setting where the population parameters are unknown, using non-parametric bootstrap variability as an empirical benchmark.
+
+\subsection{Simulation Study}
+\label{subsec:simulation}
+
+The simulation study is designed to assess three aspects of the proposed framework. First, we examine whether the CEM estimator concentrates around the population Classification Maximum Likelihood (CML) target. Second, we investigate the finite-sample behavior of the standard error estimates obtained from the naive and boundary-corrected covariance estimators. Third, we compare the empirical coverage of nominal confidence intervals under different degrees of component overlap.
+
+\subsubsection{Simulation Design}
+
+We generate data from two heterogeneous two-component multivariate mixture models:
+\begin{enumerate}
+    \item \textbf{Multivariate Normal--Student-$t$ mixture}: the first component is multivariate Gaussian, while the second component follows a multivariate Student-$t$ distribution with degrees-of-freedom parameter $\nu$.
+    \item \textbf{Multivariate Normal--Skew-Normal mixture}: the first component is multivariate Gaussian, while the second component follows a multivariate skew-normal distribution with skewness parameter vector $\boldsymbol{\alpha}$.
+\end{enumerate}
+
+For each model family, we consider three overlap scenarios: \textit{well-separated}, \textit{moderate overlap}, and \textit{strong overlap}. These scenarios are constructed by varying the separation between the component location vectors while keeping the mixture specification otherwise fixed. This allows us to study how the performance of the inference procedure changes as the classification boundary moves into regions of higher probability density.
+
+We consider sample sizes
+\[
+    n
+    \in
+    \{5000,10000,15000,20000\}.
+\]
+For each combination of model family, overlap scenario, and sample size, we perform $R=100$ independent Monte Carlo replications. In each replication, the model is fitted using the CEM algorithm, and inference is computed using both the naive classified-likelihood covariance estimator and the proposed boundary-corrected sandwich covariance estimator. The asymptotic theory is stated for a maximizer of the empirical CML criterion, while the numerical implementation returns a stationary point of the CEM objective. The simulation results should therefore be interpreted as assessing the behaviour of the algorithmic CEM solution obtained under the chosen initialization strategy. The population CML target $\boldsymbol{\theta}^*$ is approximated numerically by fitting the CEM criterion to a very large ($n=100,000$) independently generated reference sample from the corresponding data-generating model. The resulting high-sample estimate is treated as the Monte Carlo approximation of $\boldsymbol{\theta}^*$ for the purpose of computing bias, RMSE, and coverage.
+
+\subsubsection{Performance Metrics}
+
+In line with the theoretical framework, performance is evaluated relative to the population CML target $ \boldsymbol{\theta}^*$, rather than the ordinary mixture-likelihood parameter $ \boldsymbol{\theta}_0$. This distinction is important because the deterministic hard-classification criterion optimized by CEM does not, in general, have the same population maximizer as the ordinary mixture likelihood. In the simulation study, the CML target is treated as the relevant asymptotic reference point for evaluating bias, variability, and confidence interval coverage.
+
+For each parameter, we report:
+\begin{itemize}
+    \item \textbf{Bias}: the average deviation of the CEM estimates from the CML target,
+    \[
+        \frac{1}{R}
+        \sum_{r=1}^R
+        \left(
+            \widehat{\theta}^{(r)}
+            -
+           \boldsymbol{\theta}^*
+        \right).
+    \]
+
+    \item \textbf{Empirical SD}: the empirical standard deviation of the Monte Carlo estimates across the $R=100$ replications.
+
+    \item \textbf{Mean naive SE}: the average standard error obtained from the naive classified-likelihood covariance estimator, which treats the hard classifications as fixed.
+
+    \item \textbf{Mean boundary-corrected SE}: the average standard error obtained from the proposed boundary-corrected sandwich covariance estimator.
+
+    \item \textbf{Coverage}: the empirical coverage probability of nominal 95\% confidence intervals centered at the CML target. Coverage is reported separately for the naive and boundary-corrected standard errors.
+\end{itemize}
+
+\subsubsection{Consistency and Asymptotic Normality}
+
+The simulation results are consistent with the asymptotic behaviour established in Theorem \ref{thm:final_normality}. Figure \ref{fig:rmse_mu} reports the root mean squared error (RMSE) relative to the CML target for selected component location parameters across sample sizes and overlap scenarios. Across the reported settings, the RMSE decreases as the sample size increases, indicating concentration of the CEM estimator around the population CML target $\boldsymbol{\theta}^*$. This behaviour provides empirical support for the consistency and asymptotic concentration predicted by the theoretical results.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{rmse_mu1_1.png}
+\includegraphics[width=0.48\textwidth]{rmse_mu2_1.png}
+\caption{RMSE relative to the CML target for selected location parameters across sample sizes. The decreasing RMSE supports the asymptotic concentration of the CEM estimator around the population CML target.}
+\label{fig:rmse_mu}
+\end{figure}
+
+\subsubsection{Standard Error Accuracy}
+
+A central question is whether the boundary-corrected standard errors provide a reliable approximation to the empirical Monte Carlo variability. To assess this, we compare the mean boundary-corrected standard error with the empirical standard deviation of the estimates. If the covariance approximation is accurate, the ratio of these two quantities should be close to one.
+
+Table \ref{tab:se_ratio} reports the ratio of the mean boundary-corrected standard error to the empirical standard deviation at $n=20,000$ for the reported model families and overlap scenarios.
+
+\begin{table}[htbp]
+\centering
+\caption{Ratio of mean boundary-corrected SE to empirical SD at $n=20,000$.}
+\label{tab:se_ratio}
+\begin{tabular}{llc}
+\toprule
+Family & Scenario & SE Ratio \\
+\midrule
+Normal--Skew-Normal & Moderate overlap & $0.973$ \\
+Normal--Skew-Normal & Strong overlap & $1.021$ \\
+Normal--Skew-Normal & Well separated & $0.971$ \\
+Normal--Student-$t$ & Moderate overlap & $1.016$ \\
+Normal--Student-$t$ & Strong overlap & $0.997$ \\
+Normal--Student-$t$ & Well separated & $1.021$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ratios are close to one in all reported settings, ranging approximately from $0.97$ to $1.02$. This suggests that, for these scenarios and at the largest sample size considered, the boundary-corrected covariance estimator provides a close approximation to the empirical Monte Carlo variability. The result supports the usefulness of the boundary correction, while the full parameter-wise behavior, including more challenging shape parameters, is examined in the supplementary tables.
+
+\subsubsection{Effect of the Boundary Correction on Coverage}
+
+We next compare the inferential behaviour of the naive classified-likelihood standard errors with the proposed boundary-corrected standard errors. The main question is whether accounting for perturbations of the classification boundary improves the approximation of the sampling variability of the CEM estimator, especially in settings with substantial component overlap.
+
+Figure \ref{fig:sd_vs_se} compares the empirical Monte Carlo standard deviation with the mean boundary-corrected standard error for a selected parameter. The boundary-corrected standard error tracks the empirical variability closely in the reported settings, suggesting that the boundary contribution captures an important part of the variability that is ignored when the hard classifications are treated as fixed.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{sd_vs_se_lambda.png}
+\caption{Comparison of the empirical Monte Carlo standard deviation and the mean boundary-corrected standard error for a selected parameter. The boundary-corrected standard error provides a close approximation to the empirical variability in the reported setting.}
+\label{fig:sd_vs_se}
+\end{figure}
+
+Table \ref{tab:coverage_improvement} reports the empirical coverage probabilities, relative to the CML target, at $n=20,000$ for selected challenging scenarios. The boundary-corrected intervals improve coverage relative to the naive intervals in all three reported cases. The improvement is most pronounced for the Normal--Student-$t$ mixture under strong overlap, where the coverage increases from $82.25\%$ to $89.33\%$.
+
+\begin{table}[htbp]
+\centering
+\caption{Coverage relative to the CML target at $n=20,000$ for selected scenarios.}
+\label{tab:coverage_improvement}
+\begin{tabular}{llrrr}
+\toprule
+Family & Scenario & Naive Cov. & BC Cov. & Improvement \\
+\midrule
+Normal--Student-$t$ & Strong overlap & $82.25\%$ & $89.33\%$ & $+7.08\%$ \\
+Normal--Skew-Normal & Strong overlap & $86.61\%$ & $89.30\%$ & $+2.69\%$ \\
+Normal--Student-$t$ & Moderate overlap & $88.66\%$ & $91.25\%$ & $+2.59\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The coverage probabilities do not uniformly attain the nominal $95\%$ level, particularly in strongly overlapping settings and for weakly identified shape parameters. This is expected in hard-classification mixture estimation, where overlap increases the instability of the induced decision boundary. Nevertheless, the boundary-corrected intervals are systematically closer to the nominal level than the naive intervals in the scenarios shown in Table \ref{tab:coverage_improvement}.
+
+Tables \ref{tab:nt_strong_cov_sp} and \ref{tab:nskew_strong_cov_sp} provide a more detailed view for selected parameters under strong overlap. For the Normal--Student-$t$ mixture, the boundary correction improves coverage for both the mixing proportion and the degrees-of-freedom parameter. For example, at $n=20,000$, the coverage for $\nu$ increases from $0.82$ under the naive method to $0.94$ under the boundary-corrected method.
+
+\begin{table}[htbp]
+\centering
+\caption{\label{tab:nt_strong_cov_sp}Coverage rates for the Normal--Student-$t$ mixture under strong overlap.}
+\begin{tabular}{lrrr}
+\toprule
+Parameter & $n$ & Naive Cov. & BC Cov. \\
+\midrule
+$\pi_1$ & $5000$ & $0.96$ & $0.97$ \\
+ & $10000$ & $0.90$ & $0.91$ \\
+ & $15000$ & $0.88$ & $0.89$ \\
+ & $20000$ & $0.90$ & $0.91$ \\
+$\nu$ & $5000$ & $0.81$ & $0.88$ \\
+ & $10000$ & $0.74$ & $0.91$ \\
+ & $15000$ & $0.82$ & $0.94$ \\
+ & $20000$ & $0.82$ & $0.94$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the Normal--Skew-Normal mixture, the improvement is also visible, although the first skewness component remains difficult. This reflects the well-known finite-sample instability of shape parameters in skewed mixture components, especially under overlap. Thus, the boundary correction improves the variance approximation, but it does not fully remove the finite-sample challenges associated with weakly identified skewness parameters.
+
+\begin{table}[htbp]
+\centering
+\caption{\label{tab:nskew_strong_cov_sp}Coverage rates for the Normal--Skew-Normal mixture under strong overlap.}
+\begin{tabular}{lrrr}
+\toprule
+Parameter & $n$ & Naive Cov. & BC Cov. \\
+\midrule
+$\alpha_1$ & $5000$ & $0.48$ & $0.54$ \\
+ & $10000$ & $0.55$ & $0.59$ \\
+ & $15000$ & $0.47$ & $0.51$ \\
+ & $20000$ & $0.45$ & $0.51$ \\
+$\alpha_2$ & $5000$ & $0.81$ & $0.85$ \\
+ & $10000$ & $0.80$ & $0.81$ \\
+ & $15000$ & $0.77$ & $0.81$ \\
+ & $20000$ & $0.90$ & $0.94$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure \ref{fig:coverage_lambda} illustrates the empirical coverage probability across sample sizes for a selected parameter. The boundary-corrected intervals tend to provide higher coverage than the naive intervals, particularly in overlap settings where the classification boundary contributes more substantially to the estimator variability.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{coverage_lambda.png}
+\caption{Empirical coverage probability for nominal $95\%$ confidence intervals for a selected parameter. The boundary-corrected intervals generally improve coverage relative to the naive intervals, especially under stronger component overlap.}
+\label{fig:coverage_lambda}
+\end{figure}
+
+The behavior in well-separated settings is shown in Table \ref{tab:nt_well_cov_sp}. When the components are well separated, the classification boundary typically lies in a region of relatively low probability density. In this case, the boundary correction is small, and the naive and boundary-corrected coverage probabilities are similar. This behavior is consistent with the theoretical form of the correction, since the boundary matrix $\boldsymbol{\mathcal{B}}(\boldsymbol{\theta}^*)$ is weighted by the density along the decision hypersurface.
+
+\begin{table}[htbp]
+\centering
+\caption{\label{tab:nt_well_cov_sp}Coverage rates for the Normal--Student-$t$ mixture under well-separated components.}
+\begin{tabular}{lrrr}
+\toprule
+Parameter & $n$ & Naive Cov. & BC Cov. \\
+\midrule
+$\pi_1$ & $5000$ & $0.97$ & $0.97$ \\
+ & $10000$ & $0.94$ & $0.94$ \\
+ & $15000$ & $0.92$ & $0.92$ \\
+ & $20000$ & $0.92$ & $0.93$ \\
+$\nu$ & $5000$ & $0.94$ & $0.94$ \\
+ & $10000$ & $0.92$ & $0.92$ \\
+ & $15000$ & $0.89$ & $0.89$ \\
+ & $20000$ & $0.87$ & $0.87$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Overall, the simulation results indicate that the boundary correction is most useful when component overlap is non-negligible and the decision boundary passes through regions with appreciable probability mass. In well-separated settings, the correction has little effect, as expected. Full parameter-wise results for bias, empirical variability, standard error estimates, and coverage are reported in the Supplementary Material.
+
+
+\subsection{Real Data Application: Breast Cancer Wisconsin Dataset}
+
+We further illustrate the proposed inference procedure using the Breast Cancer Wisconsin (Diagnostic) dataset \citep{street1993nuclear}. In contrast to the simulation study, the true data-generating parameter $\boldsymbol{\theta}_0$ and the population CML target $\boldsymbol{\theta}^*$ are unknown for real data. Therefore, we use non-parametric bootstrap variability as an empirical benchmark for assessing the behavior of the analytical standard errors.
+
+The dataset contains $n=569$ observations classified as malignant or benign. To obtain a low-dimensional representation suitable for stable model fitting and numerical boundary integration, we apply Principal Component Analysis (PCA) \citep{jolliffe2002principal} and retain the first two principal components. We then fit a heterogeneous Normal--Student-$t$ mixture model to the resulting two-dimensional data.
+
+We compare three measures of variability:
+\begin{enumerate}
+    \item \textbf{Naive SE}: the standard error obtained from the classified-likelihood Hessian, treating the hard classifications as fixed and ignoring boundary contributions.
+    \item \textbf{Boundary-corrected SE}: the standard error obtained from the proposed boundary-corrected sandwich covariance estimator.
+    \item \textbf{Bootstrap SD}: the empirical standard deviation of the parameter estimates across $B=500$ non-parametric bootstrap samples. To reduce label-switching effects, the components from each bootstrap fit are aligned to the full-data fit by minimizing the Euclidean distance between the component location estimates.
+\end{enumerate}
+
+Table \ref{tab:breast_cancer_se} reports the comparison for the mixing proportion, component means, and selected covariance parameters. The naive standard errors are smaller than the bootstrap standard deviations for all reported parameters, with Naive/Boot ratios ranging from $0.653$ to $0.973$. This suggests that treating the hard classifications as fixed can underestimate finite-sample variability in this application.
+
+The boundary-corrected standard errors are closer to the bootstrap standard deviations for all reported parameters. The improvement is particularly visible for $\pi_1$, $\mu_{1,1}$, $\mu_{2,1}$, and $\Sigma_{2,11}$, where the boundary correction increases the standard error toward the bootstrap benchmark. The BC/Boot ratios range from $0.797$ to $0.997$, indicating that the correction substantially reduces, although does not completely eliminate, the underestimation observed for the naive standard errors. Overall, the real-data example supports the practical usefulness of the boundary correction as a computationally cheaper analytical alternative to bootstrap-based uncertainty assessment.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of analytical standard errors with bootstrap standard deviations $(B=500)$ for the Breast Cancer Wisconsin dataset after PCA reduction to $p=2$ dimensions.}
+\label{tab:breast_cancer_se}
+\begin{tabular}{lrrrrr}
+\toprule
+Parameter & Naive SE & BC SE & Boot SD & Naive / Boot & BC / Boot \\
+\midrule
+$\pi_1$ & $0.087$ & $0.098$ & $0.110$ & $0.785$ & $0.892$ \\
+$\mu_{1,1}$ & $0.191$ & $0.212$ & $0.250$ & $0.764$ & $0.848$ \\
+$\mu_{1,2}$ & $0.233$ & $0.239$ & $0.239$ & $0.973$ & $0.997$ \\
+$\Sigma_{1,11}$ & $0.071$ & $0.074$ & $0.076$ & $0.933$ & $0.973$ \\
+$\mu_{2,1}$ & $0.071$ & $0.083$ & $0.103$ & $0.695$ & $0.812$ \\
+$\mu_{2,2}$ & $0.082$ & $0.092$ & $0.094$ & $0.873$ & $0.975$ \\
+$\Sigma_{2,11}$ & $0.033$ & $0.040$ & $0.051$ & $0.653$ & $0.797$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+
+The Classification EM algorithm provides a computationally attractive alternative to standard soft EM for fitting complex and heterogeneous finite mixture models. By replacing posterior probabilistic assignments with deterministic hard classifications, CEM can substantially simplify the estimation problem. However, this simplification also changes the statistical target and creates nonstandard inferential challenges, since the variability induced by perturbations of the classification regions is ignored when hard labels are treated as fixed.
+
+In this paper, we developed an M-estimation framework for heterogeneous multivariate CEM estimators. We established consistency and asymptotic normality relative to the population Classification Maximum Likelihood target. To account for the additional variability induced by hard classification, we derived a boundary-corrected sandwich covariance estimator. The correction is expressed through surface integrals over the decision hypersurfaces separating the classification regions and can be approximated numerically from the fitted model.
+
+The simulation study shows that the proposed boundary correction improves standard error estimation and confidence interval coverage in several overlapping mixture settings, where naive classified-likelihood inference tends to underestimate variability. The improvement is especially visible for parameters affected by uncertainty near the classification boundary. At the same time, the results also indicate that strong overlap and weakly identified shape parameters remain challenging in finite samples. The real-data application to the Breast Cancer Wisconsin dataset further illustrates that the boundary-corrected standard errors are generally closer to bootstrap-based variability estimates than the naive standard errors.
+
+Overall, the proposed framework provides a principled basis for conducting inference after hard-classification estimation in heterogeneous multivariate mixture models. Future work may extend the boundary-correction approach to high-dimensional and regularized CEM estimators, develop boundary-aware model selection criteria, and investigate more stable numerical approximations of the boundary contribution for complex multivariate component families.
+
+\backmatter
+
+\bmhead{Supplementary information}
+
+supplementary\_material.pdf contains the remaining simulation results conducted in our study.
+
+% \bmhead{Acknowledgements}
+
+% Acknowledgements are not compulsory. Where included they should be brief. Grant or contribution numbers may be acknowledged.
+
+% Please refer to Journal-level guidance for any specific requirements.
+
+\section*{Declarations}
+
+\begin{itemize}
+\item Conflict of interest: The authors have no relevant financial or non-financial interests to disclose.
+\item Funding: No funding has been received for this study.
+\item Data and code availability: All datasets and codes required to reproduce the results presented in this paper are publicly available at \url{https://github.com/samyajoypal/CEM_Asymptotics}.
+\end{itemize}
+\noindent
+% If any of the sections are not relevant to your manuscript, please include the heading and write `Not applicable' for that section. 
+
+% %%===================================================%%
+% %% For presentation purpose, we have included        %%
+% %% \bigskip command. Please ignore this.             %%
+% %%===================================================%%
+% \bigskip
+% \begin{flushleft}%
+% Editorial Policies for:
+
+% \bigskip\noindent
+% Springer journals and proceedings: \url{https://www.springer.com/gp/editorial-policies}
+
+% \bigskip\noindent
+% Nature Portfolio journals: \url{https://www.nature.com/nature-research/editorial-policies}
+
+% \bigskip\noindent
+% \textit{Scientific Reports}: \url{https://www.nature.com/srep/journal-policies/editorial-policies}
+
+% \bigskip\noindent
+% BMC journals: \url{https://www.biomedcentral.com/getpublished/editorial-policies}
+% \end{flushleft}
+
+% \begin{appendices}
+
+% \section{Section title of first appendix}\label{secA1}
+
+% An appendix contains supplementary information that is not an essential part of the text itself but which may be helpful in providing a more comprehensive understanding of the research problem or it is information that is too cumbersome to be included in the body of the paper.
+
+%%=============================================%%
+%% For submissions to Nature Portfolio Journals %%
+%% please use the heading ``Extended Data''.   %%
+%%=============================================%%
+
+%%=============================================================%%
+%% Sample for another appendix section			       %%
+%%=============================================================%%
+
+%% \section{Example of another appendix section}\label{secA2}%
+%% Appendices may be used for helpful, supporting or essential material that would otherwise 
+%% clutter, break up or be distracting to the text. Appendices can consist of sections, figures, 
+%% tables and equations etc.
+
+% \end{appendices}
+
+%%===========================================================================================%%
+%% If you are submitting to one of the Nature Portfolio journals, using the eJP submission   %%
+%% system, please include the references within the manuscript file itself. You may do this  %%
+%% by copying the reference list from your .bbl file, paste it into the main manuscript .tex %%
+%% file, and delete the associated \verb+\bibliography+ commands.                            %%
+%%===========================================================================================%%
+
+\bibliography{ref}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+
+\end{document}

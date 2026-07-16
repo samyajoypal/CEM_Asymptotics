@@ -1,0 +1,666 @@
+%Version 3.1 December 2024
+% See section 11 of the User Manual for version history
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+
+%%=======================================================%%
+%% to print line numbers in the margin use lineno option %%
+%%=======================================================%%
+
+%%\documentclass[lineno,pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%=========================================================================================%%
+%% the documentclass is set to pdflatex as default. You can delete it if not appropriate.  %%
+%%=========================================================================================%%
+
+%%\documentclass[sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%Note: the following reference styles support Namedate and Numbered referencing. By default the style follows the most common style. To switch between the options you can add or remove Numbered in the optional parenthesis. 
+%%The option is available for: sn-basic.bst, sn-chicago.bst%  
+ 
+%%\documentclass[pdflatex,sn-nature]{sn-jnl}% Style for submissions to Nature Portfolio journals
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style
+%%\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author Year Reference Style
+%%\documentclass[pdflatex,sn-aps]{sn-jnl}% American Physical Society (APS) Reference Style
+%%\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}% Vancouver Numbered Reference Style
+%%\documentclass[pdflatex,sn-vancouver-ay]{sn-jnl}% Vancouver Author Year Reference Style
+%%\documentclass[pdflatex,sn-apa]{sn-jnl}% APA Reference Style
+%%\documentclass[pdflatex,sn-chicago]{sn-jnl}% Chicago-based Humanities Reference Style
+
+%%%% Standard Packages
+%%<additional latex packages if required can be included here>
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+
+\let\oldtheta\theta
+\renewcommand{\theta}{\boldsymbol{\oldtheta}}
+\let\oldalpha\alpha
+\renewcommand{\alpha}{\boldsymbol{\oldalpha}}
+\let\oldmu\mu
+\renewcommand{\mu}{\boldsymbol{\oldmu}}
+\let\oldSigma\Sigma
+\renewcommand{\Sigma}{\boldsymbol{\oldSigma}}
+\let\oldxi\xi
+\renewcommand{\xi}{\boldsymbol{\oldxi}}
+\let\oldOmega\Omega
+\renewcommand{\Omega}{\boldsymbol{\oldOmega}}
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+\usepackage{bbm}
+%%%%
+
+%%%%%=============================================================================%%%%
+%%%%  Remarks: This template is provided to aid authors with the preparation
+%%%%  of original research articles intended for submission to journals published 
+%%%%  by Springer Nature. The guidance has been prepared in partnership with 
+%%%%  production teams to conform to Springer Nature technical requirements. 
+%%%%  Editorial and presentation requirements differ among journal portfolios and 
+%%%%  research disciplines. You may find sections in this template are irrelevant 
+%%%%  to your work and are empowered to omit any such section if allowed by the 
+%%%%  journal you intend to submit to. The submission guidelines and policies 
+%%%%  of the journal take precedence. A detailed User Manual is available in the 
+%%%%  template package for technical guidance.
+%%%%%=============================================================================%%%%
+
+%% as per the requirement new theorem styles can be included as shown below
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}{Proposition}% 
+%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}%
+\newtheorem{assumption}{Assumption}
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title{Supplementary Material for: Asymptotic Inference for Heterogeneous Multivariate Mixture Models Estimated by the Classification EM Algorithm}
+\maketitle
+
+This supplementary document provides the exhaustive set of tables and figures supporting the simulation study presented in the main manuscript. Due to space constraints in the main text, we present the complete finite-sample performance metrics for the Classification EM estimator across all parameter classes, overlap scenarios, and mixture families here.
+
+\section{Extended Simulation Tables}
+In this section, we present the raw tabular data summarizing the performance of the Classification EM estimator. The tables are separated by metric class: \textit{Consistency and Variance Estimates} and \textit{Coverage Rates}. For enhanced readability, we have further fragmented the parameters into three groups: Means, Covariances, and Shape/Proportions.
+
+\subsection{Consistency and Variance Estimates}
+The tables below detail the Bias relative to the Classification Maximum Likelihood (CML) target, the Empirical Standard Deviation (SD), the Mean Naive Standard Error (SE), and the Mean Boundary-Corrected SE. Notably, the bias remains consistently small (averaging $<0.01$) across all scenarios, verifying that the estimator is asymptotically unbiased for the CML target. Additionally, comparing the Naive SE to the Empirical SD reveals significant underestimation of variance in strong overlap scenarios, which the Boundary-Corrected SE successfully resolves.
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_Covariances_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_Means_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_Shape_Proportions_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_strong_overlap_Covariances_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_strong_overlap_Means_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_strong_overlap_Shape_Proportions_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_strong_overlap_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_well_separated_Covariances_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_well_separated_Means_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_well_separated_Shape_Proportions_consistency.tex}
+
+\input{results/tables_small/normal_skewnormal_well_separated_consistency.tex}
+
+\input{results/tables_small/normal_t_moderate_overlap_Covariances_consistency.tex}
+
+\input{results/tables_small/normal_t_moderate_overlap_Means_consistency.tex}
+
+\input{results/tables_small/normal_t_moderate_overlap_Shape_Proportions_consistency.tex}
+
+\input{results/tables_small/normal_t_moderate_overlap_consistency.tex}
+
+\input{results/tables_small/normal_t_strong_overlap_Covariances_consistency.tex}
+
+\input{results/tables_small/normal_t_strong_overlap_Means_consistency.tex}
+
+\input{results/tables_small/normal_t_strong_overlap_Shape_Proportions_consistency.tex}
+
+\input{results/tables_small/normal_t_strong_overlap_consistency.tex}
+
+\input{results/tables_small/normal_t_well_separated_Covariances_consistency.tex}
+
+\input{results/tables_small/normal_t_well_separated_Means_consistency.tex}
+
+\input{results/tables_small/normal_t_well_separated_Shape_Proportions_consistency.tex}
+
+\input{results/tables_small/normal_t_well_separated_consistency.tex}
+
+\clearpage
+\subsection{Coverage Rates}
+The following tables compare the empirical coverage of the 95\% confidence intervals centered at the CML target. As established in the main manuscript, the boundary correction effectively inflates variance to account for classification uncertainty. This results in the `BC Cov.' systematically outperforming the `Naive Cov.', particularly in scenarios with substantial component overlap where the naive estimator fails to meet the nominal 95\% level.
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_Covariances_coverage.tex}
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_Means_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_skewnormal_moderate_overlap_Shape_Proportions_coverage.tex}
+
+\input{results/tables_small/normal_skewnormal_moderate_overlap_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_skewnormal_strong_overlap_Covariances_coverage.tex}
+
+\input{results/tables_small/normal_skewnormal_strong_overlap_Means_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_skewnormal_strong_overlap_Shape_Proportions_coverage.tex}
+
+\input{results/tables_small/normal_skewnormal_strong_overlap_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_skewnormal_well_separated_Covariances_coverage.tex}
+
+\input{results/tables_small/normal_skewnormal_well_separated_Means_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_skewnormal_well_separated_Shape_Proportions_coverage.tex}
+
+\input{results/tables_small/normal_skewnormal_well_separated_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_t_moderate_overlap_Covariances_coverage.tex}
+
+\input{results/tables_small/normal_t_moderate_overlap_Means_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_t_moderate_overlap_Shape_Proportions_coverage.tex}
+
+\input{results/tables_small/normal_t_moderate_overlap_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_t_strong_overlap_Covariances_coverage.tex}
+
+\input{results/tables_small/normal_t_strong_overlap_Means_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_t_strong_overlap_Shape_Proportions_coverage.tex}
+
+\input{results/tables_small/normal_t_strong_overlap_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_t_well_separated_Covariances_coverage.tex}
+
+\input{results/tables_small/normal_t_well_separated_Means_coverage.tex}
+
+\clearpage
+\input{results/tables_small/normal_t_well_separated_Shape_Proportions_coverage.tex}
+
+\input{results/tables_small/normal_t_well_separated_coverage.tex}
+
+\clearpage
+\clearpage
+\section{Extended Simulation Figures}
+Visualizations of the simulation metrics across sample sizes $N \in \{5000, 10000, 15000, 20000\}$. These plots empirically validate the theoretical properties derived in the main text, specifically consistency and $\sqrt{n}$-asymptotic normality.
+
+\subsection{Bias (relative to CML target)}
+The bias relative to the CML target remains negligible across all sample sizes. This verifies the fundamental claim that while the CEM estimator is inconsistent for the true data-generating parameter $\boldsymbol{\theta}_0$, it is perfectly consistent for the population CML parameter $\boldsymbol{\theta}^*$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_alpha1.png}
+\caption{Bias (relative to CML target) for parameter alpha1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_alpha2.png}
+\caption{Bias (relative to CML target) for parameter alpha2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_l11_1.png}
+\caption{Bias (relative to CML target) for parameter l11\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_l11_2.png}
+\caption{Bias (relative to CML target) for parameter l11\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_l21_1.png}
+\caption{Bias (relative to CML target) for parameter l21\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_l21_2.png}
+\caption{Bias (relative to CML target) for parameter l21\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_l22_1.png}
+\caption{Bias (relative to CML target) for parameter l22\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_l22_2.png}
+\caption{Bias (relative to CML target) for parameter l22\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_lambda.png}
+\caption{Bias (relative to CML target) for parameter lambda across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_mu1_1.png}
+\caption{Bias (relative to CML target) for parameter mu1\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_mu1_2.png}
+\caption{Bias (relative to CML target) for parameter mu1\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_mu2_1.png}
+\caption{Bias (relative to CML target) for parameter mu2\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_mu2_2.png}
+\caption{Bias (relative to CML target) for parameter mu2\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_rho.png}
+\caption{Bias (relative to CML target) for parameter rho across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_xi2_1.png}
+\caption{Bias (relative to CML target) for parameter xi2\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/bias_xi2_2.png}
+\caption{Bias (relative to CML target) for parameter xi2\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\clearpage
+\subsection{Root Mean Squared Error (RMSE) (relative to CML target)}
+The Root Mean Squared Error (RMSE) decays systematically as the sample size $N$ increases. The rate of decay confirms the theoretical $\sqrt{n}$ convergence rate established for the heterogeneous multivariate CEM estimator.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_alpha1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter alpha1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_alpha2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter alpha2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_l11_1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter l11\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_l11_2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter l11\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_l21_1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter l21\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_l21_2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter l21\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_l22_1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter l22\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_l22_2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter l22\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_lambda.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter lambda across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_mu1_1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter mu1\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_mu1_2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter mu1\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_mu2_1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter mu2\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_mu2_2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter mu2\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_rho.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter rho across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_xi2_1.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter xi2\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/rmse_xi2_2.png}
+\caption{Root Mean Squared Error (RMSE) (relative to CML target) for parameter xi2\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\clearpage
+\subsection{Empirical Coverage of 95\% Confidence Intervals}
+The empirical coverage probability plots illustrate the robustness of the boundary-corrected standard errors. While the naive confidence intervals consistently exhibit under-coverage (particularly under strong overlap), the boundary-corrected intervals provide a critical $+2\%$ to $+7\%$ rescue, pulling the coverage back toward the nominal 95\% level.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_alpha1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter alpha1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_alpha2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter alpha2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_l11_1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter l11\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_l11_2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter l11\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_l21_1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter l21\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_l21_2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter l21\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_l22_1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter l22\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_l22_2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter l22\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_lambda.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter lambda across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_mu1_1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter mu1\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_mu1_2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter mu1\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_mu2_1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter mu2\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_mu2_2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter mu2\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_rho.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter rho across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_xi2_1.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter xi2\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/coverage_xi2_2.png}
+\caption{Empirical Coverage of 95\% Confidence Intervals for parameter xi2\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\clearpage
+\subsection{Comparison of Empirical SD vs Mean Boundary-Corrected SE}
+These plots compare the true empirical standard deviation (SD) of the estimates against the mean boundary-corrected standard error (SE) reported by our sandwich estimator. The tight correspondence between the two curves as $n \to \infty$ provides definitive proof that the derived analytical boundary correction correctly captures the asymptotic variance.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_alpha1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter alpha1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_alpha2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter alpha2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_l11_1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter l11\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_l11_2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter l11\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_l21_1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter l21\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_l21_2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter l21\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_l22_1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter l22\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_l22_2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter l22\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_lambda.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter lambda across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_mu1_1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter mu1\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_mu1_2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter mu1\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_mu2_1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter mu2\_1 across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_mu2_2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter mu2\_2 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_rho.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter rho across sample sizes.}
+\end{figure}
+
+\clearpage
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_xi2_1.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter xi2\_1 across sample sizes.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/sd_vs_se_xi2_2.png}
+\caption{Comparison of Empirical SD vs Mean Boundary-Corrected SE for parameter xi2\_2 across sample sizes.}
+\end{figure}
+
+\clearpage
+\clearpage
+\end{document}

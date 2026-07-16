@@ -1,0 +1,321 @@
+The surface representation in \eqref{eq:boundary-curvature} is useful for
+theory but direct numerical integration becomes impractical as the observation
+dimension $p$ grows.  We instead estimate its equivalent Dirac-delta
+representation using observations from $P_0$.  This avoids both a spatial grid
+and the incorrect substitution of the fitted CML mixture for the unknown
+data-generating density.
+
+For $j<l$, define the active-pair indicator
+\begin{equation}
+ \chi_{jl}(\mathbf{x};\boldsymbol{\theta})
+ =\ind\!\left\{
+ \min(q_j(\mathbf{x};\boldsymbol{\theta}),q_l(\mathbf{x};\boldsymbol{\theta}))
+ >\max_{m\notin\{j,l\}}q_m(\mathbf{x};\boldsymbol{\theta})
+ \right\},
+ \label{eq:active-pair-indicator}
+\end{equation}
+with the indicator equal to one when $k=2$.  Let $K$ be a kernel and $h=h_n$
+a bandwidth.  The proposed estimator is
+\begin{equation}
+ \widehat{\mathbf{B}}_n
+ =\frac{1}{nh}
+ \sum_{i=1}^n\sum_{1\leq j<l\leq k}
+ K\!\left\{\frac{g_{jl}(\mathbf{X}_i;\widehat{\boldsymbol{\theta}}_n)}{h}\right\}
+ \chi_{jl}(\mathbf{X}_i;\widehat{\boldsymbol{\theta}}_n)
+ \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{X}_i;\widehat{\boldsymbol{\theta}}_n)
+ \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{X}_i;\widehat{\boldsymbol{\theta}}_n)^\mathsf T.
+ \label{eq:boundary-estimator}
+\end{equation}
+Its cost is linear in $n$ and quadratic in $k$, and it does not require a grid
+in $\mathbb R^p$.
+
+\begin{assumption}[Kernel and tube regularity]
+\label{ass:kernel-tube}
+\begin{enumerate}
+ \item $K$ is bounded, Lipschitz, symmetric, compactly supported, and
+ $\int K(v)\,dv=1$.
+ \item $h\to0$, $nh\to\infty$, and
+ $\|\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*\|/h=o_p(1)$.
+ \item In neighbourhoods of active faces, the conditional surface moments of
+ $\nabla_{\boldsymbol{\theta}}g_{jl}\nabla_{\boldsymbol{\theta}}g_{jl}^\mathsf T$ given $g_{jl}=v$ are continuous at
+ $v=0$ and dominated by an integrable envelope.
+ \item Contributions from $h$-neighbourhoods of multiple-tie junctions are
+ $o(1)$ after the $h^{-1}$ normalization.
+\end{enumerate}
+\end{assumption}
+
+For a root-$n$ consistent estimator, the plug-in condition in part (2) follows
+from $\sqrt n\,h\to\infty$.  The familiar choice $h\asymp n^{-1/5}$ satisfies
+the three rate restrictions, although data-driven bandwidth selection and
+sensitivity analysis remain necessary in applications.
+
+To describe precision, define the oracle estimator
+$\widetilde{\mathbf{B}}_n$ by replacing
+$\widehat{\boldsymbol{\theta}}_n$ with $\boldsymbol{\theta}^*$ in
+\eqref{eq:boundary-estimator}.  For an active pair, let
+\begin{equation}
+ \boldsymbol{\Gamma}_{jl}(v)
+ =\int_{\{\mathbf{x}:g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)=v\}}
+ \frac{p_0(\mathbf{x})\chi_{jl}(\mathbf{x};\boldsymbol{\theta}^*)
+ \mathbf{W}_{jl}(\mathbf{x})}
+ {\|\nabla_{\mathbf{x}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\|}
+ \,d\mathcal H^{p-1}(\mathbf{x}),
+ \label{eq:surface-moment}
+\end{equation}
+where
+\begin{equation}
+ \mathbf{W}_{jl}(\mathbf{x})
+ =\nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)
+  \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)^\mathsf T.
+ \label{eq:boundary-outer-product}
+\end{equation}
+
+\begin{theorem}[Bias, variance, and oracle limit distribution]
+\label{thm:boundary-oracle-clt}
+In addition to Assumption~\ref{ass:kernel-tube}, suppose each
+$\boldsymbol{\Gamma}_{jl}$ is twice continuously differentiable at zero,
+$K$ is a second-order kernel, and the corresponding fourth-order surface
+moments are finite.  Let
+$\mu_2(K)=\int v^2K(v)\,dv$ and $R(K)=\int K(v)^2\,dv$.  Then
+\begin{align}
+ E\widetilde{\mathbf{B}}_n
+ &=\mathbf{B}+\frac{h^2\mu_2(K)}2
+   \sum_{j<l}\boldsymbol{\Gamma}_{jl}''(0)+o(h^2),
+ \label{eq:boundary-bias}\\
+ \operatorname{Var}\{\operatorname{vec}(\widetilde{\mathbf{B}}_n)\}
+ &=\frac1{nh}\boldsymbol{\Omega}_{\mathbf{B}}
+   +o\{(nh)^{-1}\},
+ \label{eq:boundary-variance}
+\end{align}
+where
+\begin{equation}
+\begin{aligned}
+ \boldsymbol{\Omega}_{\mathbf{B}}
+ &=R(K)\sum_{j<l}\int_{\mathcal F_{jl}^*}
+ \frac{p_0(\mathbf{x})}
+ {\|\nabla_{\mathbf{x}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\|}\\
+ &\quad\times
+ \operatorname{vec}\{\mathbf{W}_{jl}(\mathbf{x})\}
+ \operatorname{vec}\{\mathbf{W}_{jl}(\mathbf{x})\}^\mathsf T
+ \,d\mathcal H^{p-1}(\mathbf{x}).
+\end{aligned}
+ \label{eq:boundary-asymptotic-variance}
+\end{equation}
+If $nh^5\to0$, then
+\begin{equation}
+ \sqrt{nh}\,\operatorname{vec}
+ (\widetilde{\mathbf{B}}_n-\mathbf{B})
+ \rightsquigarrow N_{d^2}(\mathbf{0},\boldsymbol{\Omega}_{\mathbf{B}}).
+ \label{eq:boundary-oracle-clt}
+\end{equation}
+Without undersmoothing, the same conclusion holds after centering by the
+leading bias in \eqref{eq:boundary-bias}.
+\end{theorem}
+
+\begin{proof}
+The coarea formula writes the expectation as
+$\sum_{j<l}\int K(t)\boldsymbol{\Gamma}_{jl}(ht)\,dt$.
+A second-order Taylor expansion gives \eqref{eq:boundary-bias}.  Applying the
+same representation to the squared vectorized summand gives
+\eqref{eq:boundary-variance}; cross-pair terms are lower order because
+first-order mass at multiple-face junctions is excluded.  A triangular-array
+Lindeberg argument yields the centered normal limit.  Finally,
+$\sqrt{nh}h^2\to0$ is equivalent to $nh^5\to0$ and removes the leading bias.
+\end{proof}
+
+\subsection{Finite-sample curvature stabilization}
+
+Kernel variability can make
+$\widehat{\mathbf{A}}_n=\widehat{\mathbf{I}}_{c,n}-
+\widehat{\mathbf B}_n$ nonpositive in finite samples even when
+$\mathbf{A}$ is positive definite.  To make this failure visible while still
+providing usable inference, define
+\begin{align}
+ \widehat\lambda_n
+ &=\lambda_{\max}\!\left(
+ \widehat{\mathbf I}_{c,n}^{-1/2}
+ \widehat{\mathbf B}_n
+ \widehat{\mathbf I}_{c,n}^{-1/2}\right),                 \label{eq:relative-boundary-eigenvalue}\\
+ \widehat\gamma_n
+ &=\min\left\{1,\frac{1-\varepsilon_n}{\widehat\lambda_n}\right\},
+ \qquad
+ \widehat{\mathbf B}_n^{\mathrm{stab}}
+ =\widehat\gamma_n\widehat{\mathbf B}_n,                 \label{eq:boundary-stabilization}
+\end{align}
+where $\varepsilon_n\downarrow0$.  We use
+$\varepsilon_n=n^{-1/4}$ in the simulations.
+
+\begin{proposition}[Asymptotic inactivity of stabilization]
+\label{prop:stabilization-inactive}
+Suppose $\mathbf{I}_c$ and
+$\mathbf{A}=\mathbf{I}_c-\mathbf{B}$ are positive definite and the conditions of
+Theorem~\ref{thm:sandwich-consistency} hold.  If
+$\varepsilon_n\to0$, then
+\begin{equation}
+ P(\widehat\gamma_n=1)\to1,
+ \qquad
+ \widehat{\mathbf{B}}_n^{\mathrm{stab}}\to_p\mathbf{B}.
+ \label{eq:stabilization-inactive}
+\end{equation}
+Consequently, replacing $\widehat{\mathbf B}_n$ by its stabilized version does
+not change the first-order limiting distribution.
+\end{proposition}
+
+\begin{proof}
+Positive definiteness of $\mathbf{A}$ implies
+\[
+ \lambda_{\max}(\mathbf{I}_c^{-1/2}\mathbf{B}
+                         \mathbf{I}_c^{-1/2})<1.
+\]
+Consistency of $\widehat{\mathbf I}_{c,n}$ and
+$\widehat{\mathbf B}_n$, together with continuity of inverse square roots and
+eigenvalues on the positive-definite cone, gives
+$\widehat\lambda_n\to_p\lambda_{\max}<1$.  Since
+$\varepsilon_n\to0$, the inequality
+$\widehat\lambda_n\leq1-\varepsilon_n$ holds with probability tending to one.
+Hence $\widehat\gamma_n=1$ with probability tending to one, proving both
+claims.
+\end{proof}
+
+\begin{proposition}[Plug-in error rate]
+\label{prop:boundary-plugin-rate}
+Under the conditions of Theorem~\ref{thm:boundary-oracle-clt}, suppose the
+probability contribution of $h$-neighbourhoods of multiple-tie junctions,
+after $h^{-1}$ normalization, is $O(\zeta_h)$ with $\zeta_h\to0$.  Then
+\begin{equation}
+ \|\widehat{\mathbf{B}}_n-\mathbf{B}\|_F
+ =O_p\!\left(
+ h^2+(nh)^{-1/2}
+ +\frac{\|\widehat{\boldsymbol{\theta}}_n
+             -\boldsymbol{\theta}^*\|}{h}
+ +\zeta_h
+ \right).
+ \label{eq:boundary-plugin-rate}
+\end{equation}
+For root-$n$ consistent $\widehat{\boldsymbol{\theta}}_n$ and
+$h\asymp n^{-1/5}$, all displayed terms converge to zero.
+\end{proposition}
+
+\begin{proof}
+The first two terms follow from
+Theorem~\ref{thm:boundary-oracle-clt}.  Lipschitz continuity of $K$, the
+$h^{-1}$ scaling in its argument, and local derivative envelopes bound the
+parameter-substitution error by the third term.  Classification of an active
+pair can differ only near a multiple-tie junction or within a tube whose width
+is proportional to the parameter error; these contributions are controlled by
+$\zeta_h$ and the same substitution term.
+\end{proof}
+
+\begin{theorem}[Consistency of the boundary-curvature estimator]
+\label{thm:boundary-estimator-consistency}
+Under Assumptions~\ref{ass:boundary-geometry},
+\ref{ass:local-stochastic}, and \ref{ass:kernel-tube},
+\begin{equation}
+ \widehat{\mathbf{B}}_n\xrightarrow{p}\mathbf{B}.
+ \label{eq:boundary-estimator-consistency}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+First fix $\boldsymbol{\theta}=\boldsymbol{\theta}^*$.  The coarea formula gives, for each active pair,
+\begin{multline*}
+ \frac1hP_0\left[
+ K\{g_{jl}(\mathbf{X};\boldsymbol{\theta}^*)/h\}\chi_{jl}(\mathbf{X};\boldsymbol{\theta}^*)
+ \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{X};\boldsymbol{\theta}^*)\nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{X};\boldsymbol{\theta}^*)^\mathsf T
+ \right]\\
+ =\int K(v/h)h^{-1}
+ \int_{\{g_{jl}=v\}}
+ \frac{p_0(\mathbf{x})\chi_{jl}(\mathbf{x};\boldsymbol{\theta}^*)
+ \nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\nabla_{\boldsymbol{\theta}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)^\mathsf T}
+ {\|\nabla_{\mathbf{x}}g_{jl}(\mathbf{x};\boldsymbol{\theta}^*)\|}
+ \,d\mathcal H^{p-1}(\mathbf{x})\,dv.
+\end{multline*}
+Continuity of the inner surface moment and $\int K=1$ make this converge to
+the $(j,l)$ term of \eqref{eq:boundary-curvature}.  The variance is
+$O\{(nh)^{-1}\}$ under the envelope conditions, so the centered empirical
+term vanishes.  The condition
+$\|\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*\|/h=o_p(1)$, Lipschitz regularity, and negligible
+multiple-tie neighbourhoods make substitution of $\widehat{\boldsymbol{\theta}}_n$ and the
+estimated active indicator asymptotically negligible.  Summing over the
+finitely many pairs proves the result.
+\end{proof}
+
+Define the feasible fixed-classification and score matrices
+\begin{align}
+ \widehat{\mathbf{I}}_{c,n}
+ &=-\frac1n\sum_{i=1}^n\sum_{j=1}^k
+ \ind\{a_{\widehat{\boldsymbol{\theta}}_n}(\mathbf{X}_i)=j\}
+ \nabla_{\boldsymbol{\theta}}^2q_j(\mathbf{X}_i;\widehat{\boldsymbol{\theta}}_n),                         \label{eq:ic-estimator}\\
+ \widehat{\mathbf{J}}_n
+ &=\frac1n\sum_{i=1}^n
+ \widehat{\boldsymbol{\psi}}_i\widehat{\boldsymbol{\psi}}_i^\mathsf T,
+ \qquad
+ \widehat{\boldsymbol{\psi}}_i=\boldsymbol{\psi}(\mathbf{X}_i;\widehat{\boldsymbol{\theta}}_n),              \label{eq:j-estimator}\\
+ \widehat{\mathbf{A}}_n
+ &=\widehat{\mathbf{I}}_{c,n}-\widehat{\mathbf{B}}_n,               \label{eq:a-estimator}\\
+ \widehat{\mathbf{V}}_n
+ &=\widehat{\mathbf{A}}_n^{-1}\widehat{\mathbf{J}}_n\widehat{\mathbf{A}}_n^{-\mathsf T}.
+ \label{eq:v-estimator}
+\end{align}
+
+\begin{theorem}[Consistency of feasible sandwich inference]
+\label{thm:sandwich-consistency}
+Suppose the assumptions of
+Theorem~\ref{thm:boundary-estimator-consistency} hold, the interior Hessian and
+score classes satisfy uniform laws of large numbers near $\boldsymbol{\theta}^*$, and $\mathbf{A}$
+is nonsingular.  Then
+\begin{equation}
+ \widehat{\mathbf{I}}_{c,n}\to_p \mathbf{I}_c,\qquad
+ \widehat{\mathbf{J}}_n\to_p \mathbf{J},\qquad
+ \widehat{\mathbf{A}}_n\to_p \mathbf{A},\qquad
+ \widehat{\mathbf{V}}_n\to_p \mathbf{V}.
+ \label{eq:sandwich-consistency}
+\end{equation}
+Consequently, $\widehat{\mathbf{V}}_n/n$ consistently estimates the first-order
+covariance matrix of $\widehat{\boldsymbol{\theta}}_n$.
+\end{theorem}
+
+\begin{proof}
+Consistency of $\widehat{\boldsymbol{\theta}}_n$, the local uniform laws, and the fact that
+ties have probability zero give consistency of $\widehat{\mathbf{I}}_{c,n}$ and
+$\widehat{\mathbf{J}}_n$.  Theorem~\ref{thm:boundary-estimator-consistency} gives the
+remaining component of $\widehat{\mathbf{A}}_n$.  Matrix inversion is continuous on the
+set of nonsingular matrices, so the final assertion follows from the
+continuous mapping theorem.
+\end{proof}
+
+\begin{corollary}[Wald inference]
+\label{cor:wald-inference}
+Let $\mathbf{R}$ be a fixed $r\times d$ matrix of rank $r$ and suppose
+$\mathbf{R}\mathbf{V}\mathbf{R}^\mathsf T$ is nonsingular.  Under
+$H_0:\mathbf{R}\boldsymbol{\theta}^*=\mathbf{c}$,
+\begin{equation}
+ n(\mathbf{R}\widehat{\boldsymbol{\theta}}_n-\mathbf{c})^\mathsf T
+ (\mathbf{R}\widehat{\mathbf{V}}_n\mathbf{R}^\mathsf T)^{-1}
+ (\mathbf{R}\widehat{\boldsymbol{\theta}}_n-\mathbf{c})
+ \rightsquigarrow\chi_r^2.
+ \label{eq:wald-statistic}
+\end{equation}
+In particular, componentwise intervals based on
+$\{\widehat{\mathbf{V}}_{n,ss}/n\}^{1/2}$ have asymptotic coverage equal to their
+nominal level.
+\end{corollary}
+
+\begin{corollary}[Smooth transformations]
+\label{cor:delta-method}
+Let $\boldsymbol{\tau}:\mathbb R^d\to\mathbb R^s$ be continuously
+differentiable at $\boldsymbol{\theta}^*$ with Jacobian matrix
+$\mathbf{D}_{\tau}$.  Then
+\begin{equation}
+ \sqrt n\{\boldsymbol{\tau}(\widehat{\boldsymbol{\theta}}_n)
+ -\boldsymbol{\tau}(\boldsymbol{\theta}^*)\}
+ \rightsquigarrow
+ N_s(\mathbf{0},\mathbf{D}_{\tau}\mathbf{V}
+                    \mathbf{D}_{\tau}^\mathsf T),
+ \label{eq:delta-method}
+\end{equation}
+and the plug-in covariance obtained by replacing
+$\mathbf{D}_{\tau}$ and $\mathbf{V}$ by consistent estimators is consistent.
+This result covers scientifically interpretable transformations of mixture
+weights, locations, covariance parameters, and component contrasts.
+\end{corollary}

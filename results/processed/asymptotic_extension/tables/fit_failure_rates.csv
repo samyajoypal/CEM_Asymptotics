@@ -1,0 +1,5 @@
+scenario,n,fit_failures,planned_replications,fit_failure_rate
+nsn_p2_strong_balanced,8000,0.0,500.0,0.0
+nt_p2_strong_balanced,8000,0.0,500.0,0.0
+ntsn_p2_moderate_balanced,4000,10.0,500.0,0.02
+ntsn_p5_moderate_balanced,4000,36.0,500.0,0.072

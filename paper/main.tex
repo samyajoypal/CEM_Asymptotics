@@ -1,0 +1,340 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\doublespacing
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\ind}{\mathbf 1}
+
+\title{Inference for Hard Classification Likelihoods:\
+Moving-Boundary Curvature and Feasible Uncertainty Quantification}
+\author{Authors to be finalized}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Hard classification replaces posterior membership probabilities by
+deterministic assignments and can make heterogeneous mixture fitting markedly
+simpler.  It also creates a nonsmooth criterion whose classification regions
+move with the parameter.  Standard errors computed after freezing the fitted
+labels ignore that motion.  We study classification maximum-likelihood
+estimators as potentially misspecified M-estimators, with the population
+classification functional---rather than the ordinary mixture parameter---as
+their explicit target.  For regular decision hypersurfaces, we show that the
+population Hessian contains a positive semidefinite surface integral in
+addition to the usual within-class Hessian.  Because this term reduces the
+positive curvature, fixed-label sandwich inference generally understates
+uncertainty.  We establish consistency, a local stochastic expansion,
+asymptotic normality, local-bootstrap validity, and consistency of a feasible
+kernel estimator of the surface term.  An eigenvalue-constrained
+stabilization is asymptotically inactive but prevents nonpositive estimated
+curvature in finite samples.  Across 31,000 primary simulation attempts involving
+heterogeneous Normal--Student-$t$ and Normal--skew-normal mixtures, the
+correction materially improves standard-error calibration and confidence
+interval coverage under overlap and imbalance, while becoming small under
+separation.  Two Dry Bean analyses show both successful local calibration and
+the distinct instability caused by optimization-basin selection.  The method
+therefore supplies feasible local inference together with diagnostics that
+identify when a local Gaussian summary is inadequate.
+\end{abstract}
+
+\noindent\textbf{Keywords:} classification likelihood; decision boundary;
+finite mixture; M-estimation; nonsmooth inference; sandwich covariance.
+
+\section{Introduction}
+\label{sec:introduction}
+
+Many estimators combine smooth component criteria through a parameter-dependent
+maximum.  Examples arise whenever observations are assigned to the currently
+best-fitting group and the parameters are then estimated using those hard
+assignments.  Such procedures are attractive computationally: conditional on
+the assignments, a large optimization can separate into simpler component
+problems.  Statistically, however, the resulting objective is only piecewise
+smooth.  A small parameter perturbation moves the interfaces between the
+regions, so differentiating the criterion as though its fitted partition were
+fixed omits part of its curvature.
+
+Classification expectation--maximization (CEM) provides an important instance
+of this problem.  Finite mixtures are standard tools for density estimation,
+clustering, and latent-population analysis \citep{mclachlan2000finite}.  The EM
+algorithm maximizes the observed-data likelihood through probabilistic
+memberships \citep{dempster1977maximum}; CEM instead inserts a classification
+step and assigns every observation to its largest weighted component density
+\citep{celeux1992classification}.  Once labels are fixed, component updates
+are partly decoupled.  This is especially useful in heterogeneous mixtures,
+where different components use different distribution families and some
+updates require numerical optimization \citep{pal2026flexible}.
+
+Model-based clustering has developed a broad theory of mixture fitting,
+identifiability, parsimonious covariance modelling, initialization, and order
+selection \citep{titterington1985statistical,redner1984mixture,
+banfield1993model,fraley2002model,keribin2000consistent}. Mixture likelihoods
+can be singular or multimodal, motivating constrained estimation and careful
+optimization diagnostics \citep{hathaway1985constrained,chen1995optimal,
+mclachlan2008em}. Partition assessment and selection add a complementary
+literature based on adjusted agreement, silhouettes, gaps, entropy, and
+resampling stability \citep{hubert1985comparing,rousseeuw1987silhouettes,
+tibshirani2001gap,celeux1996entropy,benhur2002stability,fang2012selection}.
+These concerns are relevant to our basin diagnostics, but are distinct from
+estimating the local curvature of a prespecified classification-likelihood
+target.
+
+Classification likelihood predates CEM. Likelihood-ratio clustering was
+studied by \citet{scott1971clustering}, and
+\citet{bryant1978classification} derived early large-sample properties of
+classification maximum-likelihood estimates. Later work used classification
+criteria for mixture-based clustering and model selection, most notably the
+integrated completed likelihood \citep{biernacki2000icl} and conditional
+classification likelihood \citep{baudry2015conditional}. These contributions
+clarify that classification is a statistical criterion in its own right, but
+they do not provide a general feasible sandwich covariance that estimates the
+curvature contributed by moving multivariate decision faces in heterogeneous
+component models.
+
+Comparisons of mixture and classification sampling schemes likewise show that
+hard classification targets must not be interpreted automatically as
+ordinary-mixture parameters \citep{ganesalingam1989classification}. Related
+order-selection work shows that nontrivial classification uncertainty changes
+the asymptotic behaviour of complete-likelihood criteria \citep{hui2015order}.
+For distance-based hard clustering, early distributional and
+significance-test analyses further emphasize the role of a well-separated
+population optimum \citep{hartigan1978asymptotic,bock1985probabilistic}.
+
+The computational simplification changes both the estimand and the inference.
+The CEM output maximizes a classification likelihood, not the ordinary
+observed-data mixture likelihood.  Its natural population target is therefore
+the maximizer of the expected classification criterion, and need not equal the
+parameter that generated an ordinary finite mixture.  Moreover, the common
+practice of conditioning on the fitted labels treats a data-dependent
+partition as fixed.  This discards the effect of observations that cross a
+decision boundary under an arbitrarily small parameter perturbation.  The
+effect is negligible only when the data-generating density is sufficiently
+small on the active boundaries; it can be first-order under component overlap.
+
+The closest geometric precedent is the asymptotic theory of $k$-means.
+\citet{pollard1981strong} established consistency and
+\citet{pollard1982clt} derived a central limit theorem in which the geometry of
+moving Voronoi cells is fundamental. Our setting replaces squared-distance
+cells by general weighted component log-density comparisons, permits different
+families and misspecification, identifies the active-face contribution in a
+coordinate-invariant surface form, and develops a sample-based estimator of
+that contribution suitable for routine sandwich inference.
+
+This phenomenon is easy to miss because a regular boundary has probability
+zero.  Probability zero eliminates a boundary contribution to the first
+derivative, but not to the second.  We show that differentiation of the
+population maximum produces a surface integral over each active decision
+hypersurface.  Its integrand combines the data density on the boundary, the
+sensitivity of the pairwise score contrast to the parameter, and the spatial
+gradient transverse to the boundary.  The term is positive semidefinite in the
+population Hessian.  It consequently subtracts from the usual positive
+fixed-class curvature and generally increases the sandwich variance.
+
+Our first contribution is a theory of the classification maximum-likelihood
+functional under possible model misspecification.  We establish existence and
+consistency, derive the moving-boundary Hessian, and prove a uniform local
+empirical-process expansion for the nonsmooth maximum criterion.  These
+results yield root-$n$ consistency, asymptotic linearity, and normality for a
+sufficiently accurate local maximizer.  We also state explicit conditions
+under which an algorithmic stationary solution inherits that distribution and
+under which a nonparametric bootstrap is valid.  This separation is essential:
+asymptotic theory for a population target does not guarantee that a multistart
+algorithm or every bootstrap refit reaches its basin.
+
+Our second contribution is feasible inference without estimating the full
+data-generating density or numerically integrating over a hypersurface.  By a
+coarea identity, the surface curvature is equivalently a Dirac-delta moment of
+the pairwise score contrasts.  We estimate it using a one-dimensional kernel
+around each active contrast, obtaining a procedure whose observation-level
+cost is linear in sample size and does not require a grid in the observation
+space.  We derive its bias, variance, oracle limit distribution, plug-in rate,
+and consistency.  Because sampling variability can make the corrected
+curvature nonpositive in finite samples, we introduce an eigenvalue-constrained
+stabilization and prove that it is asymptotically inactive.
+The construction uses the coarea formula \citep{federer1969geometric} and
+standard one-dimensional kernel principles \citep{silverman1986density,
+wand1995kernel}; its plug-in analysis is framed as a stochastic-equicontinuity
+problem rather than a full multivariate density-estimation problem
+\citep{andrews1994empirical}.
+
+Our third contribution is an empirical assessment designed around the actual
+statistical target and the method's operational limitations.  The simulation
+study uses independently approximated population classification targets rather
+than the ordinary mixture-generating parameters, retains failed fits, varies
+overlap, imbalance, dimension, number of components, and heterogeneous family,
+and examines bandwidth sensitivity.  Across the main designs, fixed-label
+inference is most anti-conservative when the boundary carries appreciable
+mass; the proposed correction moves estimated standard errors and coverage
+toward their empirical values.  Additional large-sample runs distinguish slow
+convergence from persistent failure.  In two real-data analyses we compare the
+analytic covariance with a local nonparametric bootstrap and separately use
+unrestricted bootstrap refits to diagnose basin-selection instability.
+
+The contribution differs from ordinary likelihood information calculations,
+including missing-information decompositions such as \citet{Louis1982FindingTO}.
+Here the issue is not integration over an unobserved label conditional on a
+smooth likelihood.  It is the motion of deterministic classification regions
+inside a max-type population criterion.  It also differs from applying a
+generic sandwich formula after differentiation: the relevant derivative
+matrix itself contains a singular surface contribution.  The results connect
+classical misspecified M-estimation \citep{Huber1967,white1982maximum} with the
+geometry of hard classification.
+
+Technically, max-type criteria sit within the wider literature on nonsmooth
+M-estimation and empirical processes. Depending on how sharply the population
+criterion changes, nonsmooth estimators can retain a Gaussian root-$n$ limit
+or exhibit cube-root behaviour \citep{kim1990cube,sherman1993limiting}; the
+regular active-face and positive-curvature assumptions below identify the
+former regime. Our bootstrap statement builds on classical nonparametric
+bootstrap theory \citep{efron1979bootstrap,efron1993introduction}, while the
+application diagnostics recognize that clustering instability is a separate
+inferential object.
+
+Section~\ref{sec:methodology} defines the estimand, derives the active-boundary
+curvature, establishes the limit theory, and constructs the feasible
+covariance estimator. Section~\ref{sec:results} reports the simulation study
+and real-data analyses. Sections~\ref{sec:discussion} and the Conclusion state
+the implications and limitations. Technical proofs, complete empirical
+summaries, direct Gaussian-limit diagnostics, failure accounting, and
+application-level parameter tables are provided in the supplement.
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Classification likelihood and the population target}
+\label{sec:framework}
+\input{sections/framework}
+
+\subsection{Local geometry of active decision boundaries}
+\label{sec:geometry}
+\input{sections/geometry}
+
+\subsection{Asymptotic theory}
+\label{sec:theory}
+\input{sections/consistency}
+\input{sections/asymptotics}
+
+\subsection{Feasible boundary-curvature estimation}
+\label{sec:estimation}
+\input{sections/feasible_inference}
+
+\subsection{Computation and implementation}
+\label{sec:computation}
+\input{sections/computation}
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Simulation study}
+\label{sec:simulations}
+\input{sections/simulation_results}
+
+\subsection{Real data analysis}
+\label{sec:applications}
+\input{sections/applications}
+
+\section{Discussion}
+\label{sec:discussion}
+Hard classification creates a distinctive inferential problem: fitted labels
+can be locally constant for almost every individual observation even though
+their population partition changes at first order.  The missing curvature is
+concentrated on decision hypersurfaces.  Our surface representation makes this
+mechanism explicit, and its positive semidefinite sign explains why treating
+the labels as fixed tends to produce standard errors that are too small.
+
+The feasible estimator turns that geometric identity into a practical
+procedure.  It smooths only a scalar log-score contrast, regardless of the
+dimension of the observations, and it samples the unknown data distribution
+directly.  This is preferable to integrating a fitted mixture density over an
+estimated surface, which would impose correct specification precisely where
+the theory does not require it.  The simulations and the Dermason--Seker
+analysis show that the correction can restore local calibration without the
+cost of a large bootstrap.  Under clear separation the correction contracts,
+as predicted by the surface formula.
+
+There are three qualifications.  First, the method estimates a local
+classification-likelihood covariance.  It does not make the classification
+target equal to the ordinary mixture parameter.  Second, regular active faces,
+a unique local target, and positive population curvature are substantive
+conditions.  Nearly tangent boundaries, appreciable multiple ties, vanishing
+components, or weakly identified skewness can invalidate the approximation or
+slow its convergence.  Third, global family assignment and optimization-basin
+selection are discrete sources of uncertainty.  The unrestricted bootstrap
+results, particularly for Cali--Barbunya, show that they should not be hidden
+inside a Wald standard error.
+
+These qualifications suggest a reporting protocol.  Alongside corrected
+standard errors, an analysis should provide component weights, boundary kernel
+support, the raw relative boundary eigenvalue, any stabilization factor,
+multistart objective gaps, and the fraction of local bootstrap fits that pass
+their convergence diagnostics.  When unrestricted refits frequently change
+basin, conditional local intervals remain interpretable for the selected
+solution but should not be presented as a complete uncertainty statement.
+
+Several extensions are promising.  Uniform inference as two population maxima
+approach one another would require a nonregular, set-valued limit theory.
+Joint selection and estimation could instead use selective or subsampling
+methods.  Higher-order or locally adaptive bandwidths may improve estimation
+when boundary density varies sharply, while automatic differentiation could
+replace finite differences in large parameter spaces.  More broadly, the same
+surface-curvature principle applies to other estimators built from maxima of
+smooth criteria.  Developing this connection beyond mixture classification is
+an important direction for future work.
+
+\section{Conclusion}
+The inferential consequence of hard classification is geometric: decision
+boundaries move with the fitted parameter and contribute first-order
+curvature even though the boundaries themselves have probability zero. The
+proposed surface correction estimates this missing curvature with a
+one-dimensional kernel calculation and yields materially better calibrated
+local uncertainty where fixed-label inference is most anti-conservative. The
+theory, simulations, and applications also delimit the claim: corrected Wald
+inference describes a regular local optimum and cannot absorb instability from
+competing optimization basins or nearly nonregular classification faces.
+Reporting the correction together with boundary support, stabilization, and
+basin diagnostics therefore supplies both an inferential method and an
+explicit warning when a Gaussian local summary is insufficient.
+
+\section*{Data and code availability}
+The Dry Bean data are publicly available from the UCI Machine Learning
+Repository under a Creative Commons Attribution 4.0 licence
+\citep{uci2020drybean}. Code, prespecified screening output, raw job manifests,
+and scripts producing every table and figure are maintained at
+\url{https://github.com/samyajoypal/CEM_Asymptotics}. A versioned archival DOI
+will be minted for the submitted release. An anonymized reproduction archive
+will accompany the initial submission.
+
+\section*{Conflict of interest}
+The authors declare that they have no conflict of interest.
+
+\section*{Funding}
+No external funding was received for this study.
+
+\section*{Author contributions}
+S.P. contributed conceptualization, methodology, software, formal analysis,
+visualization, and preparation of the original draft. R.E.H. contributed
+review and editing of the manuscript. Both authors approved the final
+manuscript.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

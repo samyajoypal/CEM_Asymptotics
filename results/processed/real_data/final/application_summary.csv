@@ -1,0 +1,3 @@
+dataset,n,ari_external_labels,minimum_weight,kernel_support,median_se_inflation,maximum_se_inflation,boundary_shrinkage_factor,raw_generalized_boundary_eigenvalue,local_successes,local_failures,global_successes,global_failures,global_local_basin_fraction,global_admissible_fraction,median_naive_to_local_bootstrap,median_stabilized_to_local_bootstrap
+dry_bean_dermason_seker,5573,0.8666307285636845,0.3448770859501166,33,1.2841698051991042,1.6470281005424696,1.0,0.664162412626244,475,25,200,0,0.59,1.0,0.7982079096590513,0.9912148183469056
+dry_bean_cali_barbunya,2952,0.2819052402256608,0.23373983739837398,44,1.6496016242678877,2.600855690311267,1.0,0.811375476171086,262,238,200,0,0.465,0.985,0.5375566508133154,0.8504052636286673

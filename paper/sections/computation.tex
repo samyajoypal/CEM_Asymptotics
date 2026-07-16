@@ -1,0 +1,73 @@
+The implementation uses one distribution adapter for every component family.
+An adapter defines the unconstrained coordinates, inverse transformation, and
+log density used by fitting, classification, differentiation, and inference.
+Consequently, the estimated scores and decision contrasts cannot silently use
+a density different from the fitted model.  Positive-definite covariance
+matrices use log-Cholesky coordinates, and mixture weights use
+reference-category multinomial logits.
+
+For the multivariate skew-normal component, we use
+\begin{equation}
+ f(\mathbf{x};\boldsymbol{\xi},\boldsymbol{\Omega},\boldsymbol{\alpha})
+ =2\phi_p(\mathbf{x};\boldsymbol{\xi},\boldsymbol{\Omega})
+ \Phi\!\left\{
+ \boldsymbol{\alpha}^{\mathsf T}\boldsymbol{\Omega}^{-1/2}
+ (\mathbf{x}-\boldsymbol{\xi})
+ \right\},
+ \label{eq:skew-normal-density}
+\end{equation}
+where $\boldsymbol{\Omega}^{-1/2}$ is the symmetric inverse square root.  The
+same expression is used by the fitting library and the inference code.
+
+Hard-EM fitting explicitly requests the hard mode.  We use both K-means and
+Gaussian-mixture initializations.  When component families are distinct, all
+family-to-component assignments are fitted and the result with the largest
+empirical classification likelihood is retained.  The objective gap, selected
+initialization, component weights, tail parameter, covariance eigenvalues, and
+skewness norm are retained as basin-stability diagnostics.  The result is then
+mapped to the manuscript's canonical family order.  Repeated families are
+ordered by a prespecified fitted location functional.  Neither operation uses
+the generating parameters or simulated labels.
+
+The reference implementation evaluates derivatives by centered finite
+differences in the common unconstrained coordinate system.  Evaluations are
+vectorized over observations, so a full contrast-gradient matrix requires
+two score evaluations per parameter coordinate rather than two evaluations
+per observation and coordinate.  A deliberately slow observation-wise
+implementation is retained as an independent numerical check.
+
+The contrast $g_{jl}$ is a dimensionless log posterior odds.  Our prespecified
+pilot bandwidth therefore uses its natural scale,
+\begin{equation}
+ h_{jl}=1.06n^{-1/5}.
+ \label{eq:pilot-bandwidth}
+\end{equation}
+The global empirical spread of $g_{jl}$ is reported but does not multiply the
+bandwidth: in separated mixtures it is dominated by observations far from the
+boundary and produces severe oversmoothing. This is a pilot rule, not an
+optimality claim. Every analysis reports $h_{jl}$, the robust global spread,
+the number of observations for which $(j,l)$ is active, and the number falling
+inside the kernel support.
+Pairs with insufficient effective observations are flagged rather than
+silently assigned a wider bandwidth.  The simulation study examines
+multiplier sensitivity around \eqref{eq:pilot-bandwidth}.
+
+We report the raw corrected matrix and its nonpositive-curvature failure rate.
+Primary finite-sample inference uses the eigenvalue-constrained version in
+\eqref{eq:boundary-stabilization}, with $\varepsilon_n=n^{-1/4}$.  The
+associated shrinkage factor is reported for every replication; the correction
+is asymptotically unmodified by Proposition~\ref{prop:stabilization-inactive}.
+
+Population CML targets used in simulation are approximated from several
+independent large reference samples.  We retain every resulting target vector
+and report the between-reference Monte Carlo standard error of each coordinate.
+This prevents numerical target uncertainty from being treated as zero.  Target
+fits and ordinary simulation fits use the same multistart hard-EM,
+classification-objective selection, and canonical-ordering rules.
+
+The nonparametric bootstrap used to assess local inferential accuracy is
+initialized at the original estimate and constrained to a local trust region.
+Replicates reaching that region's boundary are reported as failures.  Fresh
+global bootstrap fits that reselect the family assignment answer a different
+question---stability under model and basin selection---and are reported
+separately rather than pooled into a Gaussian standard error.

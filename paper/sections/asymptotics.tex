@@ -1,0 +1,237 @@
+\subsection{Local stochastic expansion}
+
+Write $\mathbb G_n=\sqrt n(\mathbb P_n-P_0)$ and
+$\boldsymbol{\psi}^*(\mathbf{x})=\boldsymbol{\psi}(\mathbf{x};\boldsymbol{\theta}^*)$.  Although $m_{\boldsymbol{\theta}}(\mathbf{x})$ is continuous in
+$\boldsymbol{\theta}$, it is not differentiable when two component scores tie.  The
+probability of observations lying in a shrinking tube around an active face
+therefore controls the empirical remainder.
+
+For $j<l$, define the activity margin
+\begin{equation}
+ \Delta_{jl}(\mathbf{x};\boldsymbol{\theta})
+ =\min\{q_j(\mathbf{x};\boldsymbol{\theta}),q_l(\mathbf{x};\boldsymbol{\theta})\}
+  -\max_{m\notin\{j,l\}}q_m(\mathbf{x};\boldsymbol{\theta}),
+ \label{eq:activity-margin}
+\end{equation}
+where the maximum over an empty set is $-\infty$.
+
+\begin{assumption}[Local stochastic regularity]
+\label{ass:local-stochastic}
+There are a neighbourhood $U$ of $\boldsymbol{\theta}^*$, constants $C,t_0>0$, and a
+measurable envelope $L$ with $P_0L^{2+\eta}<\infty$ for some $\eta>0$ such
+that:
+\begin{enumerate}
+ \item for all $\boldsymbol{\theta},\boldsymbol{\vartheta}\in U$ and every $j$,
+ \[
+  |q_j(\mathbf{X};\boldsymbol{\theta})-q_j(\mathbf{X};\boldsymbol{\vartheta})|
+  +\|\nabla_{\boldsymbol{\theta}}q_j(\mathbf{X};\boldsymbol{\theta})-\nabla_{\boldsymbol{\theta}}q_j(\mathbf{X};\boldsymbol{\vartheta})\|
+  \leq L(\mathbf{X})\|\boldsymbol{\theta}-\boldsymbol{\vartheta}\|
+ \]
+ almost surely, with the analogous local bound for $\nabla_{\boldsymbol{\theta}}^2q_j$;
+ \item for every $j<l$ and $0<t<t_0$,
+ \[
+  P_0\{|g_{jl}(\mathbf{X};\boldsymbol{\theta}^*)|\leq tL(\mathbf{X}),\
+          \Delta_{jl}(\mathbf{X};\boldsymbol{\theta}^*)\geq-tL(\mathbf{X})\}\leq Ct;
+ \]
+ \item simultaneous $t$-neighbourhoods of two distinct active contrasts have
+ probability $O(t^2)$; and
+ \item $\mathbf{A}=-\nabla_{\boldsymbol{\theta}}^2M(\boldsymbol{\theta}^*)$ is positive definite.
+\end{enumerate}
+\end{assumption}
+
+The second condition is a local margin condition.  It follows under the
+regular-face assumptions when the distribution of an active contrast has a
+bounded density at zero, with suitable integrability for $L$.  The third
+condition rules out first-order probability mass at multiple-face junctions.
+
+\begin{lemma}[Quadratic mean expansion of the max criterion]
+\label{lem:l2-expansion}
+Under Assumptions~\ref{ass:boundary-geometry} and
+\ref{ass:local-stochastic}, as $\mathbf{u}\to0$,
+\begin{equation}
+ \left\|m_{\boldsymbol{\theta}^*+\mathbf{u}}-m_{\boldsymbol{\theta}^*}-\mathbf{u}^\mathsf T\boldsymbol{\psi}^*\right\|_{P_0,2}
+ =O(\|\mathbf{u}\|^{3/2})+O(\|\mathbf{u}\|^2).
+ \label{eq:l2-expansion}
+\end{equation}
+The bound holds uniformly over $\mathbf{u}/\|\mathbf{u}\|$.
+\end{lemma}
+
+\begin{proof}
+If the winning component does not change between $\boldsymbol{\theta}^*$ and
+$\boldsymbol{\theta}^*+\mathbf{u}$, a Taylor expansion of its score leaves a remainder bounded by a
+multiple of $L\|\mathbf{u}\|^2$.  A change of winner can occur only if an active
+contrast at $\boldsymbol{\theta}^*$ lies within a tube of width proportional to
+$L\|\mathbf{u}\|$.  On this event the first-order discrepancy is bounded by a multiple
+of $L\|\mathbf{u}\|$.  The margin condition makes the probability of the tube
+$O(\|\mathbf{u}\|)$, giving the $O(\|\mathbf{u}\|^{3/2})$ term in $L_2(P_0)$.  Intersections of
+two tubes are of smaller order by Assumption~\ref{ass:local-stochastic}(3).
+The derivative-envelope condition makes these bounds uniform in direction.
+\end{proof}
+
+\begin{theorem}[Local empirical-process expansion]
+\label{thm:local-empirical-expansion}
+Under Assumptions~\ref{ass:boundary-geometry} and
+\ref{ass:local-stochastic}, for every finite $R$,
+\begin{multline}
+ \sup_{\|\mathbf{u}\|\leq R}\left|
+ n\left[(M_n-M)(\boldsymbol{\theta}^*+\mathbf{u}/\sqrt n)
+       -(M_n-M)(\boldsymbol{\theta}^*)\right]
+ -\mathbf{u}^\mathsf T\mathbb G_n\boldsymbol{\psi}^*
+ \right|\\
+ \xrightarrow{p}0.
+ \label{eq:local-empirical-expansion}
+\end{multline}
+Consequently,
+\begin{equation}
+ n\{M_n(\boldsymbol{\theta}^*+\mathbf{u}/\sqrt n)-M_n(\boldsymbol{\theta}^*)\}
+ =\mathbf{u}^\mathsf T\mathbb G_n\boldsymbol{\psi}^*
+  -\tfrac12\mathbf{u}^\mathsf TAu+o_p(1),
+ \label{eq:local-asymptotic-quadratic}
+\end{equation}
+uniformly on compact subsets of $\mathbb R^d$.
+\end{theorem}
+
+\begin{proof}
+Apply Lemma~\ref{lem:l2-expansion} to the local class indexed by
+$\|\mathbf{u}\|\leq R$.  Its finite-dimensional Lipschitz parameterization and
+$L^{2+\eta}$ envelope give asymptotic equicontinuity of the empirical process;
+the nonlinear remainder in \eqref{eq:l2-expansion} is then negligible at the
+$n^{-1/2}$ localization.  The linear part equals
+$\mathbf{u}^\mathsf T\mathbb G_n\boldsymbol{\psi}^*$.  Combining this result with
+\eqref{eq:population-quadratic-expansion} and $\mathbf{H}=-\mathbf{A}$ proves
+\eqref{eq:local-asymptotic-quadratic}.  This is the standard local
+M-estimation argument, with Lemma~\ref{lem:l2-expansion} supplying the
+nonsmooth stochastic differentiability condition
+\citep{vandervaart1998,van1996weak}.
+\end{proof}
+
+\subsection{Rate, asymptotic linearity, and normality}
+
+Define
+\begin{equation}
+ \mathbf{J}=P_0\{\boldsymbol{\psi}^*(\mathbf{X})\boldsymbol{\psi}^*(\mathbf{X})^\mathsf T\}.
+ \label{eq:score-variance}
+\end{equation}
+At the interior maximizer, Theorem~\ref{thm:population-curvature} gives
+$P_0\boldsymbol{\psi}^*=0$.
+
+\begin{theorem}[Root-$n$ rate]
+\label{thm:root-n-rate}
+Suppose the conditions of Theorems~\ref{thm:cml-consistency} and
+\ref{thm:local-empirical-expansion} hold.  If the approximate-maximization
+error in \eqref{eq:approximate-maximizer} satisfies $nr_n=o_p(1)$, then
+\begin{equation}
+ \sqrt n(\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)=O_p(1).
+ \label{eq:root-n-rate}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Consistency localizes $\widehat{\boldsymbol{\theta}}_n$ to a neighbourhood on which the
+population criterion has negative quadratic drift bounded away from zero.
+The empirical modulus implied by
+Theorem~\ref{thm:local-empirical-expansion} is linear at the corresponding
+scale.  On shells $\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|$ larger than $C/\sqrt n$, the quadratic
+drift dominates that modulus with probability tending to one as $C\to\infty$.
+The error $r_n=o_p(n^{-1})$ is negligible on this scale, proving
+\eqref{eq:root-n-rate}.
+\end{proof}
+
+\begin{theorem}[Asymptotic linearity and normality]
+\label{thm:asymptotic-normality}
+Under the conditions of Theorem~\ref{thm:root-n-rate},
+\begin{equation}
+ \sqrt n(\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)
+ =\mathbf{A}^{-1}\mathbb G_n\boldsymbol{\psi}^*+o_p(1).
+ \label{eq:asymptotic-linearity}
+\end{equation}
+If $\mathbf{J}$ is finite, then
+\begin{equation}
+ \sqrt n(\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)
+ \rightsquigarrow N_d(0,\mathbf{V}),
+ \qquad \mathbf{V}=\mathbf{A}^{-1}\mathbf{J}\mathbf{A}^{-\mathsf T}.
+ \label{eq:asymptotic-normality}
+\end{equation}
+This result remains centered on the CML functional $\boldsymbol{\theta}^*$ when the
+ordinary mixture model is misspecified.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:root-n-rate}, the local parameter
+$\widehat{\mathbf{u}}_n=\sqrt n(\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)$ is tight.  The limiting
+quadratic process in \eqref{eq:local-asymptotic-quadratic} has the unique
+maximizer $\mathbf{A}^{-1}\mathbb G_n\boldsymbol{\psi}^*$.  The argmax theorem and
+$nr_n=o_p(1)$ give \eqref{eq:asymptotic-linearity}.  The multivariate central
+limit theorem and Slutsky's theorem yield \eqref{eq:asymptotic-normality}.
+\end{proof}
+
+\begin{proposition}[Transfer to a local algorithmic solution]
+\label{prop:algorithmic-transfer}
+Let $\widetilde{\boldsymbol{\theta}}_n\to_p\boldsymbol{\theta}^*$ be an interior solution produced by an
+algorithm.  Suppose ties occur with probability zero and
+\begin{equation}
+ \mathbb P_n\boldsymbol{\psi}(\mathbf{X};\widetilde{\boldsymbol{\theta}}_n)=o_p(n^{-1/2}),
+ \label{eq:algorithmic-score-error}
+\end{equation}
+and suppose the local score process is stochastically differentiable at
+$\boldsymbol{\theta}^*$ with derivative $-\mathbf{A}$.  Then
+\begin{equation}
+ \sqrt n(\widetilde{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)
+ =\mathbf{A}^{-1}\mathbb G_n\boldsymbol{\psi}^*+o_p(1).
+ \label{eq:algorithmic-linearity}
+\end{equation}
+Thus a consistent stationary solution has the same first-order distribution
+as the local CML maximizer when its optimization error is smaller than the
+statistical score error.
+\end{proposition}
+
+\begin{proof}
+Stochastic differentiability gives
+\[
+ \mathbb P_n\boldsymbol{\psi}(\mathbf{X};\widetilde{\boldsymbol{\theta}}_n)
+ =\mathbb P_n\boldsymbol{\psi}^*-\mathbf{A}(\widetilde{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)
+  +o_p(n^{-1/2}+\|\widetilde{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*\|).
+\]
+Use $P_0\boldsymbol{\psi}^*=0$, multiply by $\sqrt n$, and solve the resulting linear
+equation.  Positive definiteness of $\mathbf{A}$ and consistency absorb the remainder.
+\end{proof}
+
+\begin{theorem}[Validity of the nonparametric bootstrap]
+\label{thm:bootstrap-validity}
+Let $\mathbb P_n^{\#}$ be the empirical measure of a size-$n$ sample drawn
+with replacement from $\mathbb P_n$, and let
+$\widehat{\boldsymbol{\theta}}_n^{\#}$ be a bootstrap approximate maximizer
+initialized in the same consistent basin as
+$\widehat{\boldsymbol{\theta}}_n$.  Suppose, conditionally on the data, its
+optimization error is $o_p(n^{-1})$, and suppose the localized classes in
+Theorem~\ref{thm:local-empirical-expansion} are bootstrap-Donsker and
+$\mathbf{J}$ is positive definite.  Then
+\begin{equation}
+ \sup_{C\in\mathcal C}
+ \left|
+ P^{\#}\!\left\{
+ \sqrt n(\widehat{\boldsymbol{\theta}}_n^{\#}
+          -\widehat{\boldsymbol{\theta}}_n)\in C
+ \right\}
+ -P\{N_d(\mathbf{0},\mathbf{V})\in C\}
+ \right|\xrightarrow{p}0,
+ \label{eq:bootstrap-validity}
+\end{equation}
+where $\mathcal C$ is the collection of convex Borel subsets of
+$\mathbb R^d$.  Thus the ordinary nonparametric bootstrap consistently
+estimates the first-order distribution, provided each bootstrap fit reaches
+the relevant local solution.
+\end{theorem}
+
+\begin{proof}
+Conditionally on the observations, the bootstrap empirical process obeys the
+same local stochastic expansion as in
+Theorem~\ref{thm:local-empirical-expansion}, centered at
+$\widehat{\boldsymbol{\theta}}_n$.  Bootstrap asymptotic equicontinuity and
+the conditional central limit theorem give the same Gaussian linear term,
+while consistency of the local curvature gives the same matrix
+$\mathbf{A}$.  The conditional argmax theorem yields the bootstrap analogue
+of \eqref{eq:asymptotic-linearity}; convergence over convex Borel sets follows
+from continuity of the nondegenerate Gaussian limit
+\citep{van1996weak}.
+\end{proof}
