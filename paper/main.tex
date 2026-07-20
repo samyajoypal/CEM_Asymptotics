@@ -215,16 +215,10 @@ bootstrap theory \citep{efron1979bootstrap,efron1993introduction}, while the
 application diagnostics recognize that clustering instability is a separate
 inferential object.
 
-Section~\ref{sec:methodology} defines the estimand, derives the active-boundary
-curvature, establishes the limit theory, and constructs the feasible
-covariance estimator. Section~\ref{sec:results} reports the simulation study
-and real-data analyses. Sections~\ref{sec:discussion} and the Conclusion state
-the implications and limitations. Technical proofs, complete empirical
-summaries, direct Gaussian-limit diagnostics, failure accounting, and
-application-level parameter tables are provided in the supplement.
-
 \subsection{A one-dimensional illustration of the boundary term}
 \label{sec:one-dimensional-illustration}
+Before introducing the general notation, a scalar example makes the source
+and magnitude of the additional curvature transparent.  
 Consider two components on the real line and suppose that their contrast
 $g(x;\boldsymbol{\theta})=q_1(x;\boldsymbol{\theta})-
 q_2(x;\boldsymbol{\theta})$ has one active regular boundary point $x_0$ at
@@ -240,6 +234,17 @@ Thus the correction is large when the data density is high at the decision
 boundary, all else equal.  It is small when the boundary lies in a low-density
 region, which explains why fixed-label inference can be adequate for strongly
 separated groups.
+
+\newpage
+The general development below replaces the single point $x_0$ by active
+hypersurfaces and turns this population identity into feasible inference.
+Section~\ref{sec:methodology} defines the estimand, derives the active-boundary
+curvature, establishes the limit theory, and constructs the feasible
+covariance estimator. Section~\ref{sec:results} reports the simulation study
+and real-data analyses. Sections~\ref{sec:discussion} and the Conclusion state
+the implications and limitations. Technical proofs, complete empirical
+summaries, direct Gaussian-limit diagnostics, failure accounting, and
+application-level parameter tables are provided in the supplement.
 
 \section{Methodology}
 \label{sec:methodology}
