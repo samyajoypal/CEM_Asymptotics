@@ -74,6 +74,32 @@ from 0.886 to 1.082, whereas the naive ratios range from 0.576 to 0.939.  Thus
 the aggregate improvement is not driven by one parameter.  The estimated
 boundary curvature required no finite-sample shrinkage in this fit.
 
+\begin{table}[t]
+\centering
+\caption{Dermason--Seker inference for interpretable fitted quantities. The
+location distance is measured in standardized principal-component space.}
+\label{tab:dermason-interpretable}
+\begin{tabular}{lrrrrl}
+\toprule
+Quantity & Estimate & Naive SE & Corrected SE & Local SD & Corrected 95\% CI\\
+\midrule
+Mixing weight $\pi_1$ & 0.345 & 0.006 & 0.008 & 0.008 & (0.329, 0.361)\\
+$\|\boldsymbol\mu_1-\boldsymbol\mu_2\|$ & 5.202 & 0.036 & 0.037 & 0.035 & (5.130, 5.273)\\
+Student-$t$ degrees of freedom $\nu$ & 20.680 & 3.848 & 4.184 & 5.533 & (12.479, 28.881)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Scientifically, the correction changes uncertainty most clearly for the fitted
+prevalence of the first hard-classification group: its standard error increases
+by about 31\%, bringing it close to the local-bootstrap scale.  The estimated
+location separation is so pronounced that its uncertainty changes little, as
+predicted by the low-boundary-density argument.  For the Student-$t$ tail
+parameter, the corrected interval is wider than the naive interval, although
+the remaining gap to the local-bootstrap standard deviation warns that tail
+estimation is harder.  The correction therefore changes substantive precision
+selectively; it does not inflate every uncertainty by a common factor.
+
 Figure~\ref{fig:application-calibration} confirms that the aggregate result is
 not an artefact of taking medians. Dermason--Seker corrected ratios cluster
 around one across the coordinate vector; Cali--Barbunya shows a substantial

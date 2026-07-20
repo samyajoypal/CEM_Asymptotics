@@ -129,6 +129,15 @@ $j<l$ proves \eqref{eq:hessian-decomposition}; the remaining statements follow
 from the definitions.
 \end{proof}
 
+\begin{remark}[Relation to $k$-means]
+\label{rem:kmeans}
+For $q_j(\mathbf{x};\boldsymbol{\theta})=-\|\mathbf{x}-
+\boldsymbol{\mu}_j\|^2$, the active faces are Voronoi boundaries.  Pollard's
+$k$-means boundary geometry is therefore recovered as a special
+hard-classification case \citep{pollard1982clt}.  The result extends it to
+weighted log-density comparisons, heterogeneous families, and misspecification.
+\end{remark}
+
 \begin{corollary}[Negligible-boundary limit]
 \label{cor:negligible-boundary}
 If $p_0=0$ $\mathcal H^{p-1}$-almost everywhere on every active face, then

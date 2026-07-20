@@ -240,6 +240,9 @@ estimated active indicator asymptotically negligible.  Summing over the
 finitely many pairs proves the result.
 \end{proof}
 
+The choice $h\asymp n^{-1/5}$ is used here for consistency and conventional
+MSE-type bias--variance behaviour, not for an undersmoothed centred CLT.
+
 Define the feasible fixed-classification and score matrices
 \begin{align}
  \widehat{\mathbf{I}}_{c,n}
@@ -283,6 +286,18 @@ remaining component of $\widehat{\mathbf{A}}_n$.  Matrix inversion is continuous
 set of nonsingular matrices, so the final assertion follows from the
 continuous mapping theorem.
 \end{proof}
+
+\begin{corollary}[First-order equivalence after stabilization]
+\label{cor:stabilized-equivalence}
+Under Proposition~\ref{prop:stabilization-inactive} and
+Theorem~\ref{thm:sandwich-consistency}, let
+$\widehat{\mathbf V}_n^{\mathrm{stab}}$ be obtained from
+$\widehat{\mathbf B}_n^{\mathrm{stab}}$.  Then
+$P(\widehat{\mathbf V}_n^{\mathrm{stab}}=\widehat{\mathbf V}_n)\to1$ and
+$\widehat{\mathbf V}_n^{\mathrm{stab}}\to_p\mathbf V$.  Hence stabilized and
+unstabilized Wald statistics have the same first-order limit whenever
+stabilization is asymptotically inactive.
+\end{corollary}
 
 \begin{corollary}[Wald inference]
 \label{cor:wald-inference}

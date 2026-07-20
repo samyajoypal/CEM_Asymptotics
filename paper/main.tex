@@ -38,7 +38,8 @@ move with the parameter.  Standard errors computed after freezing the fitted
 labels ignore that motion.  We study classification maximum-likelihood
 estimators as potentially misspecified M-estimators, with the population
 classification functional---rather than the ordinary mixture parameter---as
-their explicit target.  For regular decision hypersurfaces, we show that the
+their explicit target, and focus on a selected local optimum.
+For regular decision hypersurfaces, we show that the
 population Hessian contains a positive semidefinite surface integral in
 addition to the usual within-class Hessian.  Because this term reduces the
 positive curvature, fixed-label sandwich inference generally understates
@@ -51,9 +52,10 @@ heterogeneous Normal--Student-$t$ and Normal--skew-normal mixtures, the
 correction materially improves standard-error calibration and confidence
 interval coverage under overlap and imbalance, while becoming small under
 separation.  Two Dry Bean analyses show both successful local calibration and
-the distinct instability caused by optimization-basin selection.  The method
-therefore supplies feasible local inference together with diagnostics that
-identify when a local Gaussian summary is inadequate.
+the distinct instability caused by optimization-basin selection; diagnostics
+identify basin instability.  The method therefore supplies feasible local
+inference together with diagnostics that identify when a local Gaussian
+summary is inadequate.
 \end{abstract}
 
 \noindent\textbf{Keywords:} classification likelihood; decision boundary;
@@ -71,6 +73,11 @@ problems.  Statistically, however, the resulting objective is only piecewise
 smooth.  A small parameter perturbation moves the interfaces between the
 regions, so differentiating the criterion as though its fitted partition were
 fixed omits part of its curvature.
+The paper's main message is that hard classification creates moving decision
+boundaries, and these boundaries contribute first-order curvature even though
+they have probability zero.  Mixtures provide the main implementation, but
+the theory applies more generally to max-type classification likelihoods built
+from smooth component criteria.
 
 Classification expectation--maximization (CEM) provides an important instance
 of this problem.  Finite mixtures are standard tools for density estimation,
@@ -216,6 +223,24 @@ the implications and limitations. Technical proofs, complete empirical
 summaries, direct Gaussian-limit diagnostics, failure accounting, and
 application-level parameter tables are provided in the supplement.
 
+\subsection{A one-dimensional illustration of the boundary term}
+\label{sec:one-dimensional-illustration}
+Consider two components on the real line and suppose that their contrast
+$g(x;\boldsymbol{\theta})=q_1(x;\boldsymbol{\theta})-
+q_2(x;\boldsymbol{\theta})$ has one active regular boundary point $x_0$ at
+$\boldsymbol{\theta}^*$.  The surface correction in
+Theorem~\ref{thm:population-curvature} then reduces to
+\begin{equation}
+ \mathbf B=\frac{p_0(x_0)\nabla_{\boldsymbol\theta}g(x_0;\boldsymbol\theta^*)
+ \nabla_{\boldsymbol\theta}g(x_0;\boldsymbol\theta^*)^\mathsf T}
+ {|\nabla_x g(x_0;\boldsymbol\theta^*)|}.
+ \label{eq:one-dimensional-boundary}
+\end{equation}
+Thus the correction is large when the data density is high at the decision
+boundary, all else equal.  It is small when the boundary lies in a low-density
+region, which explains why fixed-label inference can be adequate for strongly
+separated groups.
+
 \section{Methodology}
 \label{sec:methodology}
 
@@ -266,20 +291,27 @@ dimension of the observations, and it samples the unknown data distribution
 directly.  This is preferable to integrating a fitted mixture density over an
 estimated surface, which would impose correct specification precisely where
 the theory does not require it.  The simulations and the Dermason--Seker
-analysis show that the correction can restore local calibration without the
+analysis show that the correction can improve local calibration without the
 cost of a large bootstrap.  Under clear separation the correction contracts,
 as predicted by the surface formula.
 
-There are three qualifications.  First, the method estimates a local
-classification-likelihood covariance.  It does not make the classification
-target equal to the ordinary mixture parameter.  Second, regular active faces,
+\paragraph{What the method does not do.}
+The method does not target the ordinary mixture parameter: its estimand is the
+population hard-classification optimum.  It does not solve uncertainty from
+label selection or component-family selection.  Nor does it guarantee valid
+inference near nonregular configurations with multiple active boundaries.
+Regular active faces,
 a unique local target, and positive population curvature are substantive
 conditions.  Nearly tangent boundaries, appreciable multiple ties, vanishing
 components, or weakly identified skewness can invalidate the approximation or
-slow its convergence.  Third, global family assignment and optimization-basin
+slow its convergence.  Global family assignment and optimization-basin
 selection are discrete sources of uncertainty.  The unrestricted bootstrap
 results, particularly for Cali--Barbunya, show that they should not be hidden
 inside a Wald standard error.
+The method estimates local sampling uncertainty conditional on the selected
+basin; it does not account for global optimization-basin selection.  When
+unrestricted bootstrap refits often move to another basin, corrected Wald
+intervals should be reported only as conditional local summaries.
 
 These qualifications suggest a reporting protocol.  Alongside corrected
 standard errors, an analysis should provide component weights, boundary kernel
@@ -318,9 +350,7 @@ The Dry Bean data are publicly available from the UCI Machine Learning
 Repository under a Creative Commons Attribution 4.0 licence
 \citep{uci2020drybean}. Code, prespecified screening output, raw job manifests,
 and scripts producing every table and figure are maintained at
-\url{https://github.com/samyajoypal/CEM_Asymptotics}. A versioned archival DOI
-will be minted for the submitted release. An anonymized reproduction archive
-will accompany the initial submission.
+\url{https://github.com/samyajoypal/CEM_Asymptotics}.
 
 \section*{Conflict of interest}
 The authors declare that they have no conflict of interest.

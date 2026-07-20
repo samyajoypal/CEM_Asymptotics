@@ -34,7 +34,7 @@ Table~\ref{tab:simulation-main} reports coordinate-median coverage and the
 coordinate-median ratio of estimated standard error to empirical standard
 deviation.  The stabilized method uses the central bandwidth multiplier.  The
 correction is most consequential under overlap and imbalance.  For example, in
-the Normal--$t$, $p=2$, moderate-overlap design with $n=500$, median coverage
+the Normal--Student-$t$, $p=2$, moderate-overlap design with $n=500$, median coverage
 increased from 0.886 to 0.925 and the median standard-error ratio from 0.758 to
 0.920.  Under imbalance the corresponding coverage increased from 0.834 to
 0.895.  Under separation and $n=2000$, both methods are closer, as expected.
@@ -49,13 +49,36 @@ parentheses by coordinate-median 95\% coverage.}
 \toprule
 Families & Regime & $p$ & $n$ & Naive & Stabilized \\
 \midrule
-Normal--$t$ & moderate & 2 & 500  & 0.758 (0.886) & 0.920 (0.925) \\
-Normal--$t$ & moderate & 2 & 2000 & 0.827 (0.896) & 0.994 (0.940) \\
-Normal--$t$ & imbalanced & 2 & 500 & 0.615 (0.834) & 0.844 (0.895) \\
-Normal--$t$ & strong & 2 & 500 & 0.491 (0.750) & 0.675 (0.844) \\
-Normal--$t$ & separated & 5 & 2000 & 0.956 (0.939) & 1.018 (0.950) \\
+Normal--Student-$t$ & moderate & 2 & 500  & 0.758 (0.886) & 0.920 (0.925) \\
+Normal--Student-$t$ & moderate & 2 & 2000 & 0.827 (0.896) & 0.994 (0.940) \\
+Normal--Student-$t$ & imbalanced & 2 & 500 & 0.615 (0.834) & 0.844 (0.895) \\
+Normal--Student-$t$ & strong & 2 & 500 & 0.491 (0.750) & 0.675 (0.844) \\
+Normal--Student-$t$ & separated & 5 & 2000 & 0.956 (0.939) & 1.018 (0.950) \\
 Normal--skew-normal & strong & 2 & 2000 & 0.573 (0.868) & 0.762 (0.922) \\
 Normal--skew-normal & moderate & 5 & 2000 & 0.892 (0.933) & 0.994 (0.943) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:simulation-quantiles} aggregates all retained coordinate-level
+primary results rather than selecting favourable coordinates.  Coordinate-level
+results, including the difficult coordinates, are reported in the supplement;
+no difficult coordinate was removed from the analysis.
+
+\begin{table}[t]
+\centering
+\caption{Across-coordinate distribution of calibration results in the primary
+study.  Entries are the 25th percentile, median, and 75th percentile across all
+scenario--sample-size--coordinate cells; corrected results use the central
+bandwidth.}
+\label{tab:simulation-quantiles}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{3}{c}{SE/empirical SD} & \multicolumn{3}{c}{Empirical coverage}\\
+Method & Q25 & Median & Q75 & Q25 & Median & Q75\\
+\midrule
+Naive & 0.654 & 0.867 & 0.952 & 0.878 & 0.917 & 0.935\\
+Corrected, stabilized & 0.780 & 0.991 & 1.032 & 0.911 & 0.937 & 0.947\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -75,14 +98,19 @@ denotes equality; dotted lines mark ideal SE calibration and nominal coverage.}
 \label{fig:simulation-calibration}
 \end{figure*}
 
-Raw correction frequently produced a nonpositive estimated curvature, with the
+Across the primary study, 4214 scenario--replication cases had at least one raw
+nonpositive curvature result among the three prespecified bandwidths.  This is
+why stabilization is reported as a diagnostic rather than hidden as a purely
+numerical adjustment.  Raw correction frequently produced a nonpositive estimated curvature, with the
 frequency increasing under strong overlap and in higher dimension.  In
 contrast, the stabilized correction was computable whenever the underlying
 fit and naive information calculation succeeded.  Stabilization was active in
-10.5\% of Normal--$t$, $p=2$, moderate-overlap replications at $n=500$, falling
+10.5\% of Normal--Student-$t$, $p=2$, moderate-overlap replications at $n=500$, falling
 to 3.4\% at $n=2000$; in the separated $p=2$ cells it fell from 5.1\% to 1.0\%.
+Under the regular theory, stabilization frequency should decrease with sample
+size; these paired simulation cells show precisely that tendency.
 
-Normal--$t$ fitting succeeded in every primary replication.  Operational fit
+Normal--Student-$t$ fitting succeeded in every primary replication.  Operational fit
 failure for models involving a skew-normal component ranged from zero to 7.6\%,
 with the maximum occurring in the $p=10$ stress design.  We did not replace or
 discard these seeds.  Conditional summaries use all replications for which the
@@ -93,7 +121,7 @@ A post-confirmatory convergence extension used 500 replications at $n=8000$
 for the two $p=2$ strong-overlap models and at $n=4000$ for the two
 three-component models.  Stabilized median coverage reached 0.940 for the
 Normal--skew-normal strong-overlap case and 0.942 for the $p=5$ three-component
-case.  The Normal--$t$ strong-overlap case improved to 0.923, compared with
+case.  The Normal--Student-$t$ strong-overlap case improved to 0.923, compared with
 0.721 for naive inference.  The $p=2$ three-component case remained difficult,
 with stabilized median coverage 0.863.  This last result illustrates slow
 finite-sample convergence when several decision faces and family-assignment

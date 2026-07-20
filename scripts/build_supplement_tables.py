@@ -116,7 +116,8 @@ def main() -> None:
                        f"{row.boundary_shrinkage_factor:.3f}")
         else:
             metrics = r"-- & -- & -- & --"
-        family = "Normal--$t$" if row.family == "normal_t" else "Normal--SN"
+        family = ("Normal--Student-$t$" if row.family == "normal_t"
+                  else "Normal--skew-normal")
         rows.append(
             f"{esc(row.dataset)} & {family} & {int(row.p)} & {int(row.n)} & "
             f"{metrics} \\\\"

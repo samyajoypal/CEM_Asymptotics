@@ -6,6 +6,26 @@ a density different from the fitted model.  Positive-definite covariance
 matrices use log-Cholesky coordinates, and mixture weights use
 reference-category multinomial logits.
 
+\begin{center}
+\fbox{\begin{minipage}{0.94\linewidth}
+\textbf{Algorithm 1: Feasible boundary-aware covariance estimation}
+\begin{enumerate}
+ \item Fit the hard-classification likelihood to obtain
+ $\widehat{\boldsymbol\theta}_n$.
+ \item Compute the fitted labels.
+ \item Compute $\widehat{\mathbf I}_{c,n}$.
+ \item Compute $\widehat{\mathbf J}_n$.
+ \item Compute every pairwise contrast $g_{jl}$ and its parameter gradient.
+ \item Estimate $\widehat{\mathbf B}_n$ by \eqref{eq:boundary-estimator}.
+ \item Form $\widehat{\mathbf A}_n=\widehat{\mathbf I}_{c,n}-
+ \widehat{\mathbf B}_n$ and stabilize it if necessary, recording the diagnostic.
+ \item Report $\widehat{\mathbf V}_n=\widehat{\mathbf A}_n^{-1}
+ \widehat{\mathbf J}_n\widehat{\mathbf A}_n^{-\mathsf T}$ and standard errors
+ from $\widehat{\mathbf V}_n/n$.
+\end{enumerate}
+\end{minipage}}
+\end{center}
+
 For the multivariate skew-normal component, we use
 \begin{equation}
  f(\mathbf{x};\boldsymbol{\xi},\boldsymbol{\Omega},\boldsymbol{\alpha})

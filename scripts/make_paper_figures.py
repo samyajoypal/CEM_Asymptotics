@@ -71,7 +71,7 @@ def simulation_calibration(out: Path) -> None:
         ax.set(xlabel=xlabel, ylabel=ylabel, xlim=(lo, hi), ylim=(lo, hi))
         ax.grid(alpha=.18)
     handles = [mpl.lines.Line2D([], [], marker="o", linestyle="", color=c, label=l)
-               for c, l in [(BLUE, "Normal--$t$"), (ORANGE, "Normal--skew-normal"),
+               for c, l in [(BLUE, "Normal--Student-$t$"), (ORANGE, "Normal--skew-normal"),
                             (GREEN, "three components")]]
     axes[1].legend(handles=handles, loc="lower right", frameon=False)
     fig.tight_layout()
@@ -94,7 +94,7 @@ def simulation_profiles(out: Path) -> None:
                 axes[1, col].plot(d.n, d.median_coverage, marker=marker, color=color, ls=ls)
         axes[0, col].axhline(1, color="0.15", lw=.8, ls=":")
         axes[1, col].axhline(.95, color="0.15", lw=.8, ls=":")
-        axes[0, col].set_title("Normal--$t$" if prefix == "nt" else "Normal--skew-normal")
+        axes[0, col].set_title("Normal--Student-$t$" if prefix == "nt" else "Normal--skew-normal")
         axes[1, col].set_xlabel("Sample size")
         axes[0, col].grid(alpha=.18); axes[1, col].grid(alpha=.18)
     axes[0, 0].set_ylabel("Median SE / empirical SD")
