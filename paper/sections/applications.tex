@@ -40,19 +40,24 @@ evaluation; black curves are equality sets of the fitted weighted log densities.
 
 \begin{table}[t]
 \centering
-\caption{Dry Bean applications.  ``SE/local SD'' is the coordinate-median
-ratio of an analytic standard error to the standard deviation from successful
-local bootstrap fits.  Local success is the percentage of 500 locally
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Dry Bean applications. The two final columns give the coordinate-
+median ratio of an analytic standard error to the standard deviation from
+successful local bootstrap fits. Boundary support is the number of observations
+inside the fitted kernel tube. Local success is the percentage of 500 locally
 optimized bootstrap refits that passed all convergence diagnostics.}
 \label{tab:applications}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{lrrrrrr}
 \toprule
-Varieties & $n$ & ARI & Support & Local success & Naive & Stabilized \\
+Varieties & Sample size & Adjusted Rand & Kernel count & Local success & Naive ratio & Corrected ratio \\
 \midrule
 Dermason--Seker & 5573 & 0.867 & 33 & 95.0\% & 0.798 & 0.991 \\
 Cali--Barbunya  & 2952 & 0.282 & 44 & 52.4\% & 0.538 & 0.850 \\
 \bottomrule
 \end{tabular}
+}
 
 \smallskip
 \begin{minipage}{0.94\linewidth}\small
@@ -76,18 +81,24 @@ boundary curvature required no finite-sample shrinkage in this fit.
 
 \begin{table}[t]
 \centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
 \caption{Dermason--Seker inference for interpretable fitted quantities. The
-location distance is measured in standardized principal-component space.}
+location distance is measured in standardized principal-component space.
+Here ``s.e.'' means standard error and ``bootstrap s.d.'' means the standard
+deviation of successful local-bootstrap estimates.}
 \label{tab:dermason-interpretable}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{lrrrrl}
 \toprule
-Quantity & Estimate & Naive SE & Corrected SE & Local SD & Corrected 95\% CI\\
+Quantity & Estimate & Naive s.e. & Corrected s.e. & Bootstrap s.d. & Corrected 95\% interval\\
 \midrule
 Mixing weight $\pi_1$ & 0.345 & 0.006 & 0.008 & 0.008 & (0.329, 0.361)\\
 $\|\boldsymbol\mu_1-\boldsymbol\mu_2\|$ & 5.202 & 0.036 & 0.037 & 0.035 & (5.130, 5.273)\\
 Student-$t$ degrees of freedom $\nu$ & 20.680 & 3.848 & 4.184 & 5.533 & (12.479, 28.881)\\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 Scientifically, the correction changes uncertainty most clearly for the fitted

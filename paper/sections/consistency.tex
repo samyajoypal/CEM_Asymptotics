@@ -9,11 +9,18 @@ target $\boldsymbol{\theta}^*$.
 \end{proposition}
 
 \begin{proof}
-For $P_0$-almost every $\mathbf{x}$, the maximum of the finite collection of continuous
-maps $\{q_j(\mathbf{x};\cdot):1\leq j\leq k\}$ is continuous.  The envelope in
-Assumption~\ref{ass:basic-criterion}(3) and dominated convergence imply
-continuity of $M$.  Existence follows from compactness of $\Theta$; uniqueness
-is part (4).
+For any $\boldsymbol\theta_r\to\boldsymbol\theta$ and almost every $\mathbf x$,
+\[
+ |m_{\boldsymbol\theta_r}(\mathbf x)-m_{\boldsymbol\theta}(\mathbf x)|
+ \leq \max_{1\leq j\leq k}|q_j(\mathbf x;\boldsymbol\theta_r)
+                         -q_j(\mathbf x;\boldsymbol\theta)|\longrightarrow0.
+\]
+Moreover, $|m_{\boldsymbol\theta_r}-m_{\boldsymbol\theta}|\leq2F$. Dominated
+convergence therefore gives
+$|M(\boldsymbol\theta_r)-M(\boldsymbol\theta)|\leq
+P_0|m_{\boldsymbol\theta_r}-m_{\boldsymbol\theta}|\to0$.
+Thus $M$ is continuous; compactness of $\Theta$ and the Weierstrass theorem
+give existence, while Assumption~\ref{ass:basic-criterion}(4) gives uniqueness.
 \end{proof}
 
 \begin{theorem}[Uniform convergence of the classification criterion]
@@ -28,13 +35,27 @@ taken almost surely.
 \end{theorem}
 
 \begin{proof}
-The class $\{m_{\boldsymbol{\theta}}:\boldsymbol{\theta}\in\Theta\}$ has an integrable envelope.  It is
-indexed by a compact finite-dimensional parameter set and is pointwise
-continuous in $\boldsymbol{\theta}$ almost surely.  A finite covering argument, using
-dominated continuity to control the oscillation within each cover element,
-reduces the supremum to finitely many ordinary laws of large numbers.  This
-gives \eqref{eq:uniform-convergence}; applying the strong law in the same
-argument gives the almost-sure version.
+Fix $\delta>0$ and define the local oscillation
+$\omega_\delta(\mathbf x,\boldsymbol\theta)=
+\sup_{\|\boldsymbol\vartheta-\boldsymbol\theta\|<\delta}
+|m_{\boldsymbol\vartheta}(\mathbf x)-m_{\boldsymbol\theta}(\mathbf x)|$.
+Pointwise continuity and domination by $2F$ imply
+$P_0\omega_\delta(\cdot,\boldsymbol\theta)\downarrow0$ as $\delta\downarrow0$.
+Compactness supplies finitely many centres
+$\boldsymbol\theta_1,\ldots,\boldsymbol\theta_N$ whose neighbourhoods cover
+$\Theta$ and for which $P_0\omega_\delta(\cdot,\boldsymbol\theta_s)<\epsilon$.
+For any $\boldsymbol\theta$ in the ball centred at $\boldsymbol\theta_s$,
+\begin{align*}
+ |(\mathbb P_n-P_0)m_{\boldsymbol\theta}|
+ &\leq |(\mathbb P_n-P_0)m_{\boldsymbol\theta_s}|
+ +\mathbb P_n\omega_\delta(\cdot,\boldsymbol\theta_s)
+ +P_0\omega_\delta(\cdot,\boldsymbol\theta_s).
+\end{align*}
+Taking the maximum over the finite centres, the ordinary law of large numbers
+makes the first term vanish and the second converge to a value below
+$\epsilon$. Hence the limsup of the required supremum is at most $2\epsilon$;
+letting $\epsilon\downarrow0$ proves the result. Replacing the weak laws by
+strong laws gives the almost-sure assertion.
 \end{proof}
 
 \begin{theorem}[Consistency of approximate CML maximizers]
@@ -61,9 +82,16 @@ On the event
  2\sup_{\boldsymbol{\theta}\in\Theta}|M_n(\boldsymbol{\theta})-M(\boldsymbol{\theta})|+r_n
  <\Delta_\varepsilon,
 \]
-no approximate maximizer satisfying \eqref{eq:approximate-maximizer} can lie
-outside the $\varepsilon$-ball around $\boldsymbol{\theta}^*$.  The probability of this
-event tends to one by Theorem~\ref{thm:uniform-convergence} and $r_n=o_p(1)$.
+write $D_n=\sup_{\Theta}|M_n-M|$. If
+$\|\widehat{\boldsymbol\theta}_n-\boldsymbol\theta^*\|\geq\varepsilon$, then
+\begin{align*}
+ M_n(\boldsymbol\theta^*)-M_n(\widehat{\boldsymbol\theta}_n)
+ &\geq M(\boldsymbol\theta^*)-M(\widehat{\boldsymbol\theta}_n)-2D_n\\
+ &\geq\Delta_\varepsilon-2D_n>r_n,
+\end{align*}
+contradicting \eqref{eq:approximate-maximizer}. Thus the estimator lies inside
+the $\varepsilon$-ball on this event. Its probability tends to one by
+Theorem~\ref{thm:uniform-convergence} and $r_n=o_p(1)$.
 The almost-sure statement follows identically.
 \end{proof}
 
@@ -77,7 +105,7 @@ For the first-order theory, Theorem~\ref{thm:population-curvature} supplies the
 deterministic quadratic expansion
 \begin{equation}
  M(\boldsymbol{\theta}^*+\mathbf{u})-M(\boldsymbol{\theta}^*)
- =\tfrac12\mathbf{u}^\mathsf THu+o(\|\mathbf{u}\|^2),
+ =\tfrac12\mathbf{u}^\mathsf T\mathbf H\mathbf{u}+o(\|\mathbf{u}\|^2),
  \label{eq:population-quadratic-expansion}
 \end{equation}
 because $\nabla_{\boldsymbol{\theta}}M(\boldsymbol{\theta}^*)=0$ at an interior maximizer.  The next theoretical

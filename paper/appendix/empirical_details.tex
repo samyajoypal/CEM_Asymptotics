@@ -97,7 +97,7 @@ sample sizes 250, 1000, 4000, and 16,000.  The results were
 \begin{center}
 \begin{tabular}{rrrrr}
 \toprule
-$n$ & Bias & Empirical SD & RMSE & Bandwidth\\
+Sample size & Bias & Empirical standard deviation & Root mean squared error & Bandwidth\\
 \midrule
 250   & $-0.00223$ & 0.04519 & 0.04520 & 0.33145\\
 1000  & $-0.00432$ & 0.02903 & 0.02932 & 0.25119\\
@@ -106,7 +106,7 @@ $n$ & Bias & Empirical SD & RMSE & Bandwidth\\
 \bottomrule
 \end{tabular}
 \end{center}
-The shrinking bias and variance provide a direct numerical check of the
+Here RMSE denotes root mean squared error. The shrinking bias and variance provide a direct numerical check of the
 kernel-estimator consistency result, separate from Wald-interval performance.
 
 \subsection{Direct evidence for the limiting theory}
@@ -151,7 +151,7 @@ The machine-readable source values accompany the figures.
 \label{fig:s-bias-atlas}\end{figure}
 \begin{figure}[p]\centering
 \includegraphics[width=.94\textwidth]{figures/coordinate_rmse_atlas.pdf}
-\caption{Coordinate-level RMSE atlas for all confirmatory scenarios.}
+\caption{Coordinate-level root mean squared error atlas for all confirmatory scenarios.}
 \label{fig:s-rmse-atlas}\end{figure}
 \begin{figure}[p]\centering
 \includegraphics[width=.94\textwidth]{figures/coordinate_coverage_atlas.pdf}
@@ -159,7 +159,7 @@ The machine-readable source values accompany the figures.
 \label{fig:s-coverage-atlas}\end{figure}
 \begin{figure}[p]\centering
 \includegraphics[width=.94\textwidth]{figures/coordinate_se_atlas.pdf}
-\caption{Coordinate-level estimated-SE to empirical-SD ratio atlas.}
+\caption{Coordinate-level estimated-standard-error to empirical-standard-deviation ratio atlas.}
 \label{fig:s-se-atlas}\end{figure}
 
 \section{Application screening and additional results}

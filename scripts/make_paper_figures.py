@@ -40,11 +40,13 @@ def save(fig: plt.Figure, out: Path, name: str) -> None:
 
 def scenario_label(value: str) -> str:
     parts = value.split("_")
-    family = {"nt": "N--t", "nsn": "N--SN", "ntsn": "N--t--SN"}[parts[0]]
-    dimension = parts[1].replace("p", "$p=$")
-    regime = parts[2].replace("moderate", "moderate").replace("separated", "separated")
-    balance = "imbal." if "imbalanced" in parts else "bal."
-    return f"{family}, {dimension}, {regime}, {balance}"
+    family = {"nt": "Normal--Student-$t$", "nsn": "Normal--skew-normal",
+              "ntsn": "Normal--$t$--skew-normal"}[parts[0]]
+    dimension = parts[1].replace("p", "dimension ")
+    regime = parts[2].replace("moderate", "moderate overlap").replace(
+        "separated", "well separated").replace("strong", "strong overlap")
+    balance = "imbalanced" if "imbalanced" in parts else "balanced"
+    return f"{family}, {dimension}\n{regime}, {balance}"
 
 
 def simulation_calibration(out: Path) -> None:
@@ -56,7 +58,7 @@ def simulation_calibration(out: Path) -> None:
     colors = family.map({"nt": BLUE, "nsn": ORANGE, "ntsn": GREEN})
     sizes = np.where(wide[("n", "")].to_numpy() >= 2000, 35, 20)
     panels = [
-        ("median_se_to_sd", "Naive SE / empirical SD", "Corrected SE / empirical SD", 1.0),
+        ("median_se_to_sd", "Naive standard-error ratio", "Corrected standard-error ratio", 1.0),
         ("median_coverage", "Naive 95% coverage", "Corrected 95% coverage", 0.95),
     ]
     for ax, (metric, xlabel, ylabel, target) in zip(axes, panels):
@@ -97,7 +99,7 @@ def simulation_profiles(out: Path) -> None:
         axes[0, col].set_title("Normal--Student-$t$" if prefix == "nt" else "Normal--skew-normal")
         axes[1, col].set_xlabel("Sample size")
         axes[0, col].grid(alpha=.18); axes[1, col].grid(alpha=.18)
-    axes[0, 0].set_ylabel("Median SE / empirical SD")
+    axes[0, 0].set_ylabel("Median standard-error ratio")
     axes[1, 0].set_ylabel("Median 95% coverage")
     method_handles = [mpl.lines.Line2D([], [], color="0.35", ls="--", label="Naive"),
                       mpl.lines.Line2D([], [], color=BLUE, label="Corrected")]
@@ -123,10 +125,10 @@ def extension_and_boundary(out: Path) -> None:
     axes[0].set_xlabel("Median 95% coverage")
     axes[0].legend(frameon=False)
     axes[0].grid(axis="x", alpha=.18)
-    axes[1].loglog(conv.n, conv.rmse, "o-", color=GREEN, label="RMSE")
+    axes[1].loglog(conv.n, conv.rmse, "o-", color=GREEN, label="Root mean squared error")
     scale = conv.rmse.iloc[0] * np.sqrt(conv.n.iloc[0] / conv.n)
     axes[1].loglog(conv.n, scale, ls="--", color="0.45", label=r"$n^{-1/2}$ reference")
-    axes[1].set(xlabel="Sample size", ylabel="Boundary-functional RMSE")
+    axes[1].set(xlabel="Sample size", ylabel="Boundary-functional root mean squared error")
     axes[1].grid(alpha=.18, which="both")
     axes[1].legend(frameon=False)
     fig.tight_layout()
@@ -177,7 +179,8 @@ def application_geometry(out: Path) -> None:
         scores = fit.model.component_scores(grid, fit.coordinates)
         contrast = (scores[:, 0] - scores[:, 1]).reshape(gx.shape)
         ax.contour(gx, gy, contrast, levels=[0], colors="black", linewidths=1.5)
-        ax.set(title=title, xlabel="Standardized PC1", ylabel="Standardized PC2")
+        ax.set(title=title, xlabel="Standardized principal component 1",
+               ylabel="Standardized principal component 2")
         ax.legend(frameon=False, markerscale=2)
     fig.tight_layout()
     save(fig, out, "application_boundaries")
@@ -196,7 +199,7 @@ def application_diagnostics(out: Path) -> None:
         ax.axhline(1, color="0.15", ls=":", lw=.8)
         ax.set(title=title, xlabel="Unconstrained parameter coordinate", xticks=x)
         ax.grid(axis="y", alpha=.18)
-    axes[0].set_ylabel("Analytic SE / local-bootstrap SD")
+    axes[0].set_ylabel("Analytic standard error / local-bootstrap standard deviation")
     axes[1].legend(frameon=False)
     fig.tight_layout()
     save(fig, out, "application_se_calibration")
@@ -241,13 +244,16 @@ def asymptotic_evidence(out: Path) -> None:
     axes[0,0].legend(frameon=False)
     vals=[diag.loc[diag.n.eq(n),'ks_distance'].dropna() for n in sorted(diag.n.unique())]
     axes[0,1].boxplot(vals, tick_labels=[str(n) for n in sorted(diag.n.unique())], showfliers=False)
-    axes[0,1].set(xlabel="Sample size", ylabel="KS distance", title="Coordinate-level Gaussian distance")
+    axes[0,1].set(xlabel="Sample size", ylabel="Kolmogorov--Smirnov distance",
+                  title="Coordinate-level Gaussian distance")
     med=summ.groupby(['scenario','n'],as_index=False).agg(rmse=('rmse','median'),bias=('bias',lambda x: np.median(np.abs(x))))
     for scenario,g in med.groupby('scenario'):
         if len(g)>1:
             axes[1,0].plot(g.n, np.sqrt(g.n)*g.rmse, color=BLUE, alpha=.25)
             axes[1,1].plot(g.n, np.sqrt(g.n)*g.bias, color=GREEN, alpha=.25)
-    axes[1,0].set(xscale='log', xlabel="Sample size", ylabel=r"Median $\sqrt{n}\,\mathrm{RMSE}$", title="Root-n rate diagnostic")
+    axes[1,0].set(xscale='log', xlabel="Sample size",
+                  ylabel=r"Median $\sqrt{n}\times$ root mean squared error",
+                  title=r"$\sqrt{n}$-rate diagnostic")
     axes[1,1].set(xscale='log', xlabel="Sample size", ylabel=r"Median $\sqrt{n}\,|\mathrm{bias}|$", title="Centeredness diagnostic")
     for ax in axes.ravel(): ax.grid(alpha=.15)
     fig.tight_layout()
@@ -259,13 +265,12 @@ def coordinate_atlas(out: Path) -> None:
     d = pd.read_csv(ROOT / "results/processed/confirmatory_v2/summary.csv")
     central = d[(d.method.eq("naive")) | ((d.method.eq("corrected_stabilized")) & d.bandwidth_multiplier.eq(1.0))].copy()
     scenarios = sorted(central.scenario.unique())
-    labels = {s: s.replace("moderate_balanced", "mod").replace("moderate_imbalanced", "imb")
-              .replace("separated_balanced", "sep").replace("strong_balanced", "strong") for s in scenarios}
+    labels = {s: scenario_label(s) for s in scenarios}
     specs = [
         ("bias", "Bias relative to the CML target", "coordinate_bias_atlas", False),
-        ("rmse", "RMSE relative to the CML target", "coordinate_rmse_atlas", False),
+        ("rmse", "Root mean squared error relative to the classification target", "coordinate_rmse_atlas", False),
         ("coverage_95", "Empirical 95% coverage", "coordinate_coverage_atlas", True),
-        ("se_to_empirical_sd", "Estimated SE / empirical SD", "coordinate_se_atlas", True),
+        ("se_to_empirical_sd", "Estimated standard error / empirical standard deviation", "coordinate_se_atlas", True),
     ]
     colors = {500: ORANGE, 1000: GREEN, 2000: BLUE}
     for metric, ylabel, name, compare_methods in specs:
@@ -280,16 +285,16 @@ def coordinate_atlas(out: Path) -> None:
                             lw=.65, alpha=.85, ls="-" if method == "corrected_stabilized" else ":")
             ref = 0 if metric == "bias" else (0.95 if metric == "coverage_95" else (1 if metric == "se_to_empirical_sd" else None))
             if ref is not None: ax.axhline(ref, color="0.15", lw=.55, ls="--")
-            ax.set_title(labels[scenario], fontsize=7)
+            ax.set_title(labels[scenario], fontsize=5, linespacing=0.85, pad=1.5)
             ax.tick_params(labelsize=6); ax.grid(alpha=.10)
-        for ax in axes[-1, :]: ax.set_xlabel("Unconstrained coordinate", fontsize=7)
-        for ax in axes[:, 0]: ax.set_ylabel(ylabel, fontsize=7)
+        for ax in axes[-1, :]: ax.set_xlabel("Unconstrained parameter index", fontsize=7)
+        fig.supylabel(ylabel, fontsize=7, x=0.005)
         handles=[plt.Line2D([0],[0],color=c,lw=1,label=f"n={n}") for n,c in colors.items()]
         if compare_methods:
             handles += [plt.Line2D([0],[0],color="0.2",ls=":",label="Naive"),
                         plt.Line2D([0],[0],color="0.2",ls="-",label="Corrected")]
         fig.legend(handles=handles, loc="upper center", ncol=len(handles), frameon=False, fontsize=7)
-        fig.tight_layout(rect=(0,0,1,.975))
+        fig.tight_layout(rect=(.02,0,1,.975), h_pad=1.2)
         save(fig, out, name)
 
 

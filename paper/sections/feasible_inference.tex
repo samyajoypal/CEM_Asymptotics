@@ -113,14 +113,39 @@ leading bias in \eqref{eq:boundary-bias}.
 \end{theorem}
 
 \begin{proof}
-The coarea formula writes the expectation as
-$\sum_{j<l}\int K(t)\boldsymbol{\Gamma}_{jl}(ht)\,dt$.
-A second-order Taylor expansion gives \eqref{eq:boundary-bias}.  Applying the
-same representation to the squared vectorized summand gives
-\eqref{eq:boundary-variance}; cross-pair terms are lower order because
-first-order mass at multiple-face junctions is excluded.  A triangular-array
-Lindeberg argument yields the centered normal limit.  Finally,
-$\sqrt{nh}h^2\to0$ is equivalent to $nh^5\to0$ and removes the leading bias.
+For one pair, the coarea formula and the change of variable $v=ht$ give
+\[
+ E\widetilde{\mathbf B}_{n,jl}
+ =\frac1h\int K(v/h)\boldsymbol\Gamma_{jl}(v)\,dv
+ =\int K(t)\boldsymbol\Gamma_{jl}(ht)\,dt.
+\]
+Taylor expansion at zero, symmetry of $K$, and $\int K=1$ yield
+\[
+ E\widetilde{\mathbf B}_{n,jl}
+ =\boldsymbol\Gamma_{jl}(0)+\frac{h^2\mu_2(K)}2
+ \boldsymbol\Gamma_{jl}''(0)+o(h^2).
+\]
+Since $\sum_{j<l}\boldsymbol\Gamma_{jl}(0)=\mathbf B$, summing proves
+\eqref{eq:boundary-bias}. If $\mathbf Y_{i,h}$ denotes the vectorized total
+summand before averaging, the same calculation applied to
+$\mathbf Y_{i,h}\mathbf Y_{i,h}^\mathsf T$ gives
+\[
+ hE(\mathbf Y_{i,h}\mathbf Y_{i,h}^\mathsf T)	o
+ \boldsymbol\Omega_{\mathbf B},\qquad
+ hE\mathbf Y_{i,h}E\mathbf Y_{i,h}^\mathsf T\to\mathbf0,
+\]
+and hence \eqref{eq:boundary-variance}. Cross-pair terms require simultaneous
+kernel support and are $o(h^{-1})$ by the multiple-junction condition.
+Compact kernel support and the fourth-moment envelope imply, for every
+$\epsilon>0$,
+\[
+ nh\,E\!\left[\|\mathbf Y_{i,h}/n\|^2
+ \ind\{\sqrt{nh}\|\mathbf Y_{i,h}/n\|>\epsilon\}\right]\to0,
+\]
+so the triangular-array Lindeberg--Feller theorem proves the centred limit.
+Finally $\sqrt{nh}\,h^2=\sqrt{nh^5}\to0$ removes the leading bias. The
+corresponding surface-moment calculations are recorded in the supplementary
+boundary-estimator expansion.
 \end{proof}
 
 \subsection{Finite-sample curvature stabilization}
@@ -197,13 +222,23 @@ $h\asymp n^{-1/5}$, all displayed terms converge to zero.
 \end{proposition}
 
 \begin{proof}
-The first two terms follow from
-Theorem~\ref{thm:boundary-oracle-clt}.  Lipschitz continuity of $K$, the
-$h^{-1}$ scaling in its argument, and local derivative envelopes bound the
-parameter-substitution error by the third term.  Classification of an active
-pair can differ only near a multiple-tie junction or within a tube whose width
-is proportional to the parameter error; these contributions are controlled by
-$\zeta_h$ and the same substitution term.
+Decompose
+\[
+ \|\widehat{\mathbf B}_n-\mathbf B\|_F
+ \leq\|\widetilde{\mathbf B}_n-E\widetilde{\mathbf B}_n\|_F
+ +\|E\widetilde{\mathbf B}_n-\mathbf B\|_F
+ +\|\widehat{\mathbf B}_n-\widetilde{\mathbf B}_n\|_F.
+\]
+The first two terms are $O_p((nh)^{-1/2})$ and $O(h^2)$. Let
+$\delta_n=\|\widehat{\boldsymbol\theta}_n-\boldsymbol\theta^*\|$. Lipschitz
+continuity gives
+$|K(g(\widehat{\boldsymbol\theta}_n)/h)-K(g(\boldsymbol\theta^*)/h)|
+\leq C L\delta_n/h$ on the kernel tube; after the exterior $h^{-1}$ factor,
+the tube probability $O(h)$ leaves $O_p(\delta_n/h)$. Changes in derivative
+outer products are smaller under the same envelopes. The active indicator can
+change only in a parameter-width tube or near a multiple tie, contributing
+$O_p(\delta_n/h)+O_p(\zeta_h)$. This proves \eqref{eq:boundary-plugin-rate};
+Supplementary Lemma 1.4 supplies the uniform empirical bound.
 \end{proof}
 
 \begin{theorem}[Consistency of the boundary-curvature estimator]
@@ -279,12 +314,29 @@ covariance matrix of $\widehat{\boldsymbol{\theta}}_n$.
 \end{theorem}
 
 \begin{proof}
-Consistency of $\widehat{\boldsymbol{\theta}}_n$, the local uniform laws, and the fact that
-ties have probability zero give consistency of $\widehat{\mathbf{I}}_{c,n}$ and
-$\widehat{\mathbf{J}}_n$.  Theorem~\ref{thm:boundary-estimator-consistency} gives the
-remaining component of $\widehat{\mathbf{A}}_n$.  Matrix inversion is continuous on the
-set of nonsingular matrices, so the final assertion follows from the
-continuous mapping theorem.
+Let $\mathbf h(\mathbf x,\boldsymbol\theta)$ denote the selected within-class
+negative Hessian and let
+$\mathbf s(\mathbf x,\boldsymbol\theta)=\boldsymbol\psi
+(\mathbf x;\boldsymbol\theta)\boldsymbol\psi
+(\mathbf x;\boldsymbol\theta)^\mathsf T$. The assumed uniform laws imply
+\begin{align*}
+ \|\widehat{\mathbf I}_{c,n}-\mathbf I_c\|
+ &\leq\sup_{\boldsymbol\theta\in U}\|\mathbb P_n\mathbf h_{\boldsymbol\theta}
+ -P_0\mathbf h_{\boldsymbol\theta}\|
+ +\|P_0\mathbf h_{\widehat{\boldsymbol\theta}_n}
+ -P_0\mathbf h_{\boldsymbol\theta^*}\|=o_p(1),\\
+ \|\widehat{\mathbf J}_n-\mathbf J\|
+ &\leq\sup_{\boldsymbol\theta\in U}\|\mathbb P_n\mathbf s_{\boldsymbol\theta}
+ -P_0\mathbf s_{\boldsymbol\theta}\|
+ +\|P_0\mathbf s_{\widehat{\boldsymbol\theta}_n}
+ -P_0\mathbf s_{\boldsymbol\theta^*}\|=o_p(1).
+\end{align*}
+Continuity of the expectations follows because ties have probability zero.
+Together with $\widehat{\mathbf B}_n\to_p\mathbf B$, this gives
+$\widehat{\mathbf A}_n\to_p\mathbf A$. Nonsingularity implies
+$\widehat{\mathbf A}_n^{-1}\to_p\mathbf A^{-1}$, and direct multiplication
+yields $\widehat{\mathbf V}_n\to_p
+\mathbf A^{-1}\mathbf J\mathbf A^{-\mathsf T}=\mathbf V$.
 \end{proof}
 
 \begin{corollary}[First-order equivalence after stabilization]
@@ -334,3 +386,9 @@ $\mathbf{D}_{\tau}$ and $\mathbf{V}$ by consistent estimators is consistent.
 This result covers scientifically interpretable transformations of mixture
 weights, locations, covariance parameters, and component contrasts.
 \end{corollary}
+
+The preceding results complete the inferential argument: they identify the
+population curvature, establish the estimator's limit law, and show that each
+matrix in the sandwich covariance can be estimated consistently. We now turn
+from that theoretical construction to the concrete fitting, differentiation,
+bandwidth, stabilization, and diagnostic choices required to implement it.

@@ -17,8 +17,9 @@ where the maximum over an empty set is $-\infty$.
 
 \begin{assumption}[Local stochastic regularity]
 \label{ass:local-stochastic}
-There are a neighbourhood $U$ of $\boldsymbol{\theta}^*$, constants $C,t_0>0$, and a
-measurable envelope $L$ with $P_0L^{2+\eta}<\infty$ for some $\eta>0$ such
+There exist a neighbourhood $U$ of $\boldsymbol{\theta}^*$, constants
+$C,t_0>0$, and a measurable envelope $L$ with
+$P_0L^{2+\eta}<\infty$ for some $\eta>0$ such
 that:
 \begin{enumerate}
  \item for all $\boldsymbol{\theta},\boldsymbol{\vartheta}\in U$ and every $j$,
@@ -57,15 +58,24 @@ The bound holds uniformly over $\mathbf{u}/\|\mathbf{u}\|$.
 \end{lemma}
 
 \begin{proof}
-If the winning component does not change between $\boldsymbol{\theta}^*$ and
-$\boldsymbol{\theta}^*+\mathbf{u}$, a Taylor expansion of its score leaves a remainder bounded by a
-multiple of $L\|\mathbf{u}\|^2$.  A change of winner can occur only if an active
-contrast at $\boldsymbol{\theta}^*$ lies within a tube of width proportional to
-$L\|\mathbf{u}\|$.  On this event the first-order discrepancy is bounded by a multiple
-of $L\|\mathbf{u}\|$.  The margin condition makes the probability of the tube
-$O(\|\mathbf{u}\|)$, giving the $O(\|\mathbf{u}\|^{3/2})$ term in $L_2(P_0)$.  Intersections of
-two tubes are of smaller order by Assumption~\ref{ass:local-stochastic}(3).
-The derivative-envelope condition makes these bounds uniform in direction.
+Put $r_{\mathbf u}=m_{\boldsymbol\theta^*+\mathbf u}-
+m_{\boldsymbol\theta^*}-\mathbf u^\mathsf T\boldsymbol\psi^*$ and let
+$T_{\mathbf u}$ be the union of the active tubes in
+Assumption~\ref{ass:local-stochastic}(2), with $t=C_0\|\mathbf u\|$.
+On $T_{\mathbf u}^c$ the winner is unchanged, and Taylor's theorem gives
+$|r_{\mathbf u}|\leq C L\|\mathbf u\|^2$. On $T_{\mathbf u}$, the Lipschitz
+bound gives $|r_{\mathbf u}|\leq C L\|\mathbf u\|$. After the standard
+truncation implied by $P_0L^{2+\eta}<\infty$, the margin condition yields
+\begin{align*}
+ P_0r_{\mathbf u}^2
+ &\leq C\|\mathbf u\|^4P_0L^2
+   +C\|\mathbf u\|^2P_0(L^2\ind\{T_{\mathbf u}\})\\
+ &=O(\|\mathbf u\|^4)+O(\|\mathbf u\|^3).
+\end{align*}
+Taking square roots proves \eqref{eq:l2-expansion}. Multiple-tube intersections
+are $O(\|\mathbf u\|^2)$ by part (3), so they do not alter the bound. A full
+bracketing construction and the precise truncation argument appear in
+Supplementary Lemma 1.3.
 \end{proof}
 
 \begin{theorem}[Local empirical-process expansion]
@@ -92,16 +102,26 @@ uniformly on compact subsets of $\mathbb R^d$.
 \end{theorem}
 
 \begin{proof}
-Apply Lemma~\ref{lem:l2-expansion} to the local class indexed by
-$\|\mathbf{u}\|\leq R$.  Its finite-dimensional Lipschitz parameterization and
-$L^{2+\eta}$ envelope give asymptotic equicontinuity of the empirical process;
-the nonlinear remainder in \eqref{eq:l2-expansion} is then negligible at the
-$n^{-1/2}$ localization.  The linear part equals
-$\mathbf{u}^\mathsf T\mathbb G_n\boldsymbol{\psi}^*$.  Combining this result with
-\eqref{eq:population-quadratic-expansion} and $\mathbf{H}=-\mathbf{A}$ proves
-\eqref{eq:local-asymptotic-quadratic}.  This is the standard local
-M-estimation argument, with Lemma~\ref{lem:l2-expansion} supplying the
-nonsmooth stochastic differentiability condition
+Write $r_{n,\mathbf u}=r_{\mathbf u/\sqrt n}$. Directly,
+\begin{align*}
+ &n(\mathbb P_n-P_0)\{m_{\boldsymbol\theta^*+\mathbf u/\sqrt n}
+                       -m_{\boldsymbol\theta^*}\}
+ -\mathbf u^\mathsf T\mathbb G_n\boldsymbol\psi^*\\
+ &\hspace{35mm}=\sqrt n\,\mathbb G_n r_{n,\mathbf u}.
+\end{align*}
+Lemma~\ref{lem:l2-expansion} gives
+$\sup_{\|\mathbf u\|\leq R}\|r_{n,\mathbf u}\|_{P_0,2}=O(n^{-3/4})$.
+Supplementary Lemma 1.3 bounds the bracketing entropy by
+$C d\log(C/\epsilon)$; the bracketing maximal inequality therefore gives
+$\sup_{\|\mathbf u\|\leq R}|\sqrt n\mathbb G_nr_{n,\mathbf u}|=o_p(1)$.
+This proves \eqref{eq:local-empirical-expansion}. Finally, Taylor expansion of
+$M$ gives, uniformly on compact sets,
+\[
+ n\{M(\boldsymbol\theta^*+\mathbf u/\sqrt n)-M(\boldsymbol\theta^*)\}
+ =\tfrac12\mathbf u^\mathsf T\mathbf H\mathbf u+o(1)
+ =-\tfrac12\mathbf u^\mathsf T\mathbf A\mathbf u+o(1),
+\]
+which yields \eqref{eq:local-asymptotic-quadratic}
 \citep{vandervaart1998,van1996weak}.
 \end{proof}
 
@@ -127,14 +147,24 @@ error in \eqref{eq:approximate-maximizer} satisfies $nr_n=o_p(1)$, then
 \end{theorem}
 
 \begin{proof}
-Consistency localizes $\widehat{\boldsymbol{\theta}}_n$ to a neighbourhood on which the
-population criterion has negative quadratic drift bounded away from zero.
-The empirical modulus implied by
-Theorem~\ref{thm:local-empirical-expansion} is linear at the corresponding
-scale.  On shells $\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|$ larger than $C/\sqrt n$, the quadratic
-drift dominates that modulus with probability tending to one as $C\to\infty$.
-The error $r_n=o_p(n^{-1})$ is negligible on this scale, proving
-\eqref{eq:root-n-rate}.
+Let $\lambda_0=\lambda_{\min}(\mathbf A)>0$. For sufficiently small
+$\delta$, the population expansion implies
+$M(\boldsymbol\theta^*+\mathbf v)-M(\boldsymbol\theta^*)
+\leq-(\lambda_0/4)\|\mathbf v\|^2$ whenever $\|\mathbf v\|\leq\delta$.
+On the dyadic shell
+$2^jC<\|\mathbf u\|\leq2^{j+1}C$, the local empirical term is
+$O_p(2^jC)$ whereas the negative drift is at most
+$-(\lambda_0/4)2^{2j}C^2$. Hence, uniformly over shells inside the
+$\delta$-neighbourhood,
+\[
+ P\!\left(\sup_{\|\mathbf u\|>C}
+ n\{M_n(\boldsymbol\theta^*+\mathbf u/\sqrt n)-M_n(\boldsymbol\theta^*)\}
+ \geq-nr_n\right)\longrightarrow0
+\]
+as first $n\to\infty$ and then $C\to\infty$. Consistency excludes the
+complement of that neighbourhood, and $nr_n=o_p(1)$ does not change the shell
+comparison. Thus $\|\sqrt n(\widehat{\boldsymbol\theta}_n-
+\boldsymbol\theta^*)\|=O_p(1)$.
 \end{proof}
 
 \begin{theorem}[Asymptotic linearity and normality]
@@ -158,11 +188,21 @@ ordinary mixture model is misspecified.
 
 \begin{proof}
 By Theorem~\ref{thm:root-n-rate}, the local parameter
-$\widehat{\mathbf{u}}_n=\sqrt n(\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)$ is tight.  The limiting
-quadratic process in \eqref{eq:local-asymptotic-quadratic} has the unique
-maximizer $\mathbf{A}^{-1}\mathbb G_n\boldsymbol{\psi}^*$.  The argmax theorem and
-$nr_n=o_p(1)$ give \eqref{eq:asymptotic-linearity}.  The multivariate central
-limit theorem and Slutsky's theorem yield \eqref{eq:asymptotic-normality}.
+$\widehat{\mathbf{u}}_n=\sqrt n(\widehat{\boldsymbol{\theta}}_n-\boldsymbol{\theta}^*)$ is tight. Put
+$\mathbf Z_n=\mathbb G_n\boldsymbol\psi^*$. Completing the square in the local
+criterion gives
+\[
+ \mathbf u^\mathsf T\mathbf Z_n-	frac12\mathbf u^\mathsf T\mathbf A\mathbf u
+ =\tfrac12\mathbf Z_n^\mathsf T\mathbf A^{-1}\mathbf Z_n
+ -\tfrac12(\mathbf u-\mathbf A^{-1}\mathbf Z_n)^\mathsf T
+ \mathbf A(\mathbf u-\mathbf A^{-1}\mathbf Z_n).
+\]
+Uniformity on compact sets, tightness, and $nr_n=o_p(1)$ force
+$\widehat{\mathbf u}_n-\mathbf A^{-1}\mathbf Z_n=o_p(1)$, proving
+\eqref{eq:asymptotic-linearity}. Since
+$\mathbf Z_n\rightsquigarrow N_d(\mathbf0,\mathbf J)$ by the multivariate
+central limit theorem, Slutsky's theorem gives covariance
+$\mathbf A^{-1}\mathbf J\mathbf A^{-\mathsf T}$.
 \end{proof}
 
 \begin{proposition}[Transfer to a local algorithmic solution]
@@ -224,14 +264,30 @@ the relevant local solution.
 \end{theorem}
 
 \begin{proof}
-Conditionally on the observations, the bootstrap empirical process obeys the
-same local stochastic expansion as in
-Theorem~\ref{thm:local-empirical-expansion}, centered at
-$\widehat{\boldsymbol{\theta}}_n$.  Bootstrap asymptotic equicontinuity and
-the conditional central limit theorem give the same Gaussian linear term,
-while consistency of the local curvature gives the same matrix
-$\mathbf{A}$.  The conditional argmax theorem yields the bootstrap analogue
-of \eqref{eq:asymptotic-linearity}; convergence over convex Borel sets follows
-from continuity of the nondegenerate Gaussian limit
+Let $\mathbb G_n^\#=\sqrt n(\mathbb P_n^\#-\mathbb P_n)$. Bootstrap
+equicontinuity of the localized remainder class gives, conditionally in
+probability and uniformly for bounded $\mathbf u$,
+\begin{align*}
+ &n\{M_n^\#(\widehat{\boldsymbol\theta}_n+\mathbf u/\sqrt n)
+       -M_n^\#(\widehat{\boldsymbol\theta}_n)\}\\
+ &=\mathbf u^\mathsf T\mathbb G_n^\#
+   \boldsymbol\psi(\cdot;\widehat{\boldsymbol\theta}_n)
+   -\tfrac12\mathbf u^\mathsf T\widehat{\mathbf A}_n\mathbf u
+   +o_{p^\#}(1).
+\end{align*}
+Here $\widehat{\mathbf A}_n\to_p\mathbf A$, and the conditional central limit
+theorem gives
+$\mathbb G_n^\#\boldsymbol\psi(\cdot;\widehat{\boldsymbol\theta}_n)
+\rightsquigarrow_{p}N_d(\mathbf0,\mathbf J)$. Completing the square, as in the
+proof of Theorem~\ref{thm:asymptotic-normality}, and using the conditional
+$o_p(n^{-1})$ optimization error yields
+\[
+ \sqrt n(\widehat{\boldsymbol\theta}_n^\#-\widehat{\boldsymbol\theta}_n)
+ =\widehat{\mathbf A}_n^{-1}\mathbb G_n^\#
+ \boldsymbol\psi(\cdot;\widehat{\boldsymbol\theta}_n)+o_{p^\#}(1).
+\]
+The conditional Slutsky theorem gives the Gaussian limit with covariance
+$\mathbf V$. Since that law is nondegenerate, its boundary assigns zero mass
+to convex-set continuity boundaries, yielding the displayed uniform metric
 \citep{van1996weak}.
 \end{proof}

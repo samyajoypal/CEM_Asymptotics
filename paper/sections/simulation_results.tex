@@ -41,8 +41,9 @@ increased from 0.886 to 0.925 and the median standard-error ratio from 0.758 to
 
 \begin{table}[t]
 \centering
-\caption{Selected simulation results. Entries are coordinate-median estimated
-standard error divided by empirical standard deviation, followed in
+\small
+\caption{Selected simulation results. Entries are the coordinate-median ratio
+of estimated standard error to empirical standard deviation, followed in
 parentheses by coordinate-median 95\% coverage.}
 \label{tab:simulation-main}
 \begin{tabular}{llrrcc}
@@ -67,20 +68,23 @@ no difficult coordinate was removed from the analysis.
 
 \begin{table}[t]
 \centering
+\small
 \caption{Across-coordinate distribution of calibration results in the primary
 study.  Entries are the 25th percentile, median, and 75th percentile across all
 scenario--sample-size--coordinate cells; corrected results use the central
 bandwidth.}
 \label{tab:simulation-quantiles}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{lrrrrrr}
 \toprule
-& \multicolumn{3}{c}{SE/empirical SD} & \multicolumn{3}{c}{Empirical coverage}\\
-Method & Q25 & Median & Q75 & Q25 & Median & Q75\\
+& \multicolumn{3}{c}{Standard-error ratio} & \multicolumn{3}{c}{Empirical coverage}\\
+Method & 25th & Median & 75th & 25th & Median & 75th\\
 \midrule
 Naive & 0.654 & 0.867 & 0.952 & 0.878 & 0.917 & 0.935\\
 Corrected, stabilized & 0.780 & 0.991 & 1.032 & 0.911 & 0.937 & 0.947\\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 Figure~\ref{fig:simulation-calibration} summarizes every primary scenario.
@@ -129,7 +133,8 @@ uncertainty interact; it is reported as a limitation rather than removed from
 the design.
 
 Figure~\ref{fig:extension-boundary} places this extension beside a separate
-boundary-estimator convergence experiment. The latter shows decreasing RMSE
+boundary-estimator convergence experiment. The latter shows decreasing root
+mean squared error (RMSE)
 from sample size 250 to 16,000, directly checking the feasible surface-moment
 estimator independently of the Wald calculations.
 The supplement additionally uses all replication-level estimator vectors to
